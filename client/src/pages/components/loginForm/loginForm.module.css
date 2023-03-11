@@ -1,0 +1,57 @@
+/* login form parent */
+.LoginFormParent {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: clamp(200px, 100%, 600px);
+    margin: 0 auto 0 auto;
+}
+
+/* login form */
+.LoginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1em;
+}
+    .LoginForm > input {
+        width: 100%;
+        padding: 0.8em;
+        box-sizing: border-box;
+        font-size: 1.2rem;
+        border: 1px solid var(--greyli-color);
+        font-family: 'Roboto', sans-serif;
+    }
+        .LoginForm > input::placeholder {
+            font-size: 1rem;
+        }
+        .LoginForm > input:focus {
+            outline: none !important;
+            border: 1px solid var(--greydark-color);
+        }
+        .LoginForm > input:focus::placeholder {
+            opacity: 0;
+            font-size: 0.8rem;
+        }
+    .LoginForm > label {
+        position: relative;
+        left: 6px;
+        align-self: flex-start;
+        font-size: 0.9rem;
+        padding: 8px;
+        background-color: var(--white-color);
+        color: var(--blueli-color);
+        transition: all 0.2s;
+    }
+    .LoginForm > button {
+        margin-top: 1.5em;
+        width: 100%;
+        padding: 1em;
+        font-weight: 700;
+        font-size: 1.2rem;
+        background-color: var(--blueli-color);
+        color: var(--white-color);
+        border: 1px solid var(--greyli-color);
+        cursor: pointer;
+    }
