@@ -49,8 +49,13 @@ table {
 }
 
 :root {
+
+	--red-color: #ff7b7b;
+
 	--blueli-color: #5798e3;
+
 	--greydark-color: #565656;
+	--greymed-color: #999;
 	--greyli-color: #d4d4d4;
 	--white-color: #ffffff;
 }
