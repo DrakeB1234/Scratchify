@@ -29,7 +29,12 @@ export default function Login() {
 
     if (error) {
       console.log(error);
-      return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Error', message: 'Invalid username / password'}));
+      // invalid username / password
+      if (/Invalid login/.test(error.message)) return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Error', message: 'Invalid username / password'}));
+      // email not confirmed
+      if (/Email not/.test(error.message)) return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Error', message: 'Account not verified, check email'}));
+      // catch all
+      return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Error', message: 'There was an error processing your request'}));
     } else return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Success', message: 'You good homes!'}));
   }
   

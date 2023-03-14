@@ -4,7 +4,7 @@ import {useState} from 'react';
 
 // import styles / components
 import RegisterForm from '../components/forms/registerForm';
-import LoginForm from '../components/forms/loginForm';
+import VerifyAccount from '../components/verifyaccount/verifyaccount';
 import styles from './register.module.css';
 
 // auth
@@ -36,16 +36,22 @@ export default function Register() {
 
   return (
     <>
-      <Head>
-        <title>Register</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <Head>
+      <title>Register</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </Head>
+    {(supabaseMsg.type != 'Success') ?
       <main className={styles.LoginParent}>
         <RegisterForm 
           callback={registerUser} 
           supabaseMsg={supabaseMsg}
         />
       </main>
+    :
+    <main className={styles.LoginParent}>
+      <VerifyAccount />
+    </main>
+    }
     </>
   )
 }

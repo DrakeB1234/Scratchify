@@ -41,11 +41,19 @@ export default function LoginForm(props: any) {
             <form className={styles.FormStyle}>
                 <h1>Login</h1>
 
-                <input type='text' autoComplete='off' name='email' placeholder='Email' onChange={(e) => setLoginInput(prev => ({...prev, email: e.target.value}))} />
+                <input type='text' autoComplete='off' name='email' placeholder='Email' 
+                onChange={(e) => { setLoginInput(prev => ({...prev, email: e.target.value})); 
+                setLoginFeedback(prev => ({...prev, email: ''}))}}
+                style={loginFeedback.email != '' ? {border: '1px solid var(--red-color)'} : {}}
+                />
                 <label htmlFor='email'>Email</label>
                 <h2>{loginFeedback.email}</h2>
 
-                <input type='password' autoComplete='off' name='password' placeholder='Password' onChange={(e) => setLoginInput(prev => ({...prev, password: e.target.value}))} />
+                <input type='password' autoComplete='off' name='password' placeholder='Password' 
+                onChange={(e) => { setLoginInput(prev => ({...prev, password: e.target.value})); 
+                setLoginFeedback(prev => ({...prev, password: ''}))}}
+                style={loginFeedback.password != '' ? {border: '1px solid var(--red-color)'} : {}}
+                />
                 <label htmlFor='email'>Password</label>
                 <h2>{loginFeedback.password}</h2>
                 
