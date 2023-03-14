@@ -3,11 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link';
 import {useState} from 'react';
 
-import styles from './loginForm.module.css';
+import styles from './form.module.css';
 
-export default function LoginForm(props: any) {
+export default function RegisterForm(props: any) {
     
-    const [loginFeedback, setLoginFeedback] = useState('Invalid username/password');
     // register inputs w/ feedback
     const [registerInput, setRegisterInput] = useState({
         email: '',
@@ -41,7 +40,7 @@ export default function LoginForm(props: any) {
         if(!registerInput.password){
             return setRegisterFeedback(prev => ({...prev, password: 'Required'}));
         } else if (!/^[\w:'",.?<>!@#$|%^&*()_\-+=,.\/\{\}\[\]\\]{5,100}$/.test(registerInput.password)){
-            return setRegisterFeedback(prev => ({...prev, password: '5-100 characters, letters, numbers, -'}));
+            return setRegisterFeedback(prev => ({...prev, password: '5-100 characters, no spaces'}));
         };
         // check if password matches
         if(!registerInput.confirmPassword){
@@ -52,28 +51,13 @@ export default function LoginForm(props: any) {
 
         // if no feedback, then input is cleared
         if(registerFeedback.email == '' && registerFeedback.username == '' && registerFeedback.password == '' && registerFeedback.confirmPassword == ''){
-            alert('Good Job');
+            props.callback(registerInput)
         }
     }
     
-    return (
-        <>
-        {(props.type === 'login') 
-        ?        
-        <div className={styles.LoginFormParent}>
-            <form className={styles.LoginForm}>
-                <h1>Login</h1>
-                <input type='text' autoComplete='off' name='email' placeholder='Email or Username' />
-                <label htmlFor='email'>Email or Username</label>
-                <input type='password' autoComplete='off' name='password' placeholder='Password' />
-                <label htmlFor='email'>Password</label>
-                <h3>{loginFeedback}</h3>
-                <button type='button'>Login</button>
-            </form>
-        </div>
-        :
-        <div className={styles.LoginFormParent}>
-            <form className={styles.LoginForm}>
+    return (  
+        <div className={styles.FormParent}>
+            <form className={styles.FormStyle}>
                 <h1>Register</h1>
 
                 <input type='text' autoComplete='off' name='email' placeholder='Email' onChange={
@@ -104,11 +88,11 @@ export default function LoginForm(props: any) {
                 <label htmlFor='confirmPassword'>Confirm Password</label>
                 <h2>{registerFeedback.confirmPassword}</h2>
 
+                <h3 className={props.supabaseMsg.type == 'Error' ? styles.Error : styles.Success}>{props.supabaseMsg.message}</h3>
+
                 <button type='button' onClick={checkRegisterInput}>Register Account</button>
-                <Link href='/'><button type='button'>Back to Login</button></Link>
+                <Link href='/login'><button type='button'>Back to Login</button></Link>
             </form>
         </div>
-        }
-        </>
     )
   }

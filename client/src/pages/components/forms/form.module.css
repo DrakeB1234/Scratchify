@@ -1,5 +1,5 @@
 /* login form parent */
-.LoginFormParent {
+.FormParent {
     display: flex;
     justify-content: center;
     height: 100%;
@@ -8,22 +8,27 @@
 }
 
 /* login form */
-.LoginForm {
+.FormStyle {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 1em;
+    padding: 1.5em;
+    border: 1px solid var(--greyli-color);
+    box-shadow: 0 0 1em var(--greyli-color);
     overflow-y: scroll;
 }
-    .LoginForm > h1 {
+    .FormStyle::-webkit-scrollbar {
+        display: none;
+    }
+    .FormStyle > h1 {
         align-self: flex-start;
         padding: 0.5em 0 1em 0;
         font-weight: 700;
         font-size: 2rem;
         color: var(--greydark-color);
     }
-    .LoginForm > h2 {
+    .FormStyle > h2 {
         text-align: center;
         align-self: flex-end;
         padding: 0.3em;
@@ -32,14 +37,22 @@
         transform: translate(0px, -20px);
         overflow-wrap: break-word;
     }
-    .LoginForm > h3 {
+    .FormStyle > h3 {
+        align-self: flex-start;
         text-align: center;
         padding: 0.3em;
         font-weight: 700;
-        color: var(--red-color);
         overflow-wrap: break-word;
     }
-    .LoginForm > input {
+        /* error text */
+        .Error {
+            color: var(--red-color);
+        }
+        /* success text */
+        .Success {
+            color: var(--green-color);
+        }
+    .FormStyle > input {
         width: 100%;
         padding: 1em 1em 0.8em 1em;
         box-sizing: border-box;
@@ -47,7 +60,7 @@
         border: 1px solid var(--greyli-color);
         font-family: 'Roboto', sans-serif;
     }
-    .LoginForm > label {
+    .FormStyle > label {
         visibility: hidden;
         align-self: flex-start;
         padding: 0.3em;
@@ -55,34 +68,34 @@
         background-color: var(--white-color);
         transform: translate(12px, -42px);
     }
-        .LoginForm > input::placeholder {
+        .FormStyle > input::placeholder {
             opacity: 1;
             position: relative;
             font-size: 1rem;
             color: var(--greymed-color);
         }
-        .LoginForm > input:focus {
+        .FormStyle > input:focus {
             outline: none !important;
             border: 1px solid var(--blueli-color);
         }
-        .LoginForm > input:focus::placeholder {
+        .FormStyle > input:focus::placeholder {
             opacity: 0;
         }
-        .LoginForm > input:focus + label {
+        .FormStyle > input:focus + label {
             visibility: visible;
             color: var(--blueli-color);
             transform: translate(8px, -76px);
             transition: transform 0.2s ease-out;
         }
-        .LoginForm > input:not(:placeholder-shown) + label {
+        .FormStyle > input:not(:placeholder-shown) + label {
             visibility: visible;
             color: var(--greymed-color);
             transform: translate(8px, -76px);
           }
-    .LoginForm > a {
+    .FormStyle > a {
         width: 100%;
     }
-    .LoginForm > button, .LoginForm > a > button {
+    .FormStyle > button, .FormStyle > a > button {
         margin-top: 1.5em;
         width: 100%;
         padding: 1em;
