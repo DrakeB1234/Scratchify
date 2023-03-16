@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import {useState} from 'react';
+import Router from 'next/router';
 
 // import styles / components
 import LoginForm from '../components/forms/loginForm';
@@ -35,7 +36,7 @@ export default function Login() {
       if (/Email not/.test(error.message)) return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Error', message: 'Account not verified, check email'}));
       // catch all
       return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Error', message: 'There was an error processing your request'}));
-    } else return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Success', message: 'You good homes!'}));
+    } else return Router.push('/');
   }
   
   return (

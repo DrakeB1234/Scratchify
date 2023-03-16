@@ -1,0 +1,37 @@
+/* calendar parent */
+.MealCalendarParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 2em;
+    box-sizing: border-box;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 0.5em 0.5em var(--greyli-color);
+}
+    /* greeting */
+    .MealCalendarParent > h1 {
+        align-self: flex-start;
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--greydark-color);
+    }
+    /* date */
+    .MealCalendarParent > h2 {
+        align-self: flex-start;
+        margin-bottom: 1em;
+        font-size: 1.5rem;
+        color: var(--greydark-color);
+    }
+/* icon container */
+.MealCalendarIcons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: clamp(200px, 100%, 800px);
+}
+    /* icons */
+    .MealCalendarIcons > img {
+        max-width: 30px;
+        cursor: pointer;
+    }

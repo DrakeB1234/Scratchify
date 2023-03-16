@@ -7,9 +7,9 @@
     @keyframes paperAnim {
         0% {transform: translateY(0px);}
         10% {transform: translateY(-36px);}
-        30% {transform: translateY(-32px);}
+        30% {transform: translateY(-30px);}
         50% {transform: translateY(-36px);}
-        70% {transform: translateY(-32px);}
+        70% {transform: translateY(-30px);}
         80% {transform: translateY(-36px);}
         100% {transform: translateY(0px);}
     }

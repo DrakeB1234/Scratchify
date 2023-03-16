@@ -1,0 +1,46 @@
+/* desktop navbar parent */
+.DesktopNavbarParent {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    padding: 0.5em;
+    padding-right: 2em;
+    background-color: var(--appmain-color);
+}
+    /* app logo link */
+    .DesktopNavbarParent > a:first-child {
+        flex: 2;
+        width: 100%;
+    }
+        .DesktopNavbarParent > a:first-child > img {
+            height: 45px;
+            width: 45px;
+        }
+    /* links */
+    .DesktopNavbarParent > a {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--white-color);
+    }
+/* mobile navbar parent */
+.MobileNavbarParent {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    padding: 0.5em 1em 0.5em 1em;
+    background-color: var(--appmain-color);
+}
+    /* app logo link */
+    .MobileNavbarParent > a:first-child {
+        flex: 2;
+        width: 100%;
+    }
+        /* app logo */
+        .MobileNavbarParent > a > img {
+            height: 40px;
+            width: 40px;
+        }
+        .MobileNavbarParent > img {
+            height: 30px;
+            width: 30px;
+        }
