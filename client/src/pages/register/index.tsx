@@ -24,9 +24,15 @@ export default function Register() {
     setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: '', message: ''}));
 
     const { data, error } = await supabase.auth.signUp({
-      email: formData.email,
-      password: formData.password,
-    });
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            username: formData.username
+          }
+        }
+      }
+    );
 
     if (error) {
       console.log(error);

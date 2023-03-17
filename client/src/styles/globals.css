@@ -51,16 +51,24 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+button {
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
 
 :root {
 
 	--appmain-color: #F47B55;
+	--appmainli-color: #fbb9a4;
 
 	--green-color: #58c56c;
 
 	--red-color: #ff7b7b;
 
 	--blueli-color: #5798e3;
+
+	--black-color: #222222;
 
 	--greydark-color: #565656;
 	--greymed-color: #999;

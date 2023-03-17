@@ -8,16 +8,25 @@ import Navbar from './components/navbar/navbar';
 import styles from './homepage.module.css';
 
 // auth
-import { useSession } from '@supabase/auth-helpers-react'
+import { useSession } from '@supabase/auth-helpers-react';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+
 
 export default function Home() {
 
   const session = useSession();
-  console.log(session)
+  const supabase = useSupabaseClient();
+  let userData = {
+    username: ''
+  };
   
-  // redirect unlogged in users
+  // redirect unlogged in users, otherwise collect userdata
   if (!session){
     return <LoginPage />
+  } else {
+    userData = {
+      username: session!.user.user_metadata.username,
+    }
   }
   
   return (
@@ -27,7 +36,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className={styles.HomepageParent}>
-        <Navbar />
+        <Navbar username={userData.username}/>
         <MealCalendar />
       </main>
     </>

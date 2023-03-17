@@ -29,7 +29,6 @@ export default function Login() {
     });
 
     if (error) {
-      console.log(error);
       // invalid username / password
       if (/Invalid login/.test(error.message)) return setSupabaseMsg(supabaseMsg => ({...supabaseMsg, type: 'Error', message: 'Invalid username / password'}));
       // email not confirmed

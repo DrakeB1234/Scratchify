@@ -1,15 +1,27 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import {useState} from 'react';
+
+// auth
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 import styles from './navbar.module.css';
 
 export default function Navbar(props: any) {
+
+    const [toggleMobileNav, setToggleMobileNav] = useState(false);
+    const supabase = useSupabaseClient();
+    const router = useRouter();
+
+    // function to sign user out
+    const SignOut = async () => {
+        return await supabase.auth.signOut();
+    };
     
     return (  
         <>
-            {/* <div className={styles.DesktopNavbarParent}>
+            <div className={styles.DesktopNavbarParent}>
                 <Link href='/'>
                     <Image 
                     alt='Home'
@@ -20,9 +32,10 @@ export default function Navbar(props: any) {
                 </Link>
                 <Link href=''>Grocery List</Link>
                 <Link href=''>Meal Planner</Link>
-                <Link href=''>Recipes</Link>
-                <Link href=''>Profile</Link>
-            </div> */}
+                <Link href='/recipes'>Recipes</Link>
+                <Link href=''>Settings</Link>
+                <button onClick={SignOut}>Logout</button>  
+            </div>
             <div className={styles.MobileNavbarParent}>
                 <Link href='/'>
                     <Image 
@@ -34,10 +47,83 @@ export default function Navbar(props: any) {
                 </Link>
                 <Image 
                 alt='='
-                src='/icons/icon-bars.svg'
+                src='/icons/navigation/icon-bars.svg'
                 height={50}
                 width={50}
+                onClick={() => setToggleMobileNav(true)}
                 />
+                <div className={styles.MobileNavbarContentParent}
+                style={toggleMobileNav ? {left: '0'} : {left: '-100vw'}}
+                onClick={() => setToggleMobileNav(false)}
+                >
+                    <div className={styles.MobileNavbarContentChild}>
+                        <div>
+                            <h1>Hello, {props.username}!</h1>
+                            <Image 
+                            alt='X'
+                            src='/icons/navigation/icon-x.svg'
+                            height={50}
+                            width={50}
+                            />
+                        </div>
+                        <div className={styles.MobileNavbarContent}>
+                            <Link href='/' className={router.pathname == '/' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-house-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Home
+                            </Link>
+                            <Link href='/' className={router.pathname == '/planner' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-planner-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Meal Planner
+                            </Link>
+                            <Link href='/' className={router.pathname == '/list' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-list-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Grocery List
+                            </Link>
+                            <Link href='/recipes' className={router.pathname == '/planner' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-recipe-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Recipes
+                            </Link>
+                            <Link href='/' className={styles.SpaceLink}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-settings-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Account Settings
+                            </Link>  
+                            <button onClick={SignOut}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-logout-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Logout
+                            </button>     
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )

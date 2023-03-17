@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 import {useState} from 'react';
@@ -36,11 +35,11 @@ export default function RegisterForm(props: any) {
         } else if (!/^[\w-]{3,30}$/.test(registerInput.username)){
             return setRegisterFeedback(prev => ({...prev, username: '3-30 characters, letters, numbers, -'}));
         };
-        // check password input (all characters allowed, except spaces and unicode) 5-100 characters
+        // check password input (all characters allowed, except spaces and unicode) 6-100 characters
         if(!registerInput.password){
             return setRegisterFeedback(prev => ({...prev, password: 'Required'}));
-        } else if (!/^[\w:'",.?<>!@#$|%^&*()_\-+=,.\/\{\}\[\]\\]{5,100}$/.test(registerInput.password)){
-            return setRegisterFeedback(prev => ({...prev, password: '5-100 characters, no spaces'}));
+        } else if (!/^[\w:'",.?<>!@#$|%^&*()_\-+=,.\/\{\}\[\]\\]{6,100}$/.test(registerInput.password)){
+            return setRegisterFeedback(prev => ({...prev, password: '6-100 characters, no spaces'}));
         };
         // check if password matches
         if(!registerInput.confirmPassword){

@@ -4,7 +4,7 @@
     align-items: center;
     gap: 2em;
     padding: 0.5em;
-    padding-right: 2em;
+    padding-right: 1em;
     background-color: var(--appmain-color);
 }
     /* app logo link */
@@ -17,17 +17,19 @@
             width: 45px;
         }
     /* links */
-    .DesktopNavbarParent > a {
+    .DesktopNavbarParent > a, .DesktopNavbarParent > button {
         font-weight: 700;
         font-size: 1.1rem;
         color: var(--white-color);
     }
 /* mobile navbar parent */
 .MobileNavbarParent {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 2em;
+    width: 100%;
     padding: 0.5em 1em 0.5em 1em;
+    box-sizing: border-box;
     background-color: var(--appmain-color);
 }
     /* app logo link */
@@ -41,6 +43,100 @@
             width: 40px;
         }
         .MobileNavbarParent > img {
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
+/* mobile navbar content */
+.MobileNavbarContentParent {
+    position: absolute;
+    top: 0;
+    left: -100vw;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--white-color);
+    transition: all 0.3s ease-in-out;
+}
+/* mobile navbar content */
+.MobileNavbarContentChild {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    background-color: var(--white-color);
+}
+    /* user introduction container */
+    .MobileNavbarContentChild > div:first-child {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 1em;
+        box-sizing: border-box;
+        background-color: var(--appmain-color);
+    }
+        /* user introduction text */
+        .MobileNavbarContentChild > div > h1 {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--white-color);
+            overflow: hidden;
+            overflow-wrap: break-word;
+        }
+        /* exit button */
+        .MobileNavbarContentChild > div > img {
             height: 30px;
             width: 30px;
+            cursor: pointer;
         }
+    /* link container*/
+    .MobileNavbarContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5em;
+        min-height: 85vh;
+        width: 100%;
+        padding: 0.5em;
+        box-sizing: border-box;
+        background-color: var(--white-color);
+    }
+        .MobileNavbarContent > a, .MobileNavbarContent > button {
+            display: flex;
+            align-items: center;
+            gap: 2em;
+            min-height: 66px;
+            width: 100%;
+            padding: 0.5em 1em 0.5em 1em;
+            box-sizing: border-box;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--black-color);
+            overflow: hidden;
+        }
+            /* active link */
+            .MobileNavbarContent > .ActiveLink {
+                border-radius: 10px;
+                background-color: var(--appmainli-color);
+            }
+            /* spaced link */
+            .MobileNavbarContent > .SpaceLink {
+                margin-top: 10%;
+                padding-top: 1em;
+                border-top: 1px solid var(--greyli-color);
+            }
+            /* image */
+            .MobileNavbarContent > a > img, .MobileNavbarContent > button > img {
+                height: 30px;
+                width: 30px;
+            }
+
+@media only screen and (max-width: 900px){
+    .MobileNavbarParent {
+        display: flex;
+    }
+    .DesktopNavbarParent {
+        display: none;
+    }
+}

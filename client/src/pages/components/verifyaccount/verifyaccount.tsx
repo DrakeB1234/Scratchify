@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Link from 'next/link';
 
 import GraphicEmailVerify from '/public/graphics/graphic-email-verify.svg';

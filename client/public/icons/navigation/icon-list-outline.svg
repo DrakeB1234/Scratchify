@@ -1,0 +1,21 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-list-outline">
+<rect id="Rectangle 21" x="10" y="4" width="2" height="33" rx="1" transform="rotate(-90 10 4)" fill="#646161"/>
+<rect id="Rectangle 39" x="22" y="13" width="2" height="18" rx="1" transform="rotate(-90 22 13)" fill="#646161"/>
+<rect id="Rectangle 49" x="13" y="33" width="2" height="17" rx="1" transform="rotate(-90 13 33)" fill="#646161"/>
+<rect id="Rectangle 46" x="13" y="18" width="2" height="27" rx="1" transform="rotate(-90 13 18)" fill="#646161"/>
+<rect id="Rectangle 47" x="13" y="23" width="2" height="27" rx="1" transform="rotate(-90 13 23)" fill="#646161"/>
+<rect id="Rectangle 48" x="13" y="28" width="2" height="27" rx="1" transform="rotate(-90 13 28)" fill="#646161"/>
+<rect id="Rectangle 44" width="2" height="8.17054" rx="1" transform="matrix(0.984808 -0.173648 -0.173648 -0.984808 12.5628 29.2106)" fill="#646161"/>
+<rect id="Rectangle 25" x="42" y="9" width="2" height="6" rx="1" transform="rotate(-90 42 9)" fill="#646161"/>
+<rect id="Rectangle 28" x="20" y="39" width="2" height="6" rx="1" fill="#646161"/>
+<rect id="Rectangle 22" x="15" y="41" width="2" height="28" rx="1" transform="rotate(-90 15 41)" fill="#646161"/>
+<rect id="Rectangle 27" x="20" y="46" width="2" height="28" rx="1" transform="rotate(-90 20 46)" fill="#646161"/>
+<rect id="Rectangle 23" x="10" y="2" width="2" height="39" rx="1" fill="#646161"/>
+<rect id="Rectangle 24" x="41" y="2" width="2" height="39" rx="1" fill="#646161"/>
+<rect id="Rectangle 26" x="46" y="7" width="2" height="39" rx="1" fill="#646161"/>
+<rect id="Rectangle 33" x="14" y="6" width="5" height="6" rx="1" stroke="#646161" stroke-width="2"/>
+<path id="Ellipse 2" d="M14.2594 47.6199L14.118 47.5997L13.9766 47.6199C10.6171 48.0998 8.62863 47.5812 7.26263 46.2152C5.81481 44.7674 4.85156 42.1769 4.10365 37.9409C3.21591 32.5945 8.16003 27.205 13.966 28.0982L14.118 28.1216L14.2701 28.0982C20.0883 27.2031 25.0739 32.6057 24.1332 37.9361C23.3852 42.1749 22.4218 44.7669 20.9734 46.2152C19.6074 47.5812 17.6189 48.0998 14.2594 47.6199Z" fill="white" stroke="#646161" stroke-width="2"/>
+<rect id="Rectangle 45" x="8" y="33" width="3" height="3" rx="1" stroke="#646161" stroke-width="2"/>
+</g>
+</svg>
