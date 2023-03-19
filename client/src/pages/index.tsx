@@ -2,8 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 // import styles / components
-import LoginPage from './login/index';
-import MealCalendar from './components/homepage/mealcalendar';
+import Dashboard from './components/homepage/dashboard';
+import RecipeSearch from './components/homepage/recipeSearch';
 import Navbar from './components/navbar/navbar';
 import styles from './homepage.module.css';
 
@@ -16,18 +16,6 @@ export default function Home() {
 
   const session = useSession();
   const supabase = useSupabaseClient();
-  let userData = {
-    username: ''
-  };
-  
-  // redirect unlogged in users, otherwise collect userdata
-  if (!session){
-    return <LoginPage />
-  } else {
-    userData = {
-      username: session!.user.user_metadata.username,
-    }
-  }
   
   return (
     <>
@@ -36,8 +24,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className={styles.HomepageParent}>
-        <Navbar username={userData.username}/>
-        <MealCalendar />
+        <Navbar username={'username'}/>
+        {session ? <Dashboard /> : <></>}
+        <RecipeSearch />
       </main>
     </>
   )

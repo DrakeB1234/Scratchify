@@ -1,9 +1,0 @@
-.RecipeParent {
-    min-height: 100vh;
-    width: clamp(200px, 100%, 1600px);
-    margin: 0 auto 0 auto;
-    border: 1px solid var(--greyli-color);
-    box-sizing: border-box;
-    box-shadow: 0 0 1em var(--greyli-color);
-    overflow: hidden;
-}

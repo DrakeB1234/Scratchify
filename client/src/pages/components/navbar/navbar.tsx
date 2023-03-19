@@ -4,6 +4,7 @@ import {useRouter} from 'next/router';
 import {useState} from 'react';
 
 // auth
+import { useSession } from '@supabase/auth-helpers-react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 import styles from './navbar.module.css';
@@ -13,10 +14,12 @@ export default function Navbar(props: any) {
     const [toggleMobileNav, setToggleMobileNav] = useState(false);
     const supabase = useSupabaseClient();
     const router = useRouter();
+    const session = useSession();
 
     // function to sign user out
     const SignOut = async () => {
-        return await supabase.auth.signOut();
+        await supabase.auth.signOut();
+        router.push('/login');
     };
     
     return (  
@@ -25,24 +28,25 @@ export default function Navbar(props: any) {
                 <Link href='/'>
                     <Image 
                     alt='Home'
-                    src='/graphics/applogo-scratchify.svg'
-                    height={100}
-                    width={100}
+                    src='/graphics/appbanner-scratchify.svg'
+                    height={200}
+                    width={300}
                     />
                 </Link>
                 <Link href=''>Grocery List</Link>
                 <Link href=''>Meal Planner</Link>
                 <Link href='/recipes'>Recipes</Link>
                 <Link href=''>Settings</Link>
-                <button onClick={SignOut}>Logout</button>  
+                {session ? <button onClick={SignOut}>Logout</button> : <button onClick={() => router.push('/login')}>Login</button>}
+                  
             </div>
             <div className={styles.MobileNavbarParent}>
                 <Link href='/'>
                     <Image 
                     alt='Home'
-                    src='/graphics/applogo-scratchify.svg'
-                    height={100}
-                    width={100}
+                    src='/graphics/appbanner-scratchify.svg'
+                    height={200}
+                    width={300}
                     />
                 </Link>
                 <Image 
@@ -111,7 +115,8 @@ export default function Navbar(props: any) {
                                 width={50}
                                 />
                                 Account Settings
-                            </Link>  
+                            </Link>
+                            {session ? 
                             <button onClick={SignOut}>                
                                 <Image 
                                 alt=''
@@ -120,7 +125,18 @@ export default function Navbar(props: any) {
                                 width={50}
                                 />
                                 Logout
-                            </button>     
+                            </button>  
+                            : 
+                            <button onClick={() => router.push('/login')}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-logout-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Login
+                            </button>} 
+   
                         </div>
                     </div>
                 </div>

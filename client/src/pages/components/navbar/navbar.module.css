@@ -13,8 +13,8 @@
         width: 100%;
     }
         .DesktopNavbarParent > a:first-child > img {
-            height: 45px;
-            width: 45px;
+            height: 100%;
+            width: 130px;
         }
     /* links */
     .DesktopNavbarParent > a, .DesktopNavbarParent > button {
@@ -39,8 +39,8 @@
     }
         /* app logo */
         .MobileNavbarParent > a > img {
-            height: 40px;
-            width: 40px;
+            height: 100%;
+            width: 100px;
         }
         .MobileNavbarParent > img {
             height: 25px;
@@ -54,17 +54,16 @@
     left: -100vw;
     bottom: 0;
     width: 100%;
-    background-color: var(--white-color);
     transition: all 0.3s ease-in-out;
+    z-index: 99;
 }
 /* mobile navbar content */
 .MobileNavbarContentChild {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1em;
-    width: 100%;
-    background-color: var(--white-color);
+    width: 85%;
+    box-shadow: 0 0 1em var(--greydark-color);
 }
     /* user introduction container */
     .MobileNavbarContentChild > div:first-child {
@@ -86,8 +85,8 @@
         }
         /* exit button */
         .MobileNavbarContentChild > div > img {
-            height: 30px;
-            width: 30px;
+            height: 25px;
+            width: 25px;
             cursor: pointer;
         }
     /* link container*/
@@ -96,7 +95,7 @@
         flex-direction: column;
         align-items: center;
         gap: 0.5em;
-        min-height: 85vh;
+        min-height: 92vh;
         width: 100%;
         padding: 0.5em;
         box-sizing: border-box;
@@ -105,7 +104,7 @@
         .MobileNavbarContent > a, .MobileNavbarContent > button {
             display: flex;
             align-items: center;
-            gap: 2em;
+            gap: 1.5em;
             min-height: 66px;
             width: 100%;
             padding: 0.5em 1em 0.5em 1em;
@@ -128,8 +127,8 @@
             }
             /* image */
             .MobileNavbarContent > a > img, .MobileNavbarContent > button > img {
-                height: 30px;
-                width: 30px;
+                height: 25px;
+                width: 25px;
             }
 
 @media only screen and (max-width: 900px){
