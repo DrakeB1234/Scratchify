@@ -42,7 +42,7 @@ export default function RecipeSearch(props: any) {
                 />
                 <Image
                 alt='0='
-                src='/icons/icon-search.svg'
+                src='/icons/actions/icon-search.svg'
                 height={50}
                 width={50}
                 onClick={searchRecipes}

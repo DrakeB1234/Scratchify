@@ -1,0 +1,43 @@
+/* main parent */
+.MyRecipesParent {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+    width: clamp(200px, 100%, 1000px);
+    margin: 0 auto 0 auto;
+}
+/* create recipe parent */
+.CreateRecipeParent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+    margin: 1em;
+    padding: 2em 1em 2em 1em;
+    border-radius: 10px;
+    color: var(--white-color);
+    background-color: var(--appmain-color);
+}
+    /* create recipe text */
+    .CreateRecipeParent > h1 {
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    /* amount made text */
+    .CreateRecipeParent > h2 {
+        font-size: 1.2rem;
+    }
+    /* arrow */
+    .CreateRecipeParent > img {
+        position: absolute;
+        right: 1em;
+        height: 30px;
+        width: 30px;
+        transform: rotate(180deg);
+    }
+/* my recipes row */
+.MyRecipesRow {
+    display: flex;
+    padding: 1em;
+}

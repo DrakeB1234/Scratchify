@@ -1,0 +1,22 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-instruction">
+<path id="Rectangle 17" d="M7 21H42V24H7V21Z" fill="#ffffff"/>
+<path id="Rectangle 19" d="M8.5 41C7.67157 41 7 40.3284 7 39.5L7 22.5C7 21.6716 7.67157 21 8.5 21V21C9.32843 21 10 21.6716 10 22.5L10 39.5C10 40.3284 9.32843 41 8.5 41V41Z" fill="#ffffff"/>
+<path id="Rectangle 21" d="M1 26H7V29H1L1 26Z" fill="#ffffff"/>
+<path id="Rectangle 23" d="M1 34H7V37H1L1 34Z" fill="#ffffff"/>
+<path id="Rectangle 22" d="M1 37L1 29H4L4 37H1Z" fill="#ffffff"/>
+<path id="Rectangle 24" d="M48 26H42V29H48V26Z" fill="#ffffff"/>
+<path id="Rectangle 25" d="M48 34H42V37H48V34Z" fill="#ffffff"/>
+<path id="Rectangle 26" d="M48 37V29H45V37H48Z" fill="#ffffff"/>
+<path id="Rectangle 20" d="M40.5 41C39.6716 41 39 40.3284 39 39.5V22.5C39 21.6716 39.6716 21 40.5 21V21C41.3284 21 42 21.6716 42 22.5V39.5C42 40.3284 41.3284 41 40.5 41V41Z" fill="#ffffff"/>
+<path id="Rectangle 18" d="M13 46.5C13 45.6716 13.6716 45 14.5 45H34.5C35.3284 45 36 45.6716 36 46.5V46.5C36 47.3284 35.3284 48 34.5 48H14.5C13.6716 48 13 47.3284 13 46.5V46.5Z" fill="#ffffff"/>
+<path id="Vector 12" d="M8.5 39.5C8.5 43.5 10.5 46.5 14.5 46.5" stroke="#ffffff" stroke-width="3"/>
+<path id="Vector 13" d="M40.5 39.5C40.5 43.5 38.5 46.5 34.5 46.5" stroke="#ffffff" stroke-width="3"/>
+<path id="Vector 14" d="M17.1675 6.82498C12.9953 7.27939 11.7409 10.3882 14.6588 13.0425" stroke="#ffffff" stroke-width="2"/>
+<path id="Vector 15" d="M12.1501 19.26C16.3223 18.8056 17.5767 15.6969 14.6588 13.0425" stroke="#ffffff" stroke-width="2"/>
+<path id="Vector 16" d="M27.5087 6.82498C23.3365 7.27939 22.0821 10.3882 25 13.0425" stroke="#ffffff" stroke-width="2"/>
+<path id="Vector 17" d="M22.4913 19.26C26.6635 18.8056 27.9179 15.6969 25 13.0425" stroke="#ffffff" stroke-width="2"/>
+<path id="Vector 18" d="M37.8499 6.82498C33.6777 7.27939 32.4233 10.3882 35.3412 13.0425" stroke="#ffffff" stroke-width="2"/>
+<path id="Vector 19" d="M32.8325 19.26C37.0047 18.8056 38.2591 15.6969 35.3412 13.0425" stroke="#ffffff" stroke-width="2"/>
+</g>
+</svg>

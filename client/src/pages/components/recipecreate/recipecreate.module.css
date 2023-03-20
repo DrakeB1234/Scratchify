@@ -1,0 +1,151 @@
+/* recipe create parent */
+.RecipeCreateParent {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    overflow: hidden;
+}
+/* recipe create container */
+.RecipeCreateContainer {
+    position: relative;
+    width: clamp(200px, 100%, 1200px);
+    box-shadow: 0 0 20em var(--greydark-color);
+    background-color: var(--white-color);
+}
+/* recipe create sidebar */
+.RecipeCreateSidebar {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    left: 0;
+    height: 100%;
+    width: clamp(50px, 60%, 250px);
+    box-shadow: 0 0 0.5em var(--greydark-color);
+    background-color: var(--appmain-color);
+    z-index: 2;
+    overflow-y: scroll;
+    transition: width 0.2s ease;
+}
+    /* hide sidebar */
+    .HideSidebar {
+        width: 3em;
+    }
+        /* hide text */
+        .HideSidebar > div > h1 {
+            height: 0;
+            visibility: hidden;
+        }
+        /* rotate open icon */
+        .HideSidebar > div:first-child > img {
+            transform: rotate(180deg);
+        }
+    /* container with image and text */
+    .RecipeCreateSidebar > div {
+        display: flex;
+        justify-content: flex-start;
+        gap: 1em;
+        width: 100%;
+        padding: 1em 0.75em 1em 0.75em;
+        box-sizing: border-box;
+        color: var(--white-color);
+        cursor: pointer;
+    }
+        /* active div */
+        .ActiveDiv {
+            background-color: var(--appmainli-color);
+        }
+        /* exit container */
+        .RecipeCreateSidebar > div:last-child {
+            padding-top: 4em;
+        }
+    /* open button */
+    .RecipeCreateSidebar > div:first-child > img {
+        margin-left: auto;
+        height: 25px;
+        width: 25px;
+        cursor: pointer;
+    }
+    /* other icons */
+    .RecipeCreateSidebar > div:nth-child(n + 2) > img {
+        height: 25px;
+        width: 25px;
+        cursor: pointer;
+    }
+    /* text */
+    .RecipeCreateSidebar > div > h1 {
+        padding: 0.2em;
+        padding-top: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+/* recipe create top container */
+.RecipeCreateInputParent {
+    display: flex;
+    align-items: center;
+    margin-left: 3.5em;
+}
+/* text on top screen */
+.RecipeCreateInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 1em 1em 1em;
+    margin: 0 2% 1em 2%;
+    border: 1px solid var(--greyli-color);
+    color: var(--black-color);
+}
+    /* text on top screen */
+    .RecipeCreateInput > h1 {
+        width: 100%;
+        padding: 1em;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--white-color);
+        background-color: var(--appmainli-color);
+    }
+    /* input */
+    .RecipeCreateInput > input, .RecipeCreateInput > textarea {
+        width: 100%;
+        padding: 0.5em;
+        box-sizing: border-box;
+        font-size: 1.2rem;
+        border: 1px solid var(--greyli-color);
+        font-family: 'Roboto', sans-serif;
+        resize: none;
+    }
+        /* labels */
+        .RecipeCreateInput > label {
+            margin: 2em 0 0.5em 0;
+            align-self: flex-start;
+        }
+
+/* media query for big screens */
+@media only screen and (min-width:1000px){
+    /* keep sidebar open */
+    .RecipeCreateSidebar {
+        width: 250px;
+    }
+    /* hide open button */
+    .RecipeCreateSidebar > div:first-child > img {
+        display: none;
+    }
+    /* make sure text is visible */
+    .RecipeCreateSidebar > div > h1 {
+        visibility: visible;
+    }
+    /* adjust input parent margin */
+    .RecipeCreateInputParent {
+        display: flex;
+        align-items: center;
+        margin-left: 250px;
+    }
+}

@@ -1,0 +1,16 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-image">
+<g id="frame">
+<rect id="Rectangle 11" x="8" y="3" width="34" height="3" fill="#ffffff"/>
+<rect id="Rectangle 13" x="2" y="41" width="32" height="3" transform="rotate(-90 2 41)" fill="#ffffff"/>
+<rect id="Rectangle 14" x="45" y="42" width="33" height="3" transform="rotate(-90 45 42)" fill="#ffffff"/>
+<rect id="Rectangle 12" x="8" y="44" width="34" height="3" fill="#ffffff"/>
+<path id="Vector 2" d="M41.5 4.5C45 4.5 46.5 6 46.5 9.5" stroke="#ffffff" stroke-width="3"/>
+<path id="Vector 4" d="M8.5 45.5C5 45.5 3.5 44 3.5 40.5" stroke="#ffffff" stroke-width="3"/>
+<path id="Vector 5" d="M41.5 45.5C45 45.5 46.5 45 46.5 41.5" stroke="#ffffff" stroke-width="3"/>
+<path id="Vector 3" d="M8.5 4.5C5 4.5 3.5 6 3.5 9.5" stroke="#ffffff" stroke-width="3"/>
+<path id="Vector 6" d="M3.5 39L15 25L27.5 39L36.5 30L46 39" stroke="#ffffff" stroke-width="3"/>
+<circle id="Ellipse 2" cx="32.5" cy="18.5" r="5" stroke="#ffffff" stroke-width="3"/>
+</g>
+</g>
+</svg>

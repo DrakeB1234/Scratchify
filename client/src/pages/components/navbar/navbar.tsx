@@ -12,6 +12,7 @@ import styles from './navbar.module.css';
 export default function Navbar(props: any) {
 
     const [toggleMobileNav, setToggleMobileNav] = useState(false);
+    
     const supabase = useSupabaseClient();
     const router = useRouter();
     const session = useSession();
@@ -58,11 +59,13 @@ export default function Navbar(props: any) {
                 />
                 <div className={styles.MobileNavbarContentParent}
                 style={toggleMobileNav ? {left: '0'} : {left: '-100vw'}}
-                onClick={() => setToggleMobileNav(false)}
                 >
+                    {session 
+                    ?
+                    // navbar for logged in users
                     <div className={styles.MobileNavbarContentChild}>
-                        <div>
-                            <h1>Hello, {props.username}!</h1>
+                        <div onClick={() => setToggleMobileNav(false)}>
+                            <h1>Hello, {session.user.user_metadata.username}!</h1>
                             <Image 
                             alt='X'
                             src='/icons/navigation/icon-x.svg'
@@ -79,6 +82,24 @@ export default function Navbar(props: any) {
                                 width={50}
                                 />
                                 Home
+                            </Link>
+                            <Link href='/recipes' className={router.pathname == '/recipes' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-recipe-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Recipes
+                            </Link>
+                            <Link href='/myrecipes' className={router.pathname == '/myrecipes' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-recipe-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Recipe Manager
                             </Link>
                             <Link href='/' className={router.pathname == '/planner' ? styles.ActiveLink : ''}>                
                                 <Image 
@@ -98,17 +119,8 @@ export default function Navbar(props: any) {
                                 />
                                 Grocery List
                             </Link>
-                            <Link href='/recipes' className={router.pathname == '/planner' ? styles.ActiveLink : ''}>                
-                                <Image 
-                                alt=''
-                                src='/icons/navigation/icon-recipe-outline.svg'
-                                height={50}
-                                width={50}
-                                />
-                                Recipes
-                            </Link>
                             <Link href='/' className={styles.SpaceLink}>                
-                                <Image 
+                                <Image
                                 alt=''
                                 src='/icons/navigation/icon-settings-outline.svg'
                                 height={50}
@@ -116,7 +128,6 @@ export default function Navbar(props: any) {
                                 />
                                 Account Settings
                             </Link>
-                            {session ? 
                             <button onClick={SignOut}>                
                                 <Image 
                                 alt=''
@@ -125,9 +136,32 @@ export default function Navbar(props: any) {
                                 width={50}
                                 />
                                 Logout
-                            </button>  
-                            : 
-                            <button onClick={() => router.push('/login')}>                
+                            </button>
+                        </div>
+                    </div>
+                    // navbar for unlogged in users
+                    :
+                    <div className={styles.MobileNavbarContentChild}>
+                        <div>
+                            <h1>Hello, Guest!</h1>
+                            <Image 
+                            alt='X'
+                            src='/icons/navigation/icon-x.svg'
+                            height={50}
+                            width={50}
+                            />
+                        </div>
+                        <div className={styles.MobileNavbarContent}>
+                            <Link href='/' className={router.pathname == '/' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-house-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Home
+                            </Link>
+                            <button className={styles.SpaceLink} onClick={() => router.push('/login')}>                
                                 <Image 
                                 alt=''
                                 src='/icons/navigation/icon-logout-outline.svg'
@@ -135,12 +169,12 @@ export default function Navbar(props: any) {
                                 width={50}
                                 />
                                 Login
-                            </button>} 
-   
+                            </button>
                         </div>
                     </div>
+                    }
+                    </div>
                 </div>
-            </div>
         </>
     )
   }
