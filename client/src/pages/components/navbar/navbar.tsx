@@ -142,7 +142,7 @@ export default function Navbar(props: any) {
                     // navbar for unlogged in users
                     :
                     <div className={styles.MobileNavbarContentChild}>
-                        <div>
+                        <div onClick={() => setToggleMobileNav(false)}>
                             <h1>Hello, Guest!</h1>
                             <Image 
                             alt='X'
