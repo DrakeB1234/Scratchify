@@ -1,0 +1,75 @@
+/* input parent */
+.InputParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 2em 6% 2em 6%;
+    border: 1px solid var(--greymed-color);
+}
+    /* title */
+    .InputParent > h1 {
+        margin-bottom: 1em;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--appmainli-color);
+    }
+    /* input */
+    .InputParent input, .InputParent textarea, .InputParent select {
+        width: 100%;
+        padding: 0.5em;
+        box-sizing: border-box;
+        font-size: 1.2rem;
+        border: 1px solid var(--greyli-color);
+        font-family: 'Roboto', sans-serif;
+        resize: none;
+        background: none;
+    }
+    /* textarea */
+    .InputParent textarea {
+        padding-bottom: 2em;
+    }
+        /* remove default focus style */
+        .InputParent input:focus, .InputParent textarea:focus {
+            outline: none !important;
+            border: 1px solid var(--blueli-color);
+        }
+    /* label */
+    .InputParent label {
+        margin: 1.5em 0 0.5em 0;
+        align-self: flex-start;
+    }
+    /* target div for dynamic input (tags, instructions, ingredients...) */
+    .InputParent > div {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* buttons */
+    .SaveButton {
+        margin-top: 2em;
+        width: 100%;
+        padding: 1em;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--white-color);
+        background-color: var(--appmain-color);
+    }
+    .AddInputButton {
+        align-self: flex-end;
+        margin-top: 1em;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        color: var(--white-color);
+        background-color: var(--appmain-color);
+    }
+
+    /* text style */
+    .ErrorText {
+        align-self: flex-start;
+        padding: 0.5em 0 0.5em 0;
+        font-size: 0.9rem;
+        color: var(--red-color);
+    }

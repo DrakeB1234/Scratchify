@@ -1,0 +1,12 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-submit" clip-path="url(#clip0_4_2)">
+<circle id="Ellipse 5" cx="25" cy="25" r="23.5" stroke="#ffffff" stroke-width="3"/>
+<rect id="Rectangle 28" x="11.6361" y="26.5432" width="4" height="12.7889" rx="2" transform="rotate(-45 11.6361 26.5432)" fill="#ffffff"/>
+<rect id="Rectangle 29" x="37.7748" y="13" width="4" height="27.9658" rx="2" transform="rotate(45 37.7748 13)" fill="#ffffff"/>
+</g>
+<defs>
+<clipPath id="clip0_4_2">
+<rect width="50" height="50" fill="white"/>
+</clipPath>
+</defs>
+</svg>
