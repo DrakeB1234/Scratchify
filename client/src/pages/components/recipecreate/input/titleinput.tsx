@@ -7,11 +7,12 @@ export default function TitleInput(props: any) {
 
     const [successInput, setSuccessInput] = useState(false)
 
-    const { register, handleSubmit, formState: {errors} } = useForm({defaultValues: {
-        title: props.data.title,
-        course: props.data.course,
-        description: props.data.description
-    }
+    const { register, handleSubmit, formState: {errors} } = useForm({
+        defaultValues: {
+            title: props.data.title,
+            course: props.data.course,
+            description: props.data.description
+        }
     }
     );
 
@@ -31,13 +32,20 @@ export default function TitleInput(props: any) {
     
     return ( 
         <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
-            <div className={styles.InputLabelContainer}><label htmlFor='title'>Title</label></div>
-            <input {...register('title', {required: 'Required!', minLength: {
-                value: 3,
-                message: 'Must have at least 3 Characters!'
-                }, maxLength: {value: 30,
-                message: 'Must have less than 30 Characters!'
-                }, pattern: {
+            <label htmlFor='title'>
+                <h1>Title</h1>
+            </label>
+            <input {...register('title', {
+                required: 'Required!', 
+                minLength: {
+                    value: 3,
+                    message: 'Must have at least 3 Characters!'
+                }, 
+                maxLength: {
+                    value: 30,
+                    message: 'Must have less than 30 Characters!'
+                }, 
+                pattern: {
                     value: /^[^\s][a-zA-Z\s]{0,}$/,
                     message: 'Must only use letters and spaces!'
                 }
@@ -47,11 +55,15 @@ export default function TitleInput(props: any) {
             <h2>{errors.title?.message?.toString()}</h2>
 
 
-            <div className={styles.InputLabelContainer}><label htmlFor='course'>Course</label></div>
-            <select {...register('course', {required: 'Required', pattern: {
-                value: /^Breakfast|Lunch|Dinner|Dessert|Snack$/,
-                message: 'Must select Breakfast, Lunch, Dinner, Dessert, or Snack!'
-            }
+            <label htmlFor='course'>
+                <h1>Course</h1>
+            </label>
+            <select {...register('course', {
+                required: 'Required', 
+                pattern: {
+                    value: /^Breakfast|Lunch|Dinner|Dessert|Snack$/,
+                    message: 'Must select Breakfast, Lunch, Dinner, Dessert, or Snack!'
+                }
             })}
             >
                 <option value='' hidden></option>
@@ -63,13 +75,20 @@ export default function TitleInput(props: any) {
             </select>
             <h2>{errors.course?.message?.toString()}</h2>
 
-            <div className={styles.InputLabelContainer}><label htmlFor='description'>Description</label></div>
-            <textarea {...register('description', {required: 'Required!', minLength: {
-                value: 3,
-                message: 'Must have at least 3 Characters!'
-                }, maxLength: {value: 300,
-                message: 'Must have less than 300 Characters!'
-                }, pattern: {
+            <label htmlFor='description'>
+                <h1>Description</h1>
+            </label>
+            <textarea {...register('description', {
+                required: 'Required!', 
+                minLength: {
+                    value: 3,
+                    message: 'Must have at least 3 Characters!'
+                }, 
+                maxLength: {
+                    value: 300,
+                    message: 'Must have less than 300 Characters!'
+                }, 
+                pattern: {
                     value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:"<>?\[\]\;',.\/\\]{0,}$/,
                     message: 'No emojis!'
                 }

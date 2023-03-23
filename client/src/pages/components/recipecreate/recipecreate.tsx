@@ -5,6 +5,7 @@ import {use, useState} from 'react';
 // import styles / components
 import TitleInput from './input/titleinput';
 import TagsInput from './input/tagsinput';
+import PhotoInput from './input/photoinput'
 import styles from './recipecreate.module.css';
 
 export default function RecipeCreate(props: any) {
@@ -40,8 +41,7 @@ export default function RecipeCreate(props: any) {
         // reset active tab
         setActiveTab('title');
         // set active tab to passed value
-        setActiveTab(tab);
-        console.log(recipeInput)
+        return setActiveTab(tab);
     };
 
     return (
@@ -146,6 +146,7 @@ export default function RecipeCreate(props: any) {
                 <div className={styles.RecipeCreateInputParent}>
                     {activeTab == 'title' ? <TitleInput setData={setRecipeInput} data={recipeInput}/>
                     : activeTab == 'tags' ? <TagsInput setData={setRecipeInput} data={recipeInput} /> 
+                    : activeTab == 'picture' ? <PhotoInput setData={setRecipeInput} data={recipeInput} /> 
                     : <></>
                     }
                 </div>

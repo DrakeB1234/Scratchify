@@ -34,17 +34,45 @@
             outline: none !important;
             border: 1px solid var(--blueli-color);
         }
+    /* style for label */
+    .InputParent label {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        margin: 1em 0 0.5em 0;
+    }
+        /* style for label button */
+        .InputParent label img {
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
 
-/* input label conatiner */
-.InputLabelContainer {
+/* input dynamic conatiner */
+.InputParentDynamic {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
     width: 100%;
-    margin: 1em 0 0.5em 0;
 }
+    /* error text */
+    .InputParentDynamic > h2 {
+        align-self: flex-start;
+        margin-top: 0.5em;
+        color: var(--red-color);
+    }
 
 /* buttons */
+.AddInputButton {
+    align-self: flex-end;
+    margin-top: 1em;
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--white-color);
+    background-color: var(--blueli-color);
+}
 .SaveButton {
     margin-top: 2em;
     width: 100%;
