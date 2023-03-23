@@ -89,7 +89,7 @@ export default function TitleInput(props: any) {
                     message: 'Must have less than 300 Characters!'
                 }, 
                 pattern: {
-                    value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:"<>?\[\]\;',.\/\\]{0,}$/,
+                    value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
                     message: 'No emojis!'
                 }
                 })} 

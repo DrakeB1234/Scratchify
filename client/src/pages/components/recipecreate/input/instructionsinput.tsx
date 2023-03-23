@@ -4,13 +4,13 @@ import {useFieldArray, useForm} from 'react-hook-form';
 
 import styles from './input.module.css';
 
-export default function TagsInput(props: any) {
+export default function InstructionsInput(props: any) {
 
     const [successInput, setSuccessInput] = useState(false)
 
     const { register, control, handleSubmit, formState: {errors} } = useForm({
         defaultValues: {
-            tag: [{
+            instruction: [{
                 name: ''
             }]
         }
@@ -21,8 +21,8 @@ export default function TagsInput(props: any) {
     useEffect(() => {
         // drop first index in array
         remove(0);
-        if(props.data.tags[0] != ''){
-            props.data.tags.map((e: any) => {
+        if(props.data.instructions[0] != ''){
+            props.data.instructions.map((e: any) => {
                 append({
                     name: e.name
                 })
@@ -37,19 +37,19 @@ export default function TagsInput(props: any) {
 
     // set the type for the array
     type formValues = {
-        tag: [{
+        instruction: [{
             name: string
         }]
     }
 
     const { fields, append, remove } = useFieldArray({
-        name: 'tag',
+        name: 'instruction',
         control,
         rules: {
-            required: 'Must have at least 1 tag',
+            required: 'Must have at least 1 step',
             maxLength: {
                 value: 4,
-                message: 'Must have less than 5 tags'
+                message: 'Must have less than 11 steps'
             }
         }
     });
@@ -60,11 +60,11 @@ export default function TagsInput(props: any) {
 
         // create local array
         let data: any = []
-        formVal.tag.map((e: any) => {
-            data.push(e)
+        formVal.instruction.map((e: any) => {
+            data.push(e);
         })
         // set local data array into props state
-        props.setData((prev: any) => ({...prev, tags: data}));
+        props.setData((prev: any) => ({...prev, instructions: data}));
 
         // set success state to display success message
         setSuccessInput(true);
@@ -77,8 +77,8 @@ export default function TagsInput(props: any) {
                 <div className={styles.InputParentDynamic}
                 key={field.id}
                 >
-                    <label htmlFor='tag'>
-                        <h1>Tag {index + 1}</h1>
+                    <label htmlFor='instruction'>
+                        <h1>Step {index + 1}</h1>
                         <Image 
                         alt='x'
                         src='/icons/navigation/icon-x-orange.svg'
@@ -89,37 +89,37 @@ export default function TagsInput(props: any) {
                         }}
                         />
                     </label>
-                    <input {...register(`tag.${index}.name`, {
+                    <textarea {...register(`instruction.${index}.name`, {
                         required: 'Required!', 
                         minLength: {
                             value: 3,
                             message: 'Must have at least 3 Characters!'
                         }, 
                         maxLength: {
-                            value: 20,
-                            message: 'Must have less than 20 Characters!'
+                            value: 300,
+                            message: 'Must have less than 300 Characters!'
                         }, 
                         pattern: {
-                            value: /^[^\s][a-zA-Z\s]{0,}$/,
-                            message: 'Must only use letters and spaces!'
+                            value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
+                            message: 'No emojis!'
                         }
                         })}
                         autoComplete='off' 
                     />
-                    {errors.tag?.[index]?.name && <h2>{errors.tag?.[index]?.name?.message}</h2>}
+                    {errors.instruction?.[index]?.name && <h2>{errors.instruction?.[index]?.name?.message}</h2>}
                 </div>
             ))}
             <button className={styles.AddInputButton} type='button'
             onClick={() => {
-                if (fields.length < 4){
+                if (fields.length < 10){
                     append({
                         name: ''
                     })
                 }
             }}
-            >Add Tag</button>
+            >Add Step</button>
 
-            {errors.tag            
+            {errors.instruction            
             ?
                 <button className={styles.SaveErrorButton} type='submit'>Error</button>
             : successInput
@@ -128,7 +128,7 @@ export default function TagsInput(props: any) {
             :
                 <button className={styles.SaveButton} type='submit'>Save Changes</button>
             }
-            <h2 className={styles.ErrorText}>{errors.tag?.root?.message}</h2>
+            <h2 className={styles.ErrorText}>{errors.instruction?.root?.message}</h2>
 
 
         </form>

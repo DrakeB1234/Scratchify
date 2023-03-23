@@ -12,7 +12,7 @@
 /* recipe create container */
 .RecipeCreateContainer {
     position: relative;
-    width: clamp(200px, 100%, 1200px);
+    width: clamp(200px, 100%, 1400px);
     box-shadow: 0 0 20em var(--greydark-color);
     background-color: var(--white-color);
     overflow-y: scroll;
@@ -32,7 +32,7 @@
     background-color: var(--appmain-color);
     z-index: 2;
     overflow-y: scroll;
-    transition: width 0.2s ease;
+    transition: width 0.1s ease;
 }
     /* hide sidebar */
     .HideSidebar {
@@ -111,6 +111,7 @@
     .RecipeCreateInputParent {
         display: flex;
         align-items: center;
-        margin-left: 250px;
+        width: clamp(200px, 100%, 800px);
+        margin: 0 auto 0 25%;
     }
 }

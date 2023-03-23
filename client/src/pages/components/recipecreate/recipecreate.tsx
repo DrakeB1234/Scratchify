@@ -5,7 +5,10 @@ import {use, useState} from 'react';
 // import styles / components
 import TitleInput from './input/titleinput';
 import TagsInput from './input/tagsinput';
-import PhotoInput from './input/photoinput'
+import PhotoInput from './input/photoinput';
+import InstructionsInput from './input/instructionsinput';
+import IngredientsInput from './input/ingredientsinput';
+import SubmitInput from './input/submitinput';
 import styles from './recipecreate.module.css';
 
 export default function RecipeCreate(props: any) {
@@ -94,18 +97,6 @@ export default function RecipeCreate(props: any) {
                         <h1>Upload Picture</h1>
                     </div>
 
-                    <div className={activeTab == 'instructions' ? styles.ActiveDiv : ''}
-                    onClick={() => !toggleSidebar ? setToggleSidebar(true) : changeTab('instructions')}
-                    >
-                        <Image 
-                        alt=''
-                        src='/icons/edit/icon-instruction.svg'
-                        height={50}
-                        width={50}
-                        />
-                        <h1>Instructions</h1>
-                    </div>
-
                     <div className={activeTab == 'ingredients' ? styles.ActiveDiv : ''}
                     onClick={() => !toggleSidebar ? setToggleSidebar(true) : changeTab('ingredients')}
                     >
@@ -116,6 +107,19 @@ export default function RecipeCreate(props: any) {
                         width={50}
                         />
                         <h1>Ingredients</h1>
+                    </div>
+
+
+                    <div className={activeTab == 'instructions' ? styles.ActiveDiv : ''}
+                    onClick={() => !toggleSidebar ? setToggleSidebar(true) : changeTab('instructions')}
+                    >
+                        <Image 
+                        alt=''
+                        src='/icons/edit/icon-instruction.svg'
+                        height={50}
+                        width={50}
+                        />
+                        <h1>Instructions</h1>
                     </div>
 
                     <div className={activeTab == 'submit' ? styles.ActiveDiv : ''}
@@ -147,6 +151,9 @@ export default function RecipeCreate(props: any) {
                     {activeTab == 'title' ? <TitleInput setData={setRecipeInput} data={recipeInput}/>
                     : activeTab == 'tags' ? <TagsInput setData={setRecipeInput} data={recipeInput} /> 
                     : activeTab == 'picture' ? <PhotoInput setData={setRecipeInput} data={recipeInput} /> 
+                    : activeTab == 'instructions' ? <InstructionsInput setData={setRecipeInput} data={recipeInput} /> 
+                    : activeTab == 'ingredients' ? <IngredientsInput setData={setRecipeInput} data={recipeInput} /> 
+                    : activeTab == 'submit' ? <SubmitInput setData={setRecipeInput} data={recipeInput} /> 
                     : <></>
                     }
                 </div>
