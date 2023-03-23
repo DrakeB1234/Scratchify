@@ -6,13 +6,13 @@
     width: 100%;
     padding: 2em 6% 2em 6%;
     border: 1px solid var(--greymed-color);
+    overflow: hidden;
 }
-    /* title */
-    .InputParent > h1 {
-        margin-bottom: 1em;
-        font-weight: 700;
-        font-size: 1.2rem;
-        color: var(--appmainli-color);
+    /* error text */
+    .InputParent > h2 {
+        align-self: flex-end;
+        margin-top: 0.5em;
+        color: var(--red-color);
     }
     /* input */
     .InputParent input, .InputParent textarea, .InputParent select {
@@ -34,42 +34,41 @@
             outline: none !important;
             border: 1px solid var(--blueli-color);
         }
-    /* label */
-    .InputParent label {
-        margin: 1.5em 0 0.5em 0;
-        align-self: flex-start;
-    }
-    /* target div for dynamic input (tags, instructions, ingredients...) */
-    .InputParent > div {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
 
-    /* buttons */
-    .SaveButton {
-        margin-top: 2em;
-        width: 100%;
-        padding: 1em;
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: var(--white-color);
-        background-color: var(--appmain-color);
-    }
-    .AddInputButton {
-        align-self: flex-end;
-        margin-top: 1em;
-        padding: 0.5em 1em 0.5em 1em;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        color: var(--white-color);
-        background-color: var(--appmain-color);
-    }
+/* input label conatiner */
+.InputLabelContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    margin: 1em 0 0.5em 0;
+}
 
-    /* text style */
-    .ErrorText {
-        align-self: flex-start;
-        padding: 0.5em 0 0.5em 0;
-        font-size: 0.9rem;
-        color: var(--red-color);
-    }
+/* buttons */
+.SaveButton {
+    margin-top: 2em;
+    width: 100%;
+    padding: 1em;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white-color);
+    background-color: var(--appmain-color);
+}
+.SaveErrorButton {
+    margin-top: 2em;
+    width: 100%;
+    padding: 1em;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white-color);
+    background-color: var(--red-color);
+}
+.SaveSuccessButton {
+    margin-top: 2em;
+    width: 100%;
+    padding: 1em;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white-color);
+    background-color: var(--blueli-color);
+}

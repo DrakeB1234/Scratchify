@@ -1,74 +1,58 @@
 import React, {useState} from 'react';
+import {useForm} from 'react-hook-form';
 
 import styles from './input.module.css';
 
 export default function TitleInput(props: any) {
 
-    const [input, setInput] = useState({
-        title: '',
-        course: '',
-        description: ''
-    });
-    const [inputError, setInputError] = useState({
-        title: {
-            error: false,
-            msg: ''
-        },
-        course: {
-            error: false,
-            msg: ''
-        },
-        description: {
-            error: false,
-            msg: ''
-        }
-    });
-    const [successInput, setSuccessInput] = useState(false);
+    const [successInput, setSuccessInput] = useState(false)
 
-    const checkInput = () => {
-        // reset all error input
-        setInputError({
-            title: {
-                error: false,
-                msg: ''
-            },
-            course: {
-                error: false,
-                msg: ''
-            },
-            description: {
-                error: false,
-                msg: ''
-            }
-        })
-        // check title for correct input
-        if (!input.title || !/^[\s\w]{3,30}$/.test(input.title)) return setInputError(prev => ({...prev, title: prev.title = {error: true, msg: 'Must be (3 - 30) characters, no special characters'}}));
+    const { register, handleSubmit, formState: {errors} } = useForm({defaultValues: {
+        title: props.data.title,
+        course: props.data.course,
+        description: props.data.description
+    }
+    }
+    );
 
-        // check course for correct input (exact match for breakfast, lunch, dinner, dessert, or snack)
-        if (!input.course || !/^Breakfast|Lunch|Dinner|Dessert|Snack$/.test(input.course)) return setInputError(prev => ({...prev, course: prev.course = {error: true, msg: 'Must be Breakfast, Lunch, Dinner, Dessert, or Snack'}}));
+    const handleSave = (formVal: any) => {
+        // reset success state to false
+        setSuccessInput(!successInput);
+        // save values into state passed by props
+        props.setData((prev: any) => ({...prev, 
+            title: formVal.title, 
+            course: formVal.course,
+            description: formVal.description
+        }));
 
-        // check course for correct input (exact match for breakfast, lunch, dinner, dessert, or snack)
-        if (!input.description || !/^[\w\s!@#$%^&*()-~`_+{}|:"<>?\[\]\;',.\/\\]{3,300}$/.test(input.description)) return setInputError(prev => ({...prev, description: prev.description = {error: true, msg: 'Must be (3 - 300) characters, no emojis'}}));
-
-        // check to see if any input errored
+        // set success state to display success message
         setSuccessInput(true);
-        
     }
     
-    return (  
-        <div className={styles.InputParent}>
-            <h1>Title, Course, Description</h1>
-
-            <label htmlFor='title'>Title</label>
-            <input type='text' name='title'
-            onChange={(e) => setInput(prev => ({...prev, title: e.target.value}))}
-            maxLength={30}
+    return ( 
+        <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
+            <div className={styles.InputLabelContainer}><label htmlFor='title'>Title</label></div>
+            <input {...register('title', {required: 'Required!', minLength: {
+                value: 3,
+                message: 'Must have at least 3 Characters!'
+                }, maxLength: {value: 30,
+                message: 'Must have less than 30 Characters!'
+                }, pattern: {
+                    value: /^[^\s][a-zA-Z\s]{0,}$/,
+                    message: 'Must only use letters and spaces!'
+                }
+                })}
+                autoComplete='off' 
             />
-            {inputError.title.error ? <h2 className={styles.ErrorText}>{inputError.title.msg}</h2> : <></>}
+            <h2>{errors.title?.message?.toString()}</h2>
 
-            <label htmlFor='course'>Course</label>
-            <select name='course'
-            onChange={(e: any) => setInput(prev => ({...prev, course: e.target.value}))}
+
+            <div className={styles.InputLabelContainer}><label htmlFor='course'>Course</label></div>
+            <select {...register('course', {required: 'Required', pattern: {
+                value: /^Breakfast|Lunch|Dinner|Dessert|Snack$/,
+                message: 'Must select Breakfast, Lunch, Dinner, Dessert, or Snack!'
+            }
+            })}
             >
                 <option value='' hidden></option>
                 <option value="Breakfast">Breakfast</option>
@@ -77,18 +61,34 @@ export default function TitleInput(props: any) {
                 <option value="Dessert">Dessert</option>
                 <option value="Snack">Snack</option>
             </select>
-            {inputError.course.error ? <h2 className={styles.ErrorText}>{inputError.course.msg}</h2> : <></>}
+            <h2>{errors.course?.message?.toString()}</h2>
 
-            <label htmlFor='description'>Description</label>
-            <textarea name='description'
-            onChange={(e) => setInput(prev => ({...prev, description: e.target.value}))}
-            maxLength={300}
+            <div className={styles.InputLabelContainer}><label htmlFor='description'>Description</label></div>
+            <textarea {...register('description', {required: 'Required!', minLength: {
+                value: 3,
+                message: 'Must have at least 3 Characters!'
+                }, maxLength: {value: 300,
+                message: 'Must have less than 300 Characters!'
+                }, pattern: {
+                    value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:"<>?\[\]\;',.\/\\]{0,}$/,
+                    message: 'No emojis!'
+                }
+                })} 
+                autoComplete='off'
             />
-            {inputError.description.error ? <h2 className={styles.ErrorText}>{inputError.description.msg}</h2> : <></>}
+            <h2>{errors.description?.message?.toString()}</h2>
 
-            <button className={styles.SaveButton}
-            onClick={checkInput}>{successInput ? 'Succesfully Saved!' : 'Save Changes'}</button>
+            {errors.title || errors.course || errors.description
+            ?
+                <button className={styles.SaveErrorButton} type='submit'>Error</button>
+            : successInput
+            ?
+                <button className={styles.SaveSuccessButton} type='submit'>Save Successful</button>
+            :
+                <button className={styles.SaveButton} type='submit'>Save Changes</button>
+            }
 
-        </div>
+
+        </form>
     )
   }

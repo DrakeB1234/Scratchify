@@ -51,7 +51,7 @@ export default function RecipeSearch(props: any) {
             <div className={styles.SearchResult} style={searchFound ? {display:'flex'} : {display:'none'}}>
                 {searchFound ?
                     <>
-                        <Link href=''>Found {searchAmount} '{searchValue}' Recipes</Link>
+                        <Link href=''>Found {searchAmount} &apos;{searchValue}&apos; Recipes</Link>
                         <Image
                         alt='=>'
                         src='/icons/navigation/icon-logout-outline.svg'

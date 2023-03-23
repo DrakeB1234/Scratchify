@@ -99,7 +99,6 @@
         gap: 0.5em;
         min-height: 92vh;
         width: 100%;
-        padding: 0.5em;
         box-sizing: border-box;
         background-color: var(--white-color);
     }
@@ -120,8 +119,8 @@
         }
             /* active link */
             .MobileNavbarContent > .ActiveLink {
-                border-radius: 10px;
-                background-color: var(--appmainli-color);
+                color: var(--appmain-color);
+                background-color: var(--whitemed-color);
             }
             /* spaced link */
             .MobileNavbarContent > .SpaceLink {

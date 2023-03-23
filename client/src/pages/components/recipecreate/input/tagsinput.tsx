@@ -1,60 +1,48 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
+import {useForm} from 'react-hook-form';
 
 import styles from './input.module.css';
 
 export default function TagsInput(props: any) {
 
-    const [input, setInput] = useState<string[]>(['']);
-    const [inputError, setInputError] = useState<number[]>([]);
+    const [successInput, setSuccessInput] = useState(false)
 
-    // adds additional tag by pushing new array value
-    const addInput = () => {
-        if (input.length < 4){
-            return setInput(prev => [...prev, '']);
-        } ;
+    const { register, handleSubmit, formState: {errors} } = useForm({defaultValues: {
+        title: props.data.title,
+        course: props.data.course,
+        description: props.data.description
     }
-
-    // handle onchange for input
-    const handleInput = (value: string, index: number) => {
-        // create copy of array
-        let data = input;
-        data[index] = value;
-        return setInput(data);
     }
-    
-    const checkInput = () => {
-        // reset error messages
-        setInputError([]);
+    );
 
-        let valid = true;
-        input.map((e, index) => {
-            // if failed validation test
-            if(!e || !/^[\w]{3,20}$/.test(e)){
-                valid = false;
-                return setInputError(prev => [...prev, index + 1]);
-            };
-        });
-        if (valid) return console.log('Good job!');
-        else return console.log('Bad job!')
+    const handleSave = (formVal: any) => {
+        // reset success state to false
+        setSuccessInput(!successInput);
+        // save values into state passed by props
+        props.setData((prev: any) => ({...prev, 
+            title: formVal.title, 
+            course: formVal.course,
+            description: formVal.description
+        }));
+
+        // set success state to display success message
+        setSuccessInput(true);
     }
     
-    return (  
-        <div className={styles.InputParent}>
-            <h1>Tags</h1>
-            {inputError[0] > 0 ? <h2 className={styles.ErrorText}>{inputError.map(e => `Tag ${e},`)}<br></br><br></br>Must be (3 - 30) characters, no special characters!</h2> : <></>}
-            {input.map((e, index) => (
-                <div key={index}>
-                    <label htmlFor='tag'>Tag {index + 1}</label>
-                    <input type='text' name='tag' 
-                    onChange={(e) => handleInput(e.target.value, index)}
-                    />
-                </div>
-            ))}
-            <button className={styles.AddInputButton}
-            onClick={addInput}>Add Tag</button>
-            <button className={styles.SaveButton}
-            onClick={checkInput}>Save Changes</button>
+    return ( 
+        <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
 
-        </div>
+            {errors.title || errors.course || errors.description
+            ?
+                <button className={styles.SaveErrorButton} type='submit'>Error</button>
+            : successInput
+            ?
+                <button className={styles.SaveSuccessButton} type='submit'>Save Successful</button>
+            :
+                <button className={styles.SaveButton} type='submit'>Save Changes</button>
+            }
+
+
+        </form>
     )
   }

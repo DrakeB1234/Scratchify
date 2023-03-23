@@ -41,36 +41,9 @@ export default function RecipeCreate(props: any) {
         setActiveTab('title');
         // set active tab to passed value
         setActiveTab(tab);
+        console.log(recipeInput)
     };
 
-    const checkInputValidation = () => {
-        let valid = true;
-
-        // check tags
-        recipeInput.tags.map((e) => {
-            if (!/^[\w\s]{3,20}$/.test(e)){
-                return valid = false;
-            }});
-        if (!valid) return console.log('Tags Error');
-        
-        // check instructions
-        recipeInput.instructions.map((e) => {
-            if (!/^[\w\s!@#$%^&*()-~`_+{}|:"<>?\[\]\;',.\/\\]{1,500}$/.test(e)){
-                return valid = false;
-            }});
-        if (!valid) return console.log('Instructions Error');
-
-        // check ingredients
-        recipeInput.ingredients.map((e) => {
-            if (!/^[\w\s!@#$%^&*()-~`_+{}|:"<>?\[\]\;',.\/\\]{1,500}$/.test(e.amount)){
-                return valid = false;
-            }});
-        if (!valid) return console.log('Instructions Error');
-
-        
-        console.log('Youre Good!')
-    }
-    
     return (
         <div className={styles.RecipeCreateParent}>
             <div className={styles.RecipeCreateContainer}>
@@ -171,8 +144,9 @@ export default function RecipeCreate(props: any) {
 
                 </div>
                 <div className={styles.RecipeCreateInputParent}>
-                    {activeTab == 'title' ? <TitleInput />
-                    : activeTab == 'tags' ? <TagsInput /> : <></>
+                    {activeTab == 'title' ? <TitleInput setData={setRecipeInput} data={recipeInput}/>
+                    : activeTab == 'tags' ? <TagsInput setData={setRecipeInput} data={recipeInput} /> 
+                    : <></>
                     }
                 </div>
             </div>
