@@ -51,8 +51,8 @@ export default function IngredientsInput(props: any) {
         rules: {
             required: 'Must have at least 1 step',
             maxLength: {
-                value: 4,
-                message: 'Must have less than 11 steps'
+                value: 15,
+                message: 'Must have less than 16 ingredients'
             }
         }
     });
@@ -93,7 +93,7 @@ export default function IngredientsInput(props: any) {
                         />
                     </label>
                     <div className={styles.InputMultipleContainer}>
-                        <label htmlFor='instruction'>
+                        <label htmlFor='amount'>
                             <h1>Amount</h1>
                         </label>
                         <input {...register(`ingredient.${index}.amount`, {
@@ -111,11 +111,11 @@ export default function IngredientsInput(props: any) {
                                 message: 'No emojis!'
                             }
                             })}
-                            autoComplete='off' 
+                            autoComplete='off' placeholder='1 Cup'
                         />
                         {errors.ingredient?.[index]?.amount && <h2>{errors.ingredient?.[index]?.amount?.message}</h2>}
 
-                        <label htmlFor='instruction'>
+                        <label htmlFor='ingredient'>
                             <h1>Ingredient</h1>
                         </label>
                         <input {...register(`ingredient.${index}.name`, {
@@ -125,15 +125,15 @@ export default function IngredientsInput(props: any) {
                                 message: 'Must have at least 1 Characters!'
                             }, 
                             maxLength: {
-                                value: 50,
-                                message: 'Must have less than 50 Characters!'
+                                value: 40,
+                                message: 'Must have less than 40 Characters!'
                             }, 
                             pattern: {
                                 value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
                                 message: 'No emojis!'
                             }
                             })}
-                            autoComplete='off' 
+                            autoComplete='off' placeholder='Zuchini'
                         />
                         {errors.ingredient?.[index]?.name && <h2>{errors.ingredient?.[index]?.name?.message}</h2>}
                     </div>
@@ -141,7 +141,7 @@ export default function IngredientsInput(props: any) {
             ))}
             <button className={styles.AddInputButton} type='button'
             onClick={() => {
-                if (fields.length < 10){
+                if (fields.length < 15){
                     append({
                         amount: '',
                         name: ''

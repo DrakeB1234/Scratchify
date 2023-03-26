@@ -1,64 +1,59 @@
 import Head from 'next/head'
 import Link from 'next/link';
 import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 
+// styles / components
+import LoadingSvg from '/public/graphics/icon-loading.svg';
 import styles from './form.module.css';
 
 export default function LoginForm(props: any) {
+
+    const [loadingInput, setLoadingInput] = useState(false);
     
-    // register inputs w/ feedback
-    const [loginInput, setLoginInput] = useState({
-        email: '',
-        password: '',
-    });
-    const [loginFeedback, setLoginFeedback] = useState({
-        email: '',
-        password: '',
-    });
+    const { register, handleSubmit, formState: {errors} } = useForm({});
 
     // check register input (no checks neccessary, send data)
-    const checkLoginInput = () => {
-        // reset feedback
-        setLoginFeedback(prev => ({...prev, email: '', password: ''}));
-
-        // check email
-        if(!loginInput.email){
-            return setLoginFeedback(prev => ({...prev, email: 'Required'}));
-        } else if (!/^\S+@\S+\.\S+$/.test(loginInput.email)){
-            return setLoginFeedback(prev => ({...prev, email: 'Invalid Email'}));
-        };
-        // check email
-        if(!loginInput.password){
-            return setLoginFeedback(prev => ({...prev, password: 'Required'}));
-        }
-
-        props.callback(loginInput);
+    const handleSave = async (formVal: any) => {
+        setLoadingInput(true);
+        await props.callback(formVal);
+        setLoadingInput(false);
     }
     
     return (  
         <div className={styles.FormParent}>
-            <form className={styles.FormStyle}>
-                <h1>Login</h1>
+            <form className={styles.FormStyle} onSubmit={handleSubmit(handleSave)}>
+                <h1>Sign in</h1>
 
-                <input type='text' autoComplete='off' name='email' placeholder='Email' 
-                onChange={(e) => { setLoginInput(prev => ({...prev, email: e.target.value})); 
-                setLoginFeedback(prev => ({...prev, email: ''}))}}
-                style={loginFeedback.email != '' ? {border: '1px solid var(--red-color)'} : {}}
+                <input {...register('email', {
+                    required: 'Required!',
+                    pattern: {
+                        value: /^\S+@\S+\.\S+$/,
+                        message: 'Invalid Email Address'
+                    }
+                    })}
+                    autoComplete='off' 
                 />
                 <label htmlFor='email'>Email</label>
-                <h2>{loginFeedback.email}</h2>
+                <h2>{errors.email?.message?.toString()}</h2>
 
-                <input type='password' autoComplete='off' name='password' placeholder='Password' 
-                onChange={(e) => { setLoginInput(prev => ({...prev, password: e.target.value})); 
-                setLoginFeedback(prev => ({...prev, password: ''}))}}
-                style={loginFeedback.password != '' ? {border: '1px solid var(--red-color)'} : {}}
+                <input {...register('password', {
+                    required: 'Required!'
+                    })}
+                    autoComplete='off' type='password'
                 />
-                <label htmlFor='email'>Password</label>
-                <h2>{loginFeedback.password}</h2>
+                <label htmlFor='password'>Password</label>
+                <h2>{errors.password?.message?.toString()}</h2>
                 
                 <h3 className={props.supabaseMsg.type == 'Error' ? styles.Error : styles.Success}>{props.supabaseMsg.message}</h3>
 
-                <button type='button' onClick={checkLoginInput}>Login</button>
+                {loadingInput
+                ?
+                    <button type='button' className={styles.LoadingButton}><LoadingSvg /></button>
+                : 
+                    <button type='submit'>Sign in</button>
+                }
+
                 <Link href='/register'><button type='button'>Register Account</button></Link>
             </form>
         </div>

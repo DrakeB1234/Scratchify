@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import Dashboard from './components/homepage/dashboard';
 import RecipeSearch from './components/homepage/recipeSearch';
 import Navbar from './components/navbar/navbar';
+import Popup from './components/popup/popup';
 import styles from './homepage.module.css';
 
 // auth
@@ -16,18 +17,6 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react';
 export default function Home() {
 
   const session = useSession();
-  const supabase = useSupabaseClient();
-  let data:any = {};
-
-  const loadData = async () => {
-    let { data: Recipe, error } = await supabase.from('Recipe').select('*')
-
-    // error handler
-    if (error) console.error(error);
-    // assign data
-    data = Recipe;
-    console.log(data)
-  };
 
   return (
     <>
@@ -36,8 +25,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Navbar />
+      {session ? <Dashboard /> : <></>}
       <main className={styles.HomepageParent}>
-        {session ? <Dashboard /> : <></>}
         <RecipeSearch />
       </main>
     </>

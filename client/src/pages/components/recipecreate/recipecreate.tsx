@@ -9,12 +9,14 @@ import PhotoInput from './input/photoinput';
 import InstructionsInput from './input/instructionsinput';
 import IngredientsInput from './input/ingredientsinput';
 import SubmitInput from './input/submitinput';
+import Popup from '../../components/popup/popup';
 import styles from './recipecreate.module.css';
 
 export default function RecipeCreate(props: any) {
 
     const [toggleSidebar, setToggleSidebar] = useState(false);
     const [activeTab, setActiveTab] = useState<String>('title');
+    const [togglePopupExit, setTogglePopupExit] = useState(false);
 
     // interface / state for recipeInput
     interface ingredientObj {
@@ -47,8 +49,21 @@ export default function RecipeCreate(props: any) {
         return setActiveTab(tab);
     };
 
+    const ExitRecipe = () => props.toggle(false);
+
     return (
         <div className={styles.RecipeCreateParent}>
+            {togglePopupExit
+            ?
+                <Popup 
+                title='Confirm Exit'
+                message='Are you sure you want to exit the Recipe Creator? This will delete all data created on this page.'
+                active='true'
+                toggle={setTogglePopupExit}
+                callback={ExitRecipe}
+                />
+            : <></>
+            }
             <div className={styles.RecipeCreateContainer}>
                 <div className={toggleSidebar ? styles.RecipeCreateSidebar : styles.RecipeCreateSidebar + ' ' + styles.HideSidebar}>
                     
@@ -135,7 +150,7 @@ export default function RecipeCreate(props: any) {
                     </div>
 
                     <div
-                    onClick={() => !toggleSidebar ? setToggleSidebar(true) : props.toggle(false)}
+                    onClick={() => !toggleSidebar ? setToggleSidebar(true) : setTogglePopupExit(true)}
                     >
                         <Image 
                         alt=''

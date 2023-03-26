@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import {useRouter} from 'next/router';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 // auth
 import { useSession } from '@supabase/auth-helpers-react';
@@ -20,7 +20,7 @@ export default function Navbar(props: any) {
     // function to sign user out
     const SignOut = async () => {
         await supabase.auth.signOut();
-        router.push('/login');
+        router.push('/signin');
     };
     
     return (  
@@ -34,12 +34,23 @@ export default function Navbar(props: any) {
                     width={300}
                     />
                 </Link>
-                <Link href=''>Grocery List</Link>
-                <Link href=''>Meal Planner</Link>
-                <Link href='/recipes'>Recipes</Link>
-                <Link href=''>Settings</Link>
-                {session ? <button onClick={SignOut}>Logout</button> : <button onClick={() => router.push('/login')}>Login</button>}
-                  
+                {session ? <button onClick={SignOut}>Sign out</button> : <button onClick={() => router.push('/signin')}>Sign in</button>}
+            </div>
+            <div className={styles.DesktopNavbarChild}>
+                <Link href='/'>
+                    Home
+                </Link>
+                <Link href='/recipes'>
+                    Recipes
+                </Link>
+                {session 
+                ?                 
+                    <Link href='/settings'>
+                        Settings
+                    </Link>
+                : <></>
+                }
+
             </div>
             <div className={styles.MobileNavbarParent}>
                 <Link href='/'>
@@ -92,14 +103,14 @@ export default function Navbar(props: any) {
                                 />
                                 Recipes
                             </Link>
-                            <Link href='/myrecipes' className={router.pathname == '/myrecipes' ? styles.ActiveLink : ''}>                
+                            <Link href='/myrecipes' className={router.pathname == '/myrecipes' ? styles.ActiveLink + ' ' + styles.SpaceLink : styles.SpaceLink}>                
                                 <Image 
                                 alt=''
                                 src='/icons/navigation/icon-recipe-outline.svg'
                                 height={50}
                                 width={50}
                                 />
-                                Recipe Manager
+                                My Recipes
                             </Link>
                             <Link href='/' className={router.pathname == '/planner' ? styles.ActiveLink : ''}>                
                                 <Image 
@@ -135,7 +146,7 @@ export default function Navbar(props: any) {
                                 height={50}
                                 width={50}
                                 />
-                                Logout
+                                Sign out
                             </button>
                         </div>
                     </div>
@@ -161,14 +172,14 @@ export default function Navbar(props: any) {
                                 />
                                 Home
                             </Link>
-                            <button className={styles.SpaceLink} onClick={() => router.push('/login')}>                
+                            <button className={styles.SpaceLink} onClick={() => router.push('/signin')}>                
                                 <Image 
                                 alt=''
                                 src='/icons/navigation/icon-logout-outline.svg'
                                 height={50}
                                 width={50}
                                 />
-                                Login
+                                Sign in
                             </button>
                         </div>
                     </div>

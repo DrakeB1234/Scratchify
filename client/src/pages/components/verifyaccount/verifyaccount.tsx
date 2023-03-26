@@ -8,7 +8,7 @@ export default function VerifyAccount() {
         <div className={styles.VerifyAccountParent}>
             <GraphicEmailVerify />
             <h1>Account created, Now just verify through email!</h1>
-            <Link href='/login'>Login</Link>
+            <Link href='/signin'>Sign in</Link>
         </div>
     )
   }

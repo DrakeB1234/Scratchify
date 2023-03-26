@@ -19,12 +19,11 @@
 }
 /* recipe create sidebar */
 .RecipeCreateSidebar {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5em;
-    left: 0;
     top: 0;
     height: 100%;
     width: clamp(50px, 60%, 250px);

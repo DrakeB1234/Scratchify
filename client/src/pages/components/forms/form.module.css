@@ -106,3 +106,9 @@
         border: 1px solid var(--greyli-color);
         cursor: pointer;
     }
+
+    /* loading button */
+    .LoadingButton {
+        display: flex;
+        justify-content: center;
+    }

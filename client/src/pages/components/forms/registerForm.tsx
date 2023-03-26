@@ -1,96 +1,127 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 
+// styles / components
+import LoadingSvg from '/public/graphics/icon-loading.svg';
+import Popup from '../../components/popup/popup';
 import styles from './form.module.css';
 
 export default function RegisterForm(props: any) {
     
-    // register inputs w/ feedback
-    const [registerInput, setRegisterInput] = useState({
-        email: '',
-        username: '',
-        password: '',
-        confirmPassword: ''
-    });
-    const [registerFeedback, setRegisterFeedback] = useState({
-        email: '',
-        username: '',
-        password: '',
-        confirmPassword: ''
-    });
+    const [loadingInput, setLoadingInput] = useState(false);
+    const [togglePopupRegister, setTogglePopupRegister] = useState(false);
+    const [formData, setFormData] = useState<Object>({});
+    
+    const { register, handleSubmit, setError, formState: {errors} } = useForm({});
 
-    // check register input
-    const checkRegisterInput = () => {
-
-        // check email
-        if(!registerInput.email){
-            return setRegisterFeedback(prev => ({...prev, email: 'Required'}));
-        } else if (!/^\S+@\S+\.\S+$/.test(registerInput.email)){
-            return setRegisterFeedback(prev => ({...prev, email: 'Invalid Email'}));
-        };
-        // check username input (a-Z 0-9 and -) and at 3-30 characters
-        if(!registerInput.username){
-            return setRegisterFeedback(prev => ({...prev, username: 'Required'}));
-        } else if (!/^[\w-]{3,30}$/.test(registerInput.username)){
-            return setRegisterFeedback(prev => ({...prev, username: '3-30 characters, letters, numbers, -'}));
-        };
-        // check password input (all characters allowed, except spaces and unicode) 6-100 characters
-        if(!registerInput.password){
-            return setRegisterFeedback(prev => ({...prev, password: 'Required'}));
-        } else if (!/^[\w:'",.?<>!@#$|%^&*()_\-+=,.\/\{\}\[\]\\]{6,100}$/.test(registerInput.password)){
-            return setRegisterFeedback(prev => ({...prev, password: '6-100 characters, no spaces'}));
-        };
-        // check if password matches
-        if(!registerInput.confirmPassword){
-            return setRegisterFeedback(prev => ({...prev, confirmPassword: 'Required'}));
-        } else if (registerInput.password != registerInput.confirmPassword){
-            return setRegisterFeedback(prev => ({...prev, confirmPassword: 'Passwords do not match' }));
-        };
-
-        // if no feedback, then input is cleared
-        if(registerFeedback.email == '' && registerFeedback.username == '' && registerFeedback.password == '' && registerFeedback.confirmPassword == ''){
-            props.callback(registerInput)
+    // function to confirm user with account creation
+    const handleSave = (formVal: any) => {
+        // if confirm password equals password fields
+        if (formVal.password !== formVal.cpassword){
+           return setError("cpassword", { type: "focus", message: 'Passwords must match' }, { shouldFocus: true });        
+        } else {
+            // set form data to form values passed in
+            setFormData(formVal);
+            // toggle popup
+            setTogglePopupRegister(true);
         }
+    };
+
+    // function to confirm user with account creation
+    const SignupFunction = async () => {
+        setLoadingInput(true);
+        await props.callback(formData);
+        setLoadingInput(false);
     }
     
     return (  
         <div className={styles.FormParent}>
-            <form className={styles.FormStyle}>
+            {togglePopupRegister
+            ?
+                <Popup 
+                title='Confirm Account Creation'
+                message='Are you sure you want to create this account?'
+                active='true'
+                toggle={setTogglePopupRegister}
+                callback={SignupFunction}
+                />
+            : <></>
+            }
+            <form className={styles.FormStyle} onSubmit={handleSubmit(handleSave)}>
                 <h1>Register</h1>
 
-                <input type='text' autoComplete='off' name='email' placeholder='Email' onChange={
-                    (e) => { setRegisterInput(prev => ({...prev, email: e.target.value})); 
-                    setRegisterFeedback(prev => ({...prev, email: ''}))}} 
-                    style={registerFeedback.email != '' ? {border: '1px solid var(--red-color)'} : {}}/>
+                <input {...register('email', {
+                    required: 'Required!',
+                    pattern: {
+                        value: /^\S+@\S+\.\S+$/,
+                        message: 'Invalid Email Address'
+                    }
+                    })}
+                    autoComplete='off' 
+                />
                 <label htmlFor='email'>Email</label>
-                <h2>{registerFeedback.email}</h2>
+                <h2>{errors.email?.message?.toString()}</h2>
 
-                <input type='text' autoComplete='off' name='username' placeholder='Username' onChange={
-                    (e) => { setRegisterInput(prev => ({...prev, username: e.target.value})); 
-                    setRegisterFeedback(prev => ({...prev, username: ''}))}} 
-                    style={registerFeedback.username != '' ? {border: '1px solid var(--red-color)'} : {}}/>
+                <input {...register('username', {
+                    required: 'Required!',
+                    minLength: {
+                        value: 3,
+                        message: 'Must be greater than 3 characters!'
+                    },
+                    maxLength: {
+                        value: 30,
+                        message: 'Must be less than 30 characters!'
+                    },
+                    pattern: {
+                        value: /^[^\s][\w\s-]{0,}$/,
+                        message: 'Only letters, numbers, and - Must not start with a space'
+                    }
+                    })}
+                    autoComplete='off' 
+                />
                 <label htmlFor='username'>Username</label>
-                <h2>{registerFeedback.username}</h2>
+                <h2>{errors.username?.message?.toString()}</h2>
 
-                <input type='password' autoComplete='off' name='password' placeholder='Password' onChange={
-                    (e) => { setRegisterInput(prev => ({...prev, password: e.target.value})); 
-                    setRegisterFeedback(prev => ({...prev, password: ''}))}} 
-                    style={registerFeedback.password != '' ? {border: '1px solid var(--red-color)'} : {}}/>
+                <input {...register('password', {
+                    required: 'Required!',
+                    minLength: {
+                        value: 6,
+                        message: 'Must be greater than 6 characters!'
+                    },
+                    maxLength: {
+                        value: 100,
+                        message: 'Must be less than 100 characters!'
+                    },
+                    pattern: {
+                        value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
+                        message: 'No emojis, Must not start with a space'
+                    }
+                    })}
+                    autoComplete='off' type='password'
+                />
                 <label htmlFor='password'>Password</label>
-                <h2>{registerFeedback.password}</h2>
+                <h2>{errors.password?.message?.toString()}</h2>
 
-                <input type='password' autoComplete='off' name='confirmPassword' placeholder='Confirm Password' onChange={
-                    (e) => { setRegisterInput(prev => ({...prev, confirmPassword: e.target.value})); 
-                    setRegisterFeedback(prev => ({...prev, confirmPassword: ''}))}} 
-                    style={registerFeedback.confirmPassword != '' ? {border: '1px solid var(--red-color)'} : {}}/>
-                <label htmlFor='confirmPassword'>Confirm Password</label>
-                <h2>{registerFeedback.confirmPassword}</h2>
+                <input {...register('cpassword', {
+                    required: 'Required!'
+                    })}
+                    autoComplete='off' type='password'
+                />
+                <label htmlFor='cpassword'>Confirm Password</label>
+                <h2>{errors.cpassword?.message?.toString()}</h2>
 
                 <h3 className={props.supabaseMsg.type == 'Error' ? styles.Error : styles.Success}>{props.supabaseMsg.message}</h3>
 
-                <button type='button' onClick={checkRegisterInput}>Register Account</button>
-                <Link href='/login'><button type='button'>Back to Login</button></Link>
+                {loadingInput
+                ?
+                    <button type='button' className={styles.LoadingButton}><LoadingSvg /></button>
+                : 
+                    <button type='submit'>Register Account</button>
+                }
+
+                <Link href='/signin'><button type='button'>Back to Sign in</button></Link>
             </form>
         </div>
     )

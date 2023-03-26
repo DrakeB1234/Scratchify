@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Router from 'next/router';
+import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 
 // import styles / components
@@ -10,21 +10,20 @@ import styles from './myrecipes.module.css';
 
 // auth
 import { useSession } from '@supabase/auth-helpers-react';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 export default function MyRecipes() {
 
     const [toggleRecipeCreate, setToggleRecipeCreate] = useState(false)
+    const router = useRouter();
     
     const session = useSession();
-    const supabase = useSupabaseClient();
 
     // protect route from unauthorized users
     useEffect(() => {
         if(!session){
-            Router.push('/');
+            router.replace('/')
         };
-    }, [])
+    }, [session])
 
   return (
     <>
