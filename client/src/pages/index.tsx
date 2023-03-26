@@ -3,10 +3,7 @@ import Image from 'next/image'
 import { useEffect } from 'react';
 
 // import styles / components
-import Dashboard from './components/homepage/dashboard';
-import RecipeSearch from './components/homepage/recipeSearch';
 import Navbar from './components/navbar/navbar';
-import Popup from './components/popup/popup';
 import styles from './homepage.module.css';
 
 // auth
@@ -25,9 +22,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Navbar />
-      {session ? <Dashboard /> : <></>}
       <main className={styles.HomepageParent}>
-        <RecipeSearch />
+        <h1>asdf</h1>
       </main>
     </>
   )

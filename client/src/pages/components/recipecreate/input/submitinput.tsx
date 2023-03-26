@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Router from 'next/router';
 import {useForm} from 'react-hook-form';
 
 // styles / components
@@ -49,27 +50,77 @@ export default function SubmitInput(props: any) {
         setTogglePopupCreate(true);
     }
 
-    const loadData = async () => {
-        let data: any;
+    const postData = async () => {
 
         try {
             setLoadingInput(true);
 
-            let { data: Recipe, error } = await supabase
-            .from('Recipe')
-            .select('*')
-            .eq('userId', session?.user.id)
+            // insert data into 'recipe' table
+            const { data, error: recipeError } = await supabase
+            .from('recipe')
+            .insert({ 
+                userId: session?.user.id, 
+                title: props.data.title,
+                course: props.data.course,
+                description: props.data.description,
+                photoUrl: null
+            })
+            .select('recipeId');
+            // after insert, select returns recipe id for referencing other tables data
+            const recipeId = data?.[0].recipeId;
+            // error handle
+            if (recipeError) throw recipeError;
 
-            // error handler
-            if (error) throw error;
+            // insert data into 'recipe_tags' table
+            const tagsArray: any = [];
+            props.data.tags.map((e: any) => {
+                tagsArray.push({
+                    recipeId: recipeId,
+                    tag: e.name
+                })
+            });
+            const { error: tagsError } = await supabase
+            .from('recipe_tags')
+            .insert(tagsArray);
+            // error handle
+            if (tagsError) throw tagsError;
 
-            // assign data
-            data = Recipe;
-            console.log(data);
+            // insert data into 'recipe_ingredients' table
+            const ingredientsArray: any = [];
+            props.data.ingredients.map((e: any) => {
+                ingredientsArray.push({
+                    recipeId: recipeId,
+                    amount: e.amount,
+                    ingredient: e.name
+                })
+            });
+            const { error: ingredientsError } = await supabase
+            .from('recipe_ingredients')
+            .insert(ingredientsArray);
+            // error handle
+            if (ingredientsError) throw ingredientsError;
+
+            // insert data into 'recipe_instructions' table
+            const instructionsArray: any = [];
+            props.data.instructions.map((e: any) => {
+                instructionsArray.push({
+                    recipeId: recipeId,
+                    instruction: e.name,
+                })
+            });
+            const { error: instructionsError } = await supabase
+            .from('recipe_instructions')
+            .insert(instructionsArray);
+            // error handle
+            if (instructionsError) throw instructionsError;
+
+            // if all successful, redirect user to homepage
+            Router.push('/');
 
         } catch (error){
             setLoadingInput(false);
-            return setErrorInput({message: 'Could not Fetch Data, try again'});
+            console.error(error)
+            return setErrorInput({message: 'Problem creating recipe, try again later'});
         };
 
         // set success state to display success message, reset loading state
@@ -87,7 +138,7 @@ export default function SubmitInput(props: any) {
                 message='Are you sure you want to create this Recipe?'
                 active='true'
                 toggle={setTogglePopupCreate}
-                callback={loadData}
+                callback={postData}
                 />
             : <></>
             }

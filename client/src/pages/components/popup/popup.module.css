@@ -21,34 +21,37 @@
 }
     /* Popup Child title */
     .PopupChild > h1 {
-        text-align: center;
-        font-size: 1.5rem;
+        text-align: left;
+        font-size: 1.2rem;
         font-weight: 700;
         color: var(--black-color);
     }
     /* Popup Child message */
     .PopupChild > h2 {
         margin-top: 1em;
-        text-align: center;
-        font-size: 1.3rem;
+        text-align: left;
+        font-size: 1rem;
         color: var(--black-color);
     }
 /* Popup Button */
 .PopupButtons {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 1em;
-    margin-top: 3em;
+    margin-top: 2em;
     background-color: var(--white-color);
 }
     /* Popup Button */
     .PopupButtons > button {
         width: 40%;
+        max-width: 120px;
         padding: 0.7em;
         font-size: 1.1rem;
         font-weight: 700;
         background-color: var(--whitemed-color);
+        overflow: hidden;
+        overflow-wrap: break-word;
     }
     /* Popup Button confirm */
     .PopupButtons > button:last-child {

@@ -48,7 +48,7 @@ export default function InstructionsInput(props: any) {
         rules: {
             required: 'Must have at least 1 step',
             maxLength: {
-                value: 4,
+                value: 10,
                 message: 'Must have less than 11 steps'
             }
         }
