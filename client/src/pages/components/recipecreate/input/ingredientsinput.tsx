@@ -51,8 +51,8 @@ export default function IngredientsInput(props: any) {
         rules: {
             required: 'Must have at least 1 step',
             maxLength: {
-                value: 15,
-                message: 'Must have less than 16 ingredients'
+                value: 30,
+                message: 'Must have less than 30 ingredients'
             }
         }
     });
@@ -75,7 +75,7 @@ export default function IngredientsInput(props: any) {
     
     return ( 
         <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
-
+            <h1>Ingredients</h1>
             {fields.map((field, index) => (
                 <div className={styles.InputParentDynamic}
                 key={field.id}
@@ -97,18 +97,18 @@ export default function IngredientsInput(props: any) {
                             <h1>Amount</h1>
                         </label>
                         <input {...register(`ingredient.${index}.amount`, {
-                            required: 'Required!', 
+                            required: 'Required', 
                             minLength: {
                                 value: 1,
-                                message: 'Must have at least 1 Character!'
+                                message: 'Must have at least 1 Character'
                             }, 
                             maxLength: {
                                 value: 30,
-                                message: 'Must have less than 30 Characters!'
+                                message: 'Must have less than 30 Characters'
                             }, 
                             pattern: {
-                                value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
-                                message: 'No emojis!'
+                                value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
+                                message: 'No emojis or Starting with spaces'
                             }
                             })}
                             autoComplete='off' placeholder='1 Cup'
@@ -122,15 +122,15 @@ export default function IngredientsInput(props: any) {
                             required: 'Required!', 
                             minLength: {
                                 value: 1,
-                                message: 'Must have at least 1 Characters!'
+                                message: 'Must have at least 1 Characters'
                             }, 
                             maxLength: {
                                 value: 40,
-                                message: 'Must have less than 40 Characters!'
+                                message: 'Must have less than 40 Characters'
                             }, 
                             pattern: {
-                                value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
-                                message: 'No emojis!'
+                                value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
+                                message: 'No emojis or Starting with spaces'
                             }
                             })}
                             autoComplete='off' placeholder='Zuchini'
@@ -141,7 +141,7 @@ export default function IngredientsInput(props: any) {
             ))}
             <button className={styles.AddInputButton} type='button'
             onClick={() => {
-                if (fields.length < 15){
+                if (fields.length < 30){
                     append({
                         amount: '',
                         name: ''

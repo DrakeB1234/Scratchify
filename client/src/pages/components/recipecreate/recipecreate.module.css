@@ -12,7 +12,7 @@
 /* recipe create container */
 .RecipeCreateContainer {
     position: relative;
-    width: clamp(200px, 100%, 1400px);
+    width: clamp(200px, 100%, 1200px);
     box-shadow: 0 0 20em var(--greydark-color);
     background-color: var(--white-color);
     overflow-y: scroll;
@@ -31,11 +31,11 @@
     background-color: var(--appmain-color);
     z-index: 2;
     overflow-y: scroll;
-    transition: width 0.1s ease;
+    transition: width 0.2s ease;
 }
     /* hide sidebar */
     .HideSidebar {
-        width: 3em;
+        width: 2.5em;
     }
         /* hide text */
         .HideSidebar > div > h1 {
@@ -52,7 +52,7 @@
         justify-content: flex-start;
         gap: 1em;
         width: 100%;
-        padding: 1em 0.75em 1em 0.75em;
+        padding: 1em 0.5em 1em 0.5em;
         box-sizing: border-box;
         color: var(--white-color);
         cursor: pointer;
@@ -94,23 +94,19 @@
 
 /* media query for big screens */
 @media only screen and (min-width:1000px){
-    /* keep sidebar open */
-    .RecipeCreateSidebar {
-        width: 250px;
-    }
-    /* hide open button */
-    .RecipeCreateSidebar > div:first-child > img {
-        display: none;
-    }
-    /* make sure text is visible */
-    .RecipeCreateSidebar > div > h1 {
-        visibility: visible;
-    }
     /* adjust input parent margin */
     .RecipeCreateInputParent {
         display: flex;
         align-items: center;
         width: clamp(200px, 100%, 800px);
-        margin: 0 auto 0 25%;
+        margin: 0 auto 0 200px;
     }
+    /* hide sidebar bigger on desktop */
+    .HideSidebar {
+        width: 4em;
+    }
+        /* container with image and text */
+        .RecipeCreateSidebar > div {
+            padding: 1em 1.5em 1em 1.2em;
+        }
 }

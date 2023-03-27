@@ -27,6 +27,7 @@ export default function RecipeCreate(props: any) {
         title: string,
         course: string,
         description: string,
+        photoFile: string,
         tags: string[],
         instructions: string[],
         ingredients: ingredientObj[],
@@ -36,6 +37,7 @@ export default function RecipeCreate(props: any) {
         title: '',
         course: '',
         description: '',
+        photoFile: '',
         tags: [''],
         instructions: [''],
         ingredients: [{amount: '', ingredient: ''}]
@@ -45,6 +47,7 @@ export default function RecipeCreate(props: any) {
     const changeTab = (tab: String) => {
         // reset active tab
         setActiveTab('title');
+        setToggleSidebar(false);
         // set active tab to passed value
         return setActiveTab(tab);
     };
@@ -162,7 +165,7 @@ export default function RecipeCreate(props: any) {
                     </div>
 
                 </div>
-                <div className={styles.RecipeCreateInputParent}>
+                <div className={styles.RecipeCreateInputParent} onClick={() => setToggleSidebar(false)}>
                     {activeTab == 'title' ? <TitleInput setData={setRecipeInput} data={recipeInput}/>
                     : activeTab == 'tags' ? <TagsInput setData={setRecipeInput} data={recipeInput} /> 
                     : activeTab == 'picture' ? <PhotoInput setData={setRecipeInput} data={recipeInput} /> 

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Router from 'next/router';
 import {useForm} from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 
 // styles / components
 import LoadingSvg from '/public/graphics/icon-loading.svg';
@@ -10,6 +11,7 @@ import styles from './input.module.css';
 // auth
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useSession } from '@supabase/auth-helpers-react';
+import PhotoInput from './photoinput';
 
 export default function SubmitInput(props: any) {
 
@@ -29,31 +31,66 @@ export default function SubmitInput(props: any) {
         // reset success state to false, reset error
         setSuccessInput(false);
         setErrorInput(prev => ({...prev, message: ''}));
+        let pass = true;
 
         // running validation on each input to ensure correctness
-        if(!/^[^\s][a-zA-Z\s]{3,30}$/.test(props.data.title)) return setErrorInput(prev => ({...prev, message: 'Title must be (3 - 30) characters, only letters and spaces'}));
+        if(!/^[^\s][a-zA-Z\s]{3,50}$/.test(props.data.title)) return setErrorInput(prev => ({...prev, message: 'Title must be (3 - 30) characters, only letters and spaces'}));
         if(!/^Breakfast|Lunch|Dinner|Dessert|Snack$/.test(props.data.course)) return setErrorInput(prev => ({...prev, message: 'Course must be Breakfast, Lunch, Dinner, Dessert, or Snack'}));
-        if(!/^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{3,300}$/.test(props.data.description)) return setErrorInput(prev => ({...prev, message: 'Description must be (3 - 300) characters, no emojis or starting with a space'}));
+        if(!/^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{3,500}$/.test(props.data.description)) return setErrorInput(prev => ({...prev, message: 'Description must be (3 - 300) characters, no emojis or starting with a space'}));
 
         props.data.tags.map((e: any) => {
-            if(!/^[^\s][a-zA-Z\s]{3,20}$/.test(e.name)) return setErrorInput(prev => ({...prev, message: 'Tags must be (3 - 20) characters, only letters and spaces'}));
+            if(!e.name || !/^[^\s][a-zA-Z\s]{3,20}$/.test(e.name)) {
+                pass = false;
+                return setErrorInput(prev => ({...prev, message: 'Tags must be (3 - 20) characters, only letters and spaces'}));
+            }
         });
         props.data.ingredients.map((e: any) => {
-            if(!/^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{1,30}$/.test(e.amount)) return setErrorInput(prev => ({...prev, message: 'Ingredient amount must be (1 - 30) characters, no emojis or starting with a space'}));
-            if(!/^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{1,40}$/.test(e.name)) return setErrorInput(prev => ({...prev, message: 'Ingredient name must be (1 - 40) characters, no emojis or starting with a space'}));
+            if(!e.amount || !/^[^\s][\w\s!@#$%^&*()-~`_+{}|/°:;"<>?\[\]\',.\/\\]{0,30}$/.test(e.amount)) {
+                pass = false;
+                console.log(e.amount)
+                return setErrorInput(prev => ({...prev, message: 'Ingredient amount must be (1 - 30) characters, no emojis or starting with a space'}));
+            } 
+            if(!e.name || !/^[^\s][\w\s!@#$%^&*()-~`_+{}|/°:;"<>?\[\]\',.\/\\]{0,40}$/.test(e.name)) {
+                pass = false;
+                return setErrorInput(prev => ({...prev, message: 'Ingredient name must be (1 - 40) characters, no emojis or starting with a space'}));
+            }
         });
         props.data.instructions.map((e: any) => {
-            if(!/^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{3,300}$/.test(e.name)) return setErrorInput(prev => ({...prev, message: 'Instructions must be (3 - 300) characters, no emojis or starting with a space'}));
+            if(!e.name || !/^[^\s][\w\s!@#$%^&*()-~`_+{}|/°:;"<>?\[\]\',.\/\\]{3,500}$/.test(e.name)) {
+                pass = false;
+                return setErrorInput(prev => ({...prev, message: 'Instructions must be (3 - 300) characters, no emojis or starting with a space'}));
+            }
         });
 
         // if validated data, call pop to ensure action from user
-        setTogglePopupCreate(true);
+        if(pass) return setTogglePopupCreate(true);
     }
 
     const postData = async () => {
 
         try {
             setLoadingInput(true);
+
+            // upload image to bucket if photo provided through input
+            let url: string | null = null;
+            if (props.data.photoFile.name != undefined){
+                // make url
+                url = 'public/' + props.data.title + '-' + uuidv4();
+
+                const { data: photoFileData, error: photoError } = await supabase
+                .storage
+                .from('recipe-images')
+                // uploaded files will be recipe-images/TheBestLasagna-randomid123123
+                .upload(url, props.data.photoFile, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
+                // error handle
+                if (photoError) throw photoError;
+
+                // if no errors, set url to public url for getting image
+                url = encodeURI('https://wsgtwhbvwnftxaqiogud.supabase.co/storage/v1/object/public/recipe-images/' + url);
+            };
 
             // insert data into 'recipe' table
             const { data, error: recipeError } = await supabase
@@ -63,7 +100,7 @@ export default function SubmitInput(props: any) {
                 title: props.data.title,
                 course: props.data.course,
                 description: props.data.description,
-                photoUrl: null
+                photoUrl: url
             })
             .select('recipeId');
             // after insert, select returns recipe id for referencing other tables data
@@ -128,9 +165,15 @@ export default function SubmitInput(props: any) {
         setSuccessInput(true);
 
       };
-    
+
+      const uploadImage = async () => {
+
+      }
+
     return ( 
         <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
+            <h1 
+            onClick={() => uploadImage()}>Review</h1>
             {togglePopupCreate
             ?
                 <Popup 
@@ -145,6 +188,9 @@ export default function SubmitInput(props: any) {
             <div className={styles.InputReviewParent}>
                 <h1>{props.data.title}</h1>
                 <h2>{props.data.course}</h2>
+                {props.data.photoFile !== ''
+                ? <img src={URL.createObjectURL(props.data.photoFile)} />
+                : <></>}
 
                 <div className={styles.InputReviewContainerRow}>
                     {props.data.tags.map((e: any) => (

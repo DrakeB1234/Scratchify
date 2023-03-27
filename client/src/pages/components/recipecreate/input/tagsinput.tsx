@@ -72,7 +72,7 @@ export default function TagsInput(props: any) {
     
     return ( 
         <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
-
+            <h1>Tags</h1>
             {fields.map((field, index) => (
                 <div className={styles.InputParentDynamic}
                 key={field.id}
@@ -90,18 +90,18 @@ export default function TagsInput(props: any) {
                         />
                     </label>
                     <input {...register(`tag.${index}.name`, {
-                        required: 'Required!', 
+                        required: 'Required', 
                         minLength: {
                             value: 3,
-                            message: 'Must have at least 3 Characters!'
+                            message: 'Must have at least 3 Characters'
                         }, 
                         maxLength: {
                             value: 20,
-                            message: 'Must have less than 20 Characters!'
+                            message: 'Must have less than 20 Characters'
                         }, 
                         pattern: {
                             value: /^[^\s][a-zA-Z\s]{0,}$/,
-                            message: 'Must only use letters and spaces!'
+                            message: 'Must only use letters and spaces'
                         }
                         })}
                         autoComplete='off' 

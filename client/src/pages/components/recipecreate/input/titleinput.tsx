@@ -32,22 +32,23 @@ export default function TitleInput(props: any) {
     
     return ( 
         <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
+            <h1>Title</h1>
             <label htmlFor='title'>
                 <h1>Title</h1>
             </label>
             <input {...register('title', {
-                required: 'Required!', 
+                required: 'Required', 
                 minLength: {
                     value: 3,
-                    message: 'Must have at least 3 Characters!'
+                    message: 'Must have at least 3 Characters'
                 }, 
                 maxLength: {
-                    value: 30,
-                    message: 'Must have less than 30 Characters!'
+                    value: 50,
+                    message: 'Must have less than 50 Characters'
                 }, 
                 pattern: {
                     value: /^[^\s][a-zA-Z\s]{0,}$/,
-                    message: 'Must only use letters and spaces!'
+                    message: 'Must only use letters and spaces'
                 }
                 })}
                 autoComplete='off' 
@@ -62,7 +63,7 @@ export default function TitleInput(props: any) {
                 required: 'Required', 
                 pattern: {
                     value: /^Breakfast|Lunch|Dinner|Dessert|Snack$/,
-                    message: 'Must select Breakfast, Lunch, Dinner, Dessert, or Snack!'
+                    message: 'Must select Breakfast, Lunch, Dinner, Dessert, or Snack'
                 }
             })}
             >
@@ -82,15 +83,15 @@ export default function TitleInput(props: any) {
                 required: 'Required!', 
                 minLength: {
                     value: 3,
-                    message: 'Must have at least 3 Characters!'
+                    message: 'Must have at least 3 Characters'
                 }, 
                 maxLength: {
-                    value: 300,
-                    message: 'Must have less than 300 Characters!'
+                    value: 500,
+                    message: 'Must have less than 500 Characters'
                 }, 
                 pattern: {
-                    value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
-                    message: 'No emojis!'
+                    value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|/°:;"<>?\[\]\',.\/\\]{0,}$/,
+                    message: 'No emojis or Starting with spaces'
                 }
                 })} 
                 autoComplete='off'

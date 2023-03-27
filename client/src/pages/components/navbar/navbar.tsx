@@ -34,23 +34,30 @@ export default function Navbar(props: any) {
                     width={300}
                     />
                 </Link>
-                {session ? <button onClick={SignOut}>Sign out</button> : <button onClick={() => router.push('/signin')}>Sign in</button>}
-            </div>
-            <div className={styles.DesktopNavbarChild}>
-                <Link href='/'>
-                    Home
-                </Link>
-                <Link href='/recipes'>
-                    Recipes
-                </Link>
-                {session 
-                ?                 
-                    <Link href='/settings'>
-                        Settings
+                <div>
+                    <Link href='/'>                
+                        Home
                     </Link>
-                : <></>
-                }
-
+                    <Link href='/recipes'>                
+                        Recipes
+                    </Link>
+                    {session
+                    ?
+                        <>
+                            <Link href='/mealplanner'>                
+                                Meal Planner
+                            </Link>
+                            <Link href='/myrecipes'>                
+                                My Recipes
+                            </Link>
+                            <Link href='/grocerylist'>                
+                                Grocery List
+                            </Link>
+                        </>
+                    : <></>
+                    }   
+                    {session ? <button onClick={SignOut}>Sign out</button> : <button onClick={() => router.push('/signin')}>Sign in</button>}
+                </div>
             </div>
             <div className={styles.MobileNavbarParent}>
                 <Link href='/'>
@@ -70,12 +77,13 @@ export default function Navbar(props: any) {
                 />
                 <div className={styles.MobileNavbarContentParent}
                 style={toggleMobileNav ? {left: '0'} : {left: '-100vw'}}
+                onClick={() => setToggleMobileNav(false)}
                 >
                     {session 
                     ?
                     // navbar for logged in users
                     <div className={styles.MobileNavbarContentChild}>
-                        <div onClick={() => setToggleMobileNav(false)}>
+                        <div>
                             <h1>Hello, {session.user.user_metadata.username}!</h1>
                             <Image 
                             alt='X'
@@ -171,6 +179,15 @@ export default function Navbar(props: any) {
                                 width={50}
                                 />
                                 Home
+                            </Link>
+                            <Link href='/recipes' className={router.pathname == '/recipes' ? styles.ActiveLink : ''}>                
+                                <Image 
+                                alt=''
+                                src='/icons/navigation/icon-recipe-outline.svg'
+                                height={50}
+                                width={50}
+                                />
+                                Recipes
                             </Link>
                             <button className={styles.SpaceLink} onClick={() => router.push('/signin')}>                
                                 <Image 

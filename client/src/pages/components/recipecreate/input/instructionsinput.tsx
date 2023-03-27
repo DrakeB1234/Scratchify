@@ -72,7 +72,7 @@ export default function InstructionsInput(props: any) {
     
     return ( 
         <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
-
+            <h1>Instructions</h1>
             {fields.map((field, index) => (
                 <div className={styles.InputParentDynamic}
                 key={field.id}
@@ -90,18 +90,18 @@ export default function InstructionsInput(props: any) {
                         />
                     </label>
                     <textarea {...register(`instruction.${index}.name`, {
-                        required: 'Required!', 
+                        required: 'Required', 
                         minLength: {
                             value: 3,
-                            message: 'Must have at least 3 Characters!'
+                            message: 'Must have at least 3 Characters'
                         }, 
                         maxLength: {
-                            value: 300,
-                            message: 'Must have less than 300 Characters!'
+                            value: 500,
+                            message: 'Must have less than 500 Characters'
                         }, 
                         pattern: {
-                            value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
-                            message: 'No emojis!'
+                            value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|/°:;"<>?\[\]\',.\/\\]{0,}$/,
+                            message: 'No emojis or Starting with spaces'
                         }
                         })}
                         autoComplete='off' 

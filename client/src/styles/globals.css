@@ -56,6 +56,9 @@ button {
 	border: 0;
 	cursor: pointer;
 }
+main {
+	padding-top: 4em;
+}
 
 :root {
 
@@ -72,8 +75,8 @@ button {
 
 	--greydark-color: #565656;
 	--greymed-color: #999;
-	--greyli-color: #d4d4d4;
+	--greyli-color: #d5d5d5;
 	
-	--whitemed-color: #f7f7f7;
+	--whitemed-color: #f3f3f3;
 	--white-color: #ffffff;
 }

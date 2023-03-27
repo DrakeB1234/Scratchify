@@ -1,53 +1,59 @@
 /* desktop navbar parent */
 .DesktopNavbarParent {
-    position: relative;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    padding: 0.5em 5% 0.5em 5%;
+    box-sizing: border-box;
+    box-shadow: 0 0 0.3em var(--greydark-color);
+    background-color: var(--appmain-color);
+    z-index: 90;
+}
+    .DesktopNavbarParent > a:first-child > img {
+        height: 100%;
+        width: 130px;
+    }
+/* desktop navbar child */
+.DesktopNavbarParent > div {
     display: flex;
     align-items: center;
     gap: 2em;
-    padding: 1em;
+    width: 100%;
+    padding-left: 2em;
     background-color: var(--appmain-color);
 }
-    /* app logo link */
-    .DesktopNavbarParent > a:first-child {
-        position: absolute;
-        left: 46%;
-    }
-        .DesktopNavbarParent > a:first-child > img {
-            height: 100%;
-            width: 150px;
-        }
-    /* links */
-    .DesktopNavbarParent > a, .DesktopNavbarParent > button {
-        font-weight: 700;
+    /* Links */
+    .DesktopNavbarParent > div > a {
         font-size: 1.1rem;
+        font-weight: 700;
         color: var(--white-color);
+        cursor: pointer;
     }
-    /* sign out button */
-    .DesktopNavbarParent > button:last-child {
+    /* buttons */
+    .DesktopNavbarParent > div > button {
         margin-left: auto;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--appmain-color);
+        background-color: var(--white-color);
+        cursor: pointer;
     }
-/* desktop navbar child */
-.DesktopNavbarChild {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4em;
-    padding: 0.6em;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--white-color);
-    background-color: var(--appmainli-color);
-}
-
 /* mobile navbar parent */
 .MobileNavbarParent {
+    position: fixed;
     display: none;
     align-items: center;
     gap: 2em;
     width: 100%;
     padding: 0.5em 1em 0.5em 1em;
     box-sizing: border-box;
+    box-shadow: 0 0 0.3em var(--greydark-color);
     background-color: var(--appmain-color);
+    z-index: 90;
 }
     /* app logo link */
     .MobileNavbarParent > a:first-child {
@@ -73,15 +79,20 @@
     height: 100%;
     width: 100%;
     transition: all 0.3s ease-in-out;
-    z-index: 90;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
+    /* hide scrollbar */
+    .MobileNavbarContentParent::-webkit-scrollbar {
+        display: none;
+    }
 /* mobile navbar content */
 .MobileNavbarContentChild {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 85%;
-    box-shadow: 0 0 1em var(--greydark-color);
+    width: 75%;
+    box-shadow: 0 0 0.5em var(--greydark-color);
     z-index: 90;
 }
     /* user introduction container */
