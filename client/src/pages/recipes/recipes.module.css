@@ -1,0 +1,76 @@
+/* parent */
+.RecipesParent {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+/* recipe search bar parent */
+.RecipeSearchBarParent {
+    position: relative;
+    bottom: 0.8em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    padding: 1em;
+    padding-top: 2em;
+    background-color: var(--appmain-color);
+}
+    /* recipe search bar */
+    .RecipeSearchBarParent > div:first-child {
+        display: flex;
+        align-items: center;
+        width: clamp(200px, 100%, 600px);
+        padding: 0.8em 1em 0.8em 1em;
+        box-sizing: border-box;
+        border-radius: 4px;
+        background-color: var(--whitemed-color);
+    }
+        /* image */
+        .RecipeSearchBarParent > div > img {
+            height: 20px;
+            width: 20px;
+            transform: rotate(-90deg);
+            cursor: pointer;
+        }
+        /* text input */
+        .RecipeSearchBarParent input {
+            width: 100%;
+            padding-right: 1em;
+            font-size: 1.2rem;
+            color: var(--black-color);
+            background: none;
+            border: 0;
+            outline: none !important;
+        }
+    /* sort and filter container */
+    .SortFilterContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 1em;
+        width: clamp(200px, 100%, 600px);
+        border-radius: 4px;
+    }
+        /* separate containers */
+        .SortFilterContainer > div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.8em 1em 0.8em 1em;
+            width: fit-content;
+            box-sizing: border-box;
+            border-radius: 4px;
+            background-color: var(--greyli-color);
+        }
+            /* text */
+            .SortFilterContainer > div > h1 {
+                font-size: 0.9rem;
+            }
+            /* images */
+            .SortFilterContainer > div > img {
+                height: 20px;
+                width: 20px;
+            }

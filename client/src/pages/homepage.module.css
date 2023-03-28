@@ -35,7 +35,7 @@
     .RecipeSearchBar > input {
         width: 100%;
         padding-right: 1em;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         color: var(--black-color);
         background: none;
         border: 0;

@@ -16,25 +16,6 @@ export default function InstructionsInput(props: any) {
         }
     });
 
-    // checks to see if data is set from props, if so then add them to array,
-    // else add one empty value
-    useEffect(() => {
-        // drop first index in array
-        remove(0);
-        if(props.data.instructions[0] != ''){
-            props.data.instructions.map((e: any) => {
-                append({
-                    name: e.name
-                })
-            })
-        // else, add empty value to array
-        } else {
-            append({
-                name: ''
-            })
-        }
-    }, [])
-
     // set the type for the array
     type formValues = {
         instruction: [{
@@ -53,6 +34,29 @@ export default function InstructionsInput(props: any) {
             }
         }
     });
+
+    // checks to see if data is set from props, if so then add them to array,
+    // else add one empty value
+    useEffect(() => {
+        setArrayData();
+    }, [])
+
+    const setArrayData = () => {
+        // drop first index in array
+        remove(0);
+        if(props.data.instructions[0] != ''){
+            props.data.instructions.map((e: any) => {
+                append({
+                    name: e.name
+                })
+            })
+        // else, add empty value to array
+        } else {
+            append({
+                name: ''
+            })
+        }
+    }
 
     const handleSave = (formVal: any) => {
         // set success state to display success message

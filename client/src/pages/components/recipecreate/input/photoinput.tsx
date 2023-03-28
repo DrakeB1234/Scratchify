@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Image from 'next/image';
 import {useForm} from 'react-hook-form';
 
 import styles from './input.module.css';
@@ -34,15 +35,25 @@ export default function PhotoInput(props: any) {
         if (formVal.photo.length > 0) return setSuccessInput(true);
     };
 
-    console.log(props.data.photoFile)
-
     return ( 
         <form className={styles.InputParent} onSubmit={handleSubmit(handleSave)}>
             <h1>Photo</h1>
             {imageOutput
-            ? <img className={styles.InputImage} src={imageOutput} />
+            ? <Image 
+                className={styles.InputImage}
+                alt='image'
+                src={imageOutput}
+                height={300}
+                width={300}
+                />
             : props.data.photoFile !== ''
-                ? <img className={styles.InputImage} src={URL.createObjectURL(props.data.photoFile)} />
+                ? <Image 
+                    className={styles.InputImage}
+                    alt='image'
+                    src={URL.createObjectURL(props.data.photoFile)}
+                    height={300}
+                    width={300}
+                    />
                 : <></>
             }
             <label htmlFor='photo'>

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Router from 'next/router';
+import Image from 'next/image';
 import {useForm} from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -189,12 +190,17 @@ export default function SubmitInput(props: any) {
                 <h1>{props.data.title}</h1>
                 <h2>{props.data.course}</h2>
                 {props.data.photoFile !== ''
-                ? <img src={URL.createObjectURL(props.data.photoFile)} />
+                ? <Image 
+                    alt='image'
+                    src={URL.createObjectURL(props.data.photoFile)}
+                    height={300}
+                    width={300}
+                    />
                 : <></>}
 
                 <div className={styles.InputReviewContainerRow}>
-                    {props.data.tags.map((e: any) => (
-                        <h2>{e.name}</h2>
+                    {props.data.tags.map((e: any, index: number) => (
+                        <h2 key={index + 'a'}>{e.name}</h2>
                     ))}
                 </div>
 
@@ -203,13 +209,13 @@ export default function SubmitInput(props: any) {
                 <div className={styles.InputReviewContainerCol}>
                     <h1>Ingredients:</h1>
                     {props.data.ingredients.map((e: any, index: number) => (
-                        <h2 key={index}>{e.amount} of {e.name}</h2>
+                        <h2 key={index + 'b'}>{e.amount} of {e.name}</h2>
                     ))}
                 </div>
                 <div className={styles.InputReviewContainerCol}>
                     <h1>Instructions:</h1>
                     {props.data.instructions.map((e: any, index: number) => (
-                        <h2 key={index}>Step {index + 1}: {e.name}</h2>
+                        <h2 key={index + 'c'}>Step {index + 1}: {e.name}</h2>
                     ))}
                 </div>
             </div>

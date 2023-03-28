@@ -82,9 +82,10 @@
     display: flex;
     flex-direction: column;
     padding: 0.5em;
+    padding-bottom: 1em;
     box-sizing: border-box;
     border: 1px solid var(--greyli-color);
-    background-color: var(--whitemed-color);
+    background-color: var(--white-color);
 }
 /* review input parent */
 .InputReviewParent {
@@ -115,6 +116,7 @@
     .InputReviewParent > img {
         height: 100%;
         width: clamp(50px, 50%, 200px);
+        aspect-ratio: 1 / 1;
         border: 2px solid var(--black-color);
     }
 /* review input container row (tags) */
@@ -148,7 +150,6 @@
     .InputReviewContainerCol > h2 {
         overflow-wrap: break-word;
     }
-
 
 /* buttons */
 .AddInputButton {

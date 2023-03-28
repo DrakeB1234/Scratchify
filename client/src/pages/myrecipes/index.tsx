@@ -6,16 +6,21 @@ import {useEffect, useState} from 'react';
 // import styles / components
 import NavBar from '../components/navbar/navbar';
 import RecipeCreate from '../components/recipecreate/recipecreate';
+import GetRecipes from '../components/myrecipes/getmyrecipes';
 import styles from './myrecipes.module.css';
 
 // auth
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useSession } from '@supabase/auth-helpers-react';
 
 export default function MyRecipes() {
 
-    const [toggleRecipeCreate, setToggleRecipeCreate] = useState(false)
+    const [toggleRecipeCreate, setToggleRecipeCreate] = useState(false);
+    const [toggleGetRecipes, setToggleGetRecipes] = useState(false);
+
     const router = useRouter();
     
+    const supabase = useSupabaseClient();
     const session = useSession();
 
     // protect route from unauthorized users
@@ -23,7 +28,8 @@ export default function MyRecipes() {
         if(!session){
             router.replace('/')
         };
-    }, [session])
+
+    }, [session]);
 
   return (
     <>
@@ -43,15 +49,19 @@ export default function MyRecipes() {
             width={50}
             />
         </div>
-        <div className={styles.MyRecipesRow}>
-            <h1>View Saved Recipes</h1>
-            <Image 
-            alt='>'
-            src='/icons/actions/icon-plus.svg'
-            height={50}
-            width={50}
-            />
+
+        <div className={styles.CreateRecipeParent} onClick={() => setToggleGetRecipes(true)}>
+            <h1>View My Recipes</h1>
         </div>
+        {toggleGetRecipes
+        ?
+            <GetRecipes 
+            userid={session?.user.id} 
+            />
+        :
+            <></>
+        }
+
     </main>
     {toggleRecipeCreate
             ?

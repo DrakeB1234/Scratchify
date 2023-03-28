@@ -7,5 +7,15 @@ module.exports = {
     })
 
     return config;
-  }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'wsgtwhbvwnftxaqiogud.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/recipe-images/public/**',
+      },
+    ],
+  },
 }

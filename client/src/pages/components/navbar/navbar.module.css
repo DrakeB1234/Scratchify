@@ -53,7 +53,7 @@
     box-sizing: border-box;
     box-shadow: 0 0 0.3em var(--greydark-color);
     background-color: var(--appmain-color);
-    z-index: 90;
+    z-index: 91;
 }
     /* app logo link */
     .MobileNavbarParent > a:first-child {

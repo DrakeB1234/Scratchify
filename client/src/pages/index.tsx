@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Router from 'next/router';
 import { useState,useEffect } from 'react';
 
 // import styles / components
@@ -7,7 +8,6 @@ import Navbar from './components/navbar/navbar';
 import styles from './homepage.module.css';
 
 // auth
-import { useSession } from '@supabase/auth-helpers-react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 
@@ -15,13 +15,12 @@ export default function Home() {
 
   const [loadingData, setLoadingData] = useState(false);
   const [recipeData, setRecipeData] = useState<any>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const supabase = useSupabaseClient();
 
   // load in data
   useEffect(() => {
-
     // loadRecipes();
-    
   }, []);
 
   const loadRecipes = async () => {
@@ -40,6 +39,16 @@ export default function Home() {
     };
   };
 
+  // handle search bar when enter key is pressed
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      Router.push({
+        pathname: '/recipes',
+        query: {q: searchQuery}
+      });
+    }
+  };
+
   return (
     <>
       <Head>
@@ -49,12 +58,20 @@ export default function Home() {
       <Navbar />
       <main className={styles.HomepageParent}>
         <div className={styles.RecipeSearchBar}>
-          <input type='text' placeholder='Search for Recipes'/>
+          <input type='text' placeholder='Search for Recipes'
+          onChange={(e: any) => setSearchQuery(e.target.value)}
+          onKeyDown={(event: any) => handleKeyDown(event)}
+          />
           <Image 
           alt=''
           src='/icons/actions/icon-search.svg'
           height={50}
           width={50}
+          onClick={() => 
+            Router.push({
+            pathname: '/recipes',
+            query: {q: searchQuery}
+          })}
           />
         </div>
         <h1>Trending Recipes</h1>

@@ -17,27 +17,6 @@ export default function IngredientsInput(props: any) {
         }
     });
 
-    // checks to see if data is set from props, if so then add them to array,
-    // else add one empty value
-    useEffect(() => {
-        // drop first index in array
-        remove(0);
-        if(props.data.ingredients[0] != ''){
-            props.data.ingredients.map((e: any) => {
-                append({
-                    amount: e.amount,
-                    name: e.name
-                })
-            })
-        // else, add empty value to array
-        } else {
-            append({
-                amount: '',
-                name: ''
-            })
-        }
-    }, [])
-
     // set the type for the array
     type formValues = {
         ingredient: [{
@@ -56,6 +35,31 @@ export default function IngredientsInput(props: any) {
             }
         }
     });
+
+    // checks to see if data is set from props, if so then add them to array,
+    // else add one empty value
+    useEffect(() => {
+        setArrayData();
+    }, [])
+
+    const setArrayData = () => {
+        // drop first index in array
+        remove(0);
+        if(props.data.ingredients[0] != ''){
+            props.data.ingredients.map((e: any) => {
+                append({
+                    amount: e.amount,
+                    name: e.name
+                })
+            })
+        // else, add empty value to array
+        } else {
+            append({
+                amount: '',
+                name: ''
+            })
+        }
+    }
 
     const handleSave = (formVal: any) => {
         // set success state to display success message
