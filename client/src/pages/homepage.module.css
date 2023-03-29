@@ -27,15 +27,15 @@
 }
     /* image */
     .RecipeSearchBar > img {
-        height: 20px;
-        width: 20px;
+        height: 15px;
+        width: 15px;
         transform: rotate(-90deg);
     }
     /* text input */
     .RecipeSearchBar > input {
         width: 100%;
         padding-right: 1em;
-        font-size: 1.2rem;
+        font-size: 1rem;
         color: var(--black-color);
         background: none;
         border: 0;

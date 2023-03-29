@@ -6,12 +6,14 @@
     height: 100%;
     width: clamp(200px, 100%, 600px);
     margin: 0 auto 0 auto;
+
     border: 1px solid var(--greyli-color);
     box-shadow: 0 0 1em var(--greyli-color);
     overflow-y: scroll;
 }
     .VerifyAccountParent > svg {
         margin-top: 4em;
+        transform: scale(80%);
     }
     .VerifyAccountParent > h1 {
         padding: 1em;
@@ -21,9 +23,10 @@
         color: var(--greydark-color);
     }
     .VerifyAccountParent > a {
-        width: 80%;
+        width: 96%;
         margin-bottom: 2em;
         padding: 1em;
+        box-sizing: border-box;
         text-align: center;
         font-weight: 700;
         background-color: var(--blueli-color);

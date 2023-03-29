@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 
 // import styles / components
 import NavBar from '../components/navbar/navbar';
+import LoadingSvg from '/public/graphics/graphic-loading-dots.svg';
 import styles from './recipes.module.css';
 
 // auth
@@ -12,18 +13,18 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 export default function Recipes() {
     
-    const [loadingData, setLoadingData] = useState(false);
-    const [recipeData, setRecipeData] = useState<any>([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const supabase = useSupabaseClient();
-    const router = useRouter();
-    const { push } = useRouter();
+  const [loadingData, setLoadingData] = useState(false);
+  const [recipeData, setRecipeData] = useState<any>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const supabase = useSupabaseClient();
+  const router = useRouter();
+  const { push } = useRouter();
+  // get query params from URL
+  const { q: searchParam } = router.query;
 
-      // load in data
+  // load in data
   useEffect(() => {
-    // get query params from URL
-    const { q: searchParam } = router.query;
-
+    // only load recipes if a search param is provided, if that param is not left empty
     if (searchParam != undefined && searchParam != ''){
         loadRecipes(searchParam);
     }
@@ -112,18 +113,42 @@ export default function Recipes() {
                 </div>
             </div>
         </div>
-        {recipeData != null && recipeData.map((e: any, index: number) => (
-          <div key={index + 'as'}>
-            <h1>{e.title}</h1>
-            <h1>{e.course}</h1>
-            {e.photoUrl != null
+        {loadingData
+          ? <LoadingSvg />
+          : recipeData.length > 0
             ?
-              <img src={e.photoUrl} />
+            <div className={styles.RecipesContainer}>
+              {recipeData.map((e: any, index: number) => (
+                <div key={index + 'a'} className={styles.RecipeItem}>
+                  {e.photoUrl !== null
+                    ?
+                        <Image 
+                        alt='image'
+                        src={e.photoUrl}
+                        height={400}
+                        width={400}
+                        quality={100}
+                    />
+                    :
+                        <Image 
+                        alt='image'
+                        src='/graphics/defaultrecipeimage1.png'
+                        height={400}
+                        width={400}
+                        quality={100}
+                        />
+                    }
+                    <div>
+                        <h1>{e.title}</h1>
+                        <h2>@DrakeB123</h2>
+                        <h3>7 Likes</h3>
+                    </div>
+                </div>
+              ))}
+            </div>
             :
-              <h1>Image not found</h1>
-            }
-          </div>
-        ))}
+            <h1>Nothing Found</h1>
+        }
     </main>
     </>
   )

@@ -31,6 +31,7 @@
             height: 100%;
             width: 125px;
             aspect-ratio: 1 / 1;
+            object-fit: cover;
         }
         /* text container */
         .RecipeItem > div:first-child > div:last-child {
