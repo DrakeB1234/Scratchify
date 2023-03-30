@@ -1,0 +1,79 @@
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  /*
+    2. Remove default margin
+  */
+  * {
+    margin: 0;
+  }
+  /*
+    3. Allow percentage-based heights in the application
+  */
+  html, body {
+    height: 100%;
+  }
+  /*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /*
+    6. Improve media defaults
+  */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  /*
+    7. Remove built-in form typography styles
+  */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  /*
+    8. Avoid text overflows
+  */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+    font-size: inherit;
+  }
+  /*
+    9. Remove default link styles
+  */
+a {
+  color: inherit;
+  font-size: inherit;
+  text-decoration: none;
+}
+  /*
+    10. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+
+  /* global variables */
+  :root {
+
+    --appmain-color-dark:#2c9a5c;
+    --appmain-color-med:#67e89f;
+    --appmain-color-li:#a1f1c4;
+
+    --black-color-dark: #252525;
+    --black-color-med: #494949;
+    --black-color-li: #878787;
+
+    --white-color-dark: #e3e3e3;
+    --white-color-med: #ededed;
+    --white-color-li: #ffffff;
+
+    --red-color: #f79999;
+  }

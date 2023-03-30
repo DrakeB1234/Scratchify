@@ -1,0 +1,126 @@
+/* navbar parent,
+    height on mobile / desktop is 60px */
+.NavbarParent {
+    position: sticky;
+    top: 0;
+    display: flex;
+    width: 100%;
+    color: var(--white-color-li);
+    background-color: var(--appmain-color-med);
+}
+/* navbar parent for desktop */
+.NavbarDesktopParent {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 3% 0.5em 3%;
+}
+    /* app logo on navbar */
+    .NavbarImageBanner {
+        height: auto;
+        max-width: 50%;
+    }
+/* navbar parent for mobile */
+.NavbarMobileParent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+}
+    /* app logo */
+    .NavbarImageLogo {
+        height: auto;
+        width: 100%;
+        max-width: 45px;
+    }
+    /* hamburger icon */
+    .NavbarImageHamburger {
+        height: 30px;
+        max-width: 30px;
+        cursor: pointer;
+    }
+    /* mobile navbar content */
+    .NavbarMobileContent {
+        position: fixed;
+        top: 0;
+        left: -100vw;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        transition: all 0.3s ease-in-out;
+        scrollbar-width: none;
+    }
+        /* hide scrollbar */
+        .NavbarMobileContent::-webkit-scrollbar {
+            display: none;
+        }
+        /* mobile navbar content child */
+        .NavbarMobileContentChild {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 70%;
+            padding-bottom: 4em;
+            box-shadow: 0 0 1em var(--black-color-med);
+            background-color: var(--white-color-li);
+            overflow-y: scroll;
+            z-index: 90;
+        }
+            /* mobile navbar content welcome container */
+            .NavbarMobileContentWelcome {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1em;
+                width: 100%;
+                margin-bottom: 0.5em;
+                padding: 0.3em;
+                font-size: 1.4rem;
+                background-color: var(--appmain-color-med);
+            }
+                /* header for welcome container */
+                .NavbarMobileContentWelcome > h1 {
+                    width: 100%;
+                    align-self: flex-start;
+                }
+            /* style for mobile link container */
+            .MobileLink {
+                display: flex;
+                align-items: center;
+                gap: 1em;
+                padding: 1em 0.5em 1em 0.5em;
+                box-sizing: border-box;
+                font-weight: 700;
+                color: var(--black-color-li);
+                cursor: pointer;
+            }
+                /* link icon */
+                .NavbarImageLinkIcon {
+                    height: 25px;
+                    max-width: 25px;
+                }
+                /* active link */
+                .ActiveLink {
+                    color: var(--black-color-med);
+                    background-color: var(--appmain-color-li);
+                }
+                /* spaced link */
+                .MobileLinkSpaced {
+                    margin-top: 2em;
+                    border-top: 1px solid var(--white-color-dark);
+                }
+
+@media only screen and (max-width: 1000px){
+    /* hide desktop nav on mobile and tablet */
+    .NavbarDesktopParent {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1000px){
+    /* hide mobile nav on desktpop */
+    .NavbarMobileParent {
+        display: none;
+    }
+}
