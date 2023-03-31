@@ -6,6 +6,20 @@
     box-sizing: border-box;
     overflow-y: scroll;
 }
+    /* form error */
+    .FormError {
+        align-self: flex-start;
+        display: flex;
+        width: 100%;
+        padding: 1em 0.5em 1em 0.5em;
+        font-size: 0.9rem;
+        color: var(--red-color-dark);
+        background-color: var(--red-color-li);
+    }
+        .FormError > span {
+            margin: auto 0 auto auto;
+            cursor: pointer;
+        }
     /* inputs */
     .FormParent > input {
         width: 100%;
@@ -16,14 +30,14 @@
     }
         .FormParent > input:focus {
             outline: none !important;
-            border: 2px solid var(--appmain-color-li);
+            border: 2px solid var(--appmain-color-med);
         }
         /* form input error */
         .FormInputError {
             align-self: flex-start;
             margin-top: 0.5em;
             font-size: 0.9rem;
-            color: var(--red-color);
+            color: var(--red-color-med);
         }
     /* label */
     .FormParent > label {
@@ -41,13 +55,15 @@
     }
     /* submit button */
     .FormParent > button[type='submit'] {
+        display: flex;
+        justify-content: center;
         width: 100%;
         margin-top: 1.5em;
         padding: 0.5em;
         border: 0;
         border-radius: 4px;
         font-weight: 700;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: var(--white-color-li);
         background-color: var(--appmain-color-med);
         cursor: pointer;

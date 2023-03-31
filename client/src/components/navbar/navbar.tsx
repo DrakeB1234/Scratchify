@@ -2,17 +2,32 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React, {useState} from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import React, {useEffect, useState, useRef} from 'react';
 
 // import styles / components
 import styles from './navbar.module.css';
+
+// auth
+import { GetSessionAuth } from '@/supabasehelpers/auth';
+import { SignoutAuth } from '@/supabasehelpers/auth';
 
 export default function Navbar() {
 
     const [toggleMobile, setToggleMobile] = useState(false);
     const pathname = usePathname();
+    const [session, setSession] = useState<any>();
+    const router = useRouter();
     
+    // calls get session from auth helpers to display apporiate data for user
+    useEffect(() => {
+        const getSession = async () => {
+            const session = await GetSessionAuth();
+            setSession(session.data.session);
+        };
+        getSession();
+    }, []);
+
     return (
         <div className={styles.NavbarParent}>
             <div className={styles.NavbarDesktopParent}>
@@ -60,7 +75,10 @@ export default function Navbar() {
                             width={300}
                             quality={100}
                             />
-                            <h1>Hello, DrakeB123!</h1>
+                            {session
+                            ? <h1>Hello, DrakeB123!</h1>
+                            : <h1>Hello, Guest!</h1>
+                            }
                         </div>
                         <Link href='/' className={pathname === '/' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
                             <Image 
@@ -82,6 +100,10 @@ export default function Navbar() {
                             />
                             Recipes
                         </Link>
+
+                        {session
+                        ?
+                        <>
                         <Link href='/' className={pathname === '/myrecipes' ? styles.MobileLink + ' ' + styles.MobileLinkSpaced + ' ' + styles.ActiveLink : styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
@@ -122,7 +144,12 @@ export default function Navbar() {
                             />
                             Settings
                         </Link>
-                        <Link href='/signin' className={styles.MobileLink}>                
+                        <button className={styles.MobileLink}
+                        onClick={() => {
+                            SignoutAuth();
+                            router.replace('/signin');
+                        }}
+                        >                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
                             alt=''
@@ -131,7 +158,22 @@ export default function Navbar() {
                             width={50}
                             />
                             Sign out
-                        </Link>
+                        </button>
+                        </>
+                    : 
+                    <>
+                    <Link href='/signin' className={styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
+                        <Image 
+                        className={styles.NavbarImageLinkIcon}
+                        alt=''
+                        src='/icons/actions/icon-logout-outline.svg'
+                        height={50}
+                        width={50}
+                        />
+                        Sign in
+                    </Link>
+                    </>
+                    }
                     </div>
                 </div>
             </div>

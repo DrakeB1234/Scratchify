@@ -23,7 +23,7 @@
   */
   body {
     line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+    font-family: 'Roboto', sans-serif;
   }
   /*
     6. Improve media defaults
@@ -75,5 +75,7 @@ a {
     --white-color-med: #ededed;
     --white-color-li: #ffffff;
 
-    --red-color: #f79999;
+    --red-color-dark: #cb4545;
+    --red-color-med: #f79999;
+    --red-color-li: #fabcbc;
   }

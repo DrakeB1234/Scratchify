@@ -1,38 +1,96 @@
 'use client'
 
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 // import styles / components
+import Popup from '../popup/popup';
+import LoadingSvg from '/public/graphics/icon-loading.svg';
 import styles from './form.module.css';
+
+// signin server function
+import {SignupAuth} from '../../supabasehelpers/auth';
 
 export default function SignupForm(props: any) {
 
+    const router = useRouter();
+
+    // typedefs
     type FormInputs = {
         email: string,
         username: string,
         password: string,
         cpassword: string
     };
+    type AuthState = {
+        type: string,
+        message: string,
+    };
+
+    const [popUpState, setPopUpState] = useState(false);
+    const [loadingState, setLoadingState] = useState(false);
+    const [authState, setAuthState] = useState<AuthState>({
+        type: '',
+        message: ''
+    });
 
     const { register, handleSubmit, formState: { errors }, setError } = useForm<FormInputs>();
 
     // handle save
-    const handleSave = (formVal: FormInputs) => {
-        // check if passwords match
-        if (formVal.password != formVal.cpassword) return setError('cpassword', {
-            message: 'Passwords must match'
-        });
+    const handleSave = async (formVal: FormInputs) => {
+        // reset any form errors generated
+        setAuthState(prev => ({...prev,
+            type: '',
+            message: ''
+        }));
+        
+        // make sure passwords match
+        if (formVal.password !== formVal.cpassword) return setError('cpassword', {message: 'Passwords do not match'});
 
-        // if pass validation, pass form values to callback function
-        props.callback(formVal);
+        // set loading state
+        setLoadingState(true);
+        const val = await SignupAuth(formVal);
+        // remove loading state, set auth state with value passed from auth server component
+        setLoadingState(false);
+
+        // check if val passed from auth is error, if so set auth
+        // state
+        if (val.type == 'error') return setAuthState(prev => ({...prev, 
+            type: val.type,
+            message: val.message
+        }));
+
+        // open pop to show successful account creation
+        return setPopUpState(true);
     }
     
     return (
         <form className={styles.FormParent}
         onSubmit={(handleSubmit(handleSave))}
         >
+
+            {popUpState
+            ? <Popup 
+                title='Account Created!'
+                message={['Check your email for the verfication email sent to confirm your new account.', 
+                'Once your account is verified, come back and sign in!']}
+                link='/signin'
+                linkMessage='Sign in'
+                />
+            : <></>
+            }
+
+            {authState.type == 'error'
+            ?
+                <h1 
+                className={styles.FormError}
+                onClick={() => {setAuthState(prev => ({...prev, type: '', message: ''}))}}
+                >{authState.message}<span>X</span></h1>
+            :   <></>
+            }
+            
             <label htmlFor='email'>Email</label>
             <input {...register('email', {
                 required: {
@@ -90,7 +148,7 @@ export default function SignupForm(props: any) {
                     message: 'No emojis and can not start with space'
                 }
             })}
-            autoComplete='off'
+            autoComplete='off' type='password'
             />
             <h1 className={styles.FormInputError}>{errors?.password?.message}</h1>
 
@@ -101,11 +159,14 @@ export default function SignupForm(props: any) {
                     message: 'Required'
                 }
             })}
-            autoComplete='off'
+            autoComplete='off' type='password'
             />
             <h1 className={styles.FormInputError}>{errors?.cpassword?.message}</h1>
 
-            <button type='submit'>Sign up</button>
+            <button type='submit'>{!loadingState
+                ? 'Sign up'
+                :  <LoadingSvg />
+            }</button>
 
             <h1 className={styles.FormText}>Or sign in here</h1>
 

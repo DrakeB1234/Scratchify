@@ -1,5 +1,9 @@
 /* main parent
     adjust spacing on top for navbar */
 .HomeParent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     min-height: 100vh;
+    overflow: hidden;
 }

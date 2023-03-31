@@ -6,26 +6,27 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 // import styles / components
+import Popup from '../popup/popup';
 import LoadingSvg from '/public/graphics/icon-loading.svg';
-import styles from './form.module.css';
+import styles from '../signinform/form.module.css';
 
-// signin server function
-import {SigninAuth} from '../../supabasehelpers/auth';
+// auth server function
+import {ResetPasswordSend} from '../../supabasehelpers/auth';
 
-export default function SigninForm(props: any) {
+export default function ResetPasswordForm(props: any) {
     
     const router = useRouter();
 
     // typedefs
     type Inputs = {
         email: string,
-        password: string,
     };
     type AuthState = {
         type: string,
         message: string,
     };
 
+    const [popUpState, setPopUpState] = useState(false);
     const [loadingState, setLoadingState] = useState(false);
     const [authState, setAuthState] = useState<AuthState>({
         type: '',
@@ -43,7 +44,7 @@ export default function SigninForm(props: any) {
             message: ''
         }));
 
-        const val = await SigninAuth(formVal);
+        const val = await ResetPasswordSend(formVal);
         // remove loading state, set auth state with value passed from auth server component
         setLoadingState(false);
 
@@ -54,14 +55,25 @@ export default function SigninForm(props: any) {
             message: val.message
         }));
 
-        // redirect user to home page
-        return router.replace('/');
+        // open pop to show successful account creation
+        return setPopUpState(true);
     }
     
     return (
         <form className={styles.FormParent}
         onSubmit={(handleSubmit(handleSave))}
         >
+
+            {popUpState
+            ? <Popup 
+                title='Reset Link Sent'
+                message={['Check your email for the reset link sent in order to proceed.', 
+                'This link will expire']}
+                link='/signin'
+                linkMessage='Go back'
+                />
+            : <></>
+            }
 
             {authState.type == 'error'
             ?
@@ -88,33 +100,17 @@ export default function SigninForm(props: any) {
             />
             <h1 className={styles.FormInputError}>{errors?.email?.message}</h1>
 
-            <label htmlFor='password'>Password</label>
-            <input {...register('password', {
-                required: {
-                    value: true,
-                    message: 'Required'
-                }
-            })}
-            autoComplete='off' type='password'
-            />
-
-            <h1 className={styles.FormInputError}>{errors?.password?.message}</h1>
-            <Link 
-            href='/signin/resetpassword'
-            className={styles.LinkForgotPassword}
-            >forgot password?</Link>
-
             <button type='submit'>{!loadingState
-                ? 'Sign in'
+                ? 'Send'
                 :  <LoadingSvg />
             }</button>
 
-            <h1 className={styles.FormText}>Or sign up using</h1>
+            <h1 className={styles.FormText}>Or go back to</h1>
 
             <Link
-            href='/signup'
+            href='/signin'
             className={styles.LinkMakeAccount}
-            >Sign up</Link>
+            >Sign in</Link>
 
         </form>
     )

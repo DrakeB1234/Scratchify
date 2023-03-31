@@ -6,44 +6,50 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 // import styles / components
+import Popup from '../popup/popup';
 import LoadingSvg from '/public/graphics/icon-loading.svg';
-import styles from './form.module.css';
+import styles from '../signinform/form.module.css';
 
-// signin server function
-import {SigninAuth} from '../../supabasehelpers/auth';
+// auth server function
+import {UpdatePasswordSend} from '../../supabasehelpers/auth';
 
-export default function SigninForm(props: any) {
+export default function UpdatePasswordForm(props: any) {
     
     const router = useRouter();
 
     // typedefs
     type Inputs = {
-        email: string,
         password: string,
+        cpassword: string
     };
     type AuthState = {
         type: string,
         message: string,
     };
 
+    const [popUpState, setPopUpState] = useState(false);
     const [loadingState, setLoadingState] = useState(false);
     const [authState, setAuthState] = useState<AuthState>({
         type: '',
         message: ''
     });
 
-    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+    const { register, handleSubmit, formState: { errors }, setError } = useForm<Inputs>();
 
     // handle save
     const handleSave = async (formVal: Inputs) => {
-        // set loading state and reset any form errors generated
-        setLoadingState(true);
+        // reset any form errors generated
         setAuthState(prev => ({...prev,
             type: '',
             message: ''
         }));
 
-        const val = await SigninAuth(formVal);
+        // make sure new passwords match
+        if (formVal.password !== formVal.cpassword) return setError('cpassword', {message: 'Passwords do not match'});
+
+        // set loading state
+        setLoadingState(true);
+        const val = await UpdatePasswordSend(formVal);
         // remove loading state, set auth state with value passed from auth server component
         setLoadingState(false);
 
@@ -54,14 +60,24 @@ export default function SigninForm(props: any) {
             message: val.message
         }));
 
-        // redirect user to home page
-        return router.replace('/');
+        // open pop to show successful account creation
+        return setPopUpState(true);
     }
     
     return (
         <form className={styles.FormParent}
         onSubmit={(handleSubmit(handleSave))}
         >
+
+            {popUpState
+            ? <Popup 
+                title='Password Updated!'
+                message={['You may now go back to the sign in page.']}
+                link='/signin'
+                linkMessage='Sign in'
+                />
+            : <></>
+            }
 
             {authState.type == 'error'
             ?
@@ -72,24 +88,31 @@ export default function SigninForm(props: any) {
             :   <></>
             }
 
-
-            <label htmlFor='email'>Email</label>
-            <input {...register('email', {
+            <label htmlFor='password'>New Password</label>
+            <input {...register('password', {
                 required: {
                     value: true,
                     message: 'Required'
                 },
+                minLength: {
+                    value: 7,
+                    message: 'Must be at least 7 characters'
+                },
+                maxLength: {
+                    value: 100,
+                    message: 'Must be less than 100 characters'
+                },
                 pattern: {
-                    value: /^\S+@\S+\.\S+$/,
-                    message: 'Invalid Email Address'
+                    value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|:;"<>?\[\]\',.\/\\]{0,}$/,
+                    message: 'No emojis and can not start with space'
                 }
             })}
-            autoComplete='off'
+            autoComplete='off' type='password'
             />
-            <h1 className={styles.FormInputError}>{errors?.email?.message}</h1>
+            <h1 className={styles.FormInputError}>{errors?.password?.message}</h1>
 
-            <label htmlFor='password'>Password</label>
-            <input {...register('password', {
+            <label htmlFor='cpassword'>Confirm Password</label>
+            <input {...register('cpassword', {
                 required: {
                     value: true,
                     message: 'Required'
@@ -97,24 +120,19 @@ export default function SigninForm(props: any) {
             })}
             autoComplete='off' type='password'
             />
-
-            <h1 className={styles.FormInputError}>{errors?.password?.message}</h1>
-            <Link 
-            href='/signin/resetpassword'
-            className={styles.LinkForgotPassword}
-            >forgot password?</Link>
+            <h1 className={styles.FormInputError}>{errors?.cpassword?.message}</h1>
 
             <button type='submit'>{!loadingState
-                ? 'Sign in'
+                ? 'Update Password'
                 :  <LoadingSvg />
             }</button>
 
-            <h1 className={styles.FormText}>Or sign up using</h1>
+            <h1 className={styles.FormText}>Or go back to</h1>
 
             <Link
-            href='/signup'
+            href='/signin'
             className={styles.LinkMakeAccount}
-            >Sign up</Link>
+            >Sign in</Link>
 
         </form>
     )
