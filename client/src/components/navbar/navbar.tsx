@@ -14,6 +14,7 @@ import { SignoutAuth } from '@/supabasehelpers/auth';
 
 export default function Navbar() {
 
+    const [toggleDesktop, setToggleDesktop] = useState(false);
     const [toggleMobile, setToggleMobile] = useState(false);
     const pathname = usePathname();
     const [session, setSession] = useState<any>();
@@ -32,14 +33,109 @@ export default function Navbar() {
         <div className={styles.NavbarParent}>
             <div className={styles.NavbarDesktopParent}>
                 <Image
-                className={styles.NavbarImageBanner}
+                className={styles.NavbarImageBannerDesktop}
                 alt='logo'
                 src='/scratchify/appbanner.png'
                 height={100}
                 width={300}
                 quality={100}
                 />
-                Im the navbar
+                <button className={styles.NavbarImageBars}
+                onClick={() => setToggleDesktop(!toggleDesktop)}
+                >
+                    <Image
+                    className={styles.NavbarImageIcon}
+                    alt='logo'
+                    src='/icons/navbar/icon-bars.svg'
+                    height={50}
+                    width={50}
+                    quality={100}
+                    />
+                </button>
+                <div className={styles.NavbarDesktopContent}
+                style={toggleDesktop ? {left: '0'} : {left: '-30vw'}}
+                >
+                    <Link href='/' className={styles.DesktopLink}>                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/navbar/icon-house-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        Home
+                    </Link>
+                    <Link href='/search' className={styles.DesktopLink}>                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/navbar/icon-recipe-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        Recipes
+                    </Link>
+                    {session
+                    ?
+                    <>
+                    <Link href='/myrecipes' className={styles.DesktopLink + ' ' + styles.DesktopLinkSpaced}>                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/navbar/icon-myrecipes-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        My Recipes
+                    </Link>
+                    <Link href='/mealplanner' className={styles.DesktopLink}>                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/navbar/icon-myrecipes-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        Meal Planner
+                    </Link>
+                    <Link href='/grocerylist' className={styles.DesktopLink}>                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/navbar/icon-list-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        Grocery List
+                    </Link>
+                    <button className={styles.DesktopLink + ' ' + styles.DesktopLinkSpaced}
+                    onClick={() => {
+                        SignoutAuth();
+                        router.replace('/signin');
+                    }}
+                    >                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/actions/icon-logout-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        Sign out
+                    </button>
+                    </>
+                    :
+                    <Link href='/signin' className={styles.DesktopLink + ' ' + styles.DesktopLinkSign}>                
+                        Sign in
+                    </Link>
+                    }
+                </div>
             </div>
 
             <div className={styles.NavbarMobileParent}>
@@ -90,7 +186,7 @@ export default function Navbar() {
                             />
                             Home
                         </Link>
-                        <Link href='/' className={pathname === '/recipes' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
+                        <Link href='/search' className={pathname === '/search' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
                             alt=''
@@ -104,7 +200,7 @@ export default function Navbar() {
                         {session
                         ?
                         <>
-                        <Link href='/' className={pathname === '/myrecipes' ? styles.MobileLink + ' ' + styles.MobileLinkSpaced + ' ' + styles.ActiveLink : styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
+                        <Link href='/myrecipes' className={pathname === '/myrecipes' ? styles.MobileLink + ' ' + styles.MobileLinkSpaced + ' ' + styles.ActiveLink : styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
                             alt=''
@@ -114,7 +210,7 @@ export default function Navbar() {
                             />
                             My Recipes
                         </Link>
-                        <Link href='/' className={pathname === '/mealplanner' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
+                        <Link href='/mealplanner' className={pathname === '/mealplanner' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
                             alt=''
@@ -124,7 +220,7 @@ export default function Navbar() {
                             />
                             Meal Planner
                         </Link>
-                        <Link href='/' className={pathname === '/grocerylist' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
+                        <Link href='/grocerylist' className={pathname === '/grocerylist' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
                             alt=''
@@ -134,7 +230,7 @@ export default function Navbar() {
                             />
                             Grocery List
                         </Link>
-                        <Link href='/' className={pathname === '/recipes' ? styles.MobileLink + ' ' + styles.MobileLinkSpaced + ' ' + styles.ActiveLink : styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
+                        <Link href='/settings' className={styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
                             alt=''

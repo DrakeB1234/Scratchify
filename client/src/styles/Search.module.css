@@ -1,5 +1,5 @@
 /* main parent */
-.HomeParent {
+.SearchParent {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,22 +8,39 @@
     min-height: 100vh;
     overflow: hidden;
 }
-/* recipe parent */
-.RecipeParent {
+/* search recipe parent */
+.SearchRecipeParent {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: clamp(200px, 100%, 1000px);
-    margin-top: 2em;
+    margin-top: 1em;
     padding: 0.5em;
 }
-    /* recipe title */
-    .RecipeTitle {
-        align-self: flex-start;
-        font-weight: 700;
-        font-size: 1.2rem;
-        color: var(--black-color-dark);
+    /* search bar container */
+    .SearchRecipeBar {
+        display: flex;
+        align-items: center;
+        width: clamp(100px, 100%, 600px);
+        margin: 0 auto 0 auto;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 4px;
+        border: 1px solid var(--white-color-dark);
     }
+        /* search bar input */
+        .SearchRecipeBar > input {
+            width: 100%;
+            padding: 0.2em;
+            background: none;
+            border: 0;
+            outline: none !important;
+        }
+        /* search icon */
+        .SearchRecipeBar > img {
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
 /* recipe item container */
 .RecipeItemContainer {
     display: flex;

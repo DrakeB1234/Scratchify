@@ -24,6 +24,7 @@
   body {
     line-height: 1.5;
     font-family: 'Roboto', sans-serif;
+    background-color: var(--white-color-li);
   }
   /*
     6. Improve media defaults
@@ -73,8 +74,11 @@ a {
 
     --white-color-dark: #e3e3e3;
     --white-color-med: #ededed;
-    --white-color-li: #ffffff;
+    --white-color-li: #f7f7f7;
+    --white-color-liest: #ffffff;
 
+    --blue-color-med: #4f80e2;
+    
     --red-color-dark: #cb4545;
     --red-color-med: #f79999;
     --red-color-li: #fabcbc;

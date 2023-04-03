@@ -1,9 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-}
 
 module.exports = {
   webpack: (config) => {
@@ -16,5 +11,15 @@ module.exports = {
   },
   experimental: {
     appDir: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'wsgtwhbvwnftxaqiogud.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/recipe-images/public/**',
+      },
+    ],
   },
 }
