@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import {useSearchParams} from 'next/navigation'
 import {useRef} from 'react';
 
 // import styles / components
@@ -14,12 +15,17 @@ import { SearchRecipes } from '@/supabasehelpers/database';
 export default function Recipes() {
 
     const supabase = createClient();
+    const params = useSearchParams();
+
+    // URL params
+    const searchParam = params.get('q');
+    console.log(searchParam)
 
     // ref for input
     let searchInput = useRef('');
 
     // function for performing database search
-    const attemptDataSearch = () => {
+    const attemptDataSearch = async () => {
       alert('searcg')
     };
 

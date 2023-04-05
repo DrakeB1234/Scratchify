@@ -104,8 +104,12 @@ export default function IngredientsInput(props: any) {
                                 value: true,
                                 message: 'Required'
                             },
+                            maxLength: {
+                                value: 30,
+                                message: 'Must have less than 30 Characters'
+                            }, 
                             pattern: {
-                                value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
+                                value: /^[^\s][\w\s!@#$%^&*()-~`'_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
                                 message: 'No emojis or Starting with spaces'
                             }
                         })}
@@ -119,8 +123,16 @@ export default function IngredientsInput(props: any) {
                                 value: true,
                                 message: 'Required'
                             },
+                            minLength: {
+                                value: 3,
+                                message: 'Must have at least 3 Characters'
+                            }, 
+                            maxLength: {
+                                value: 50,
+                                message: 'Must have less than 50 Characters'
+                            }, 
                             pattern: {
-                                value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
+                                value: /^[^\s][\w\s!@#$%^&*()-~`'_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
                                 message: 'No emojis or Starting with spaces'
                             }
                         })}

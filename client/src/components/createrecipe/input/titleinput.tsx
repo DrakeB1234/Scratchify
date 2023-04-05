@@ -13,12 +13,16 @@ export default function TitleInput(props: any) {
         title: string,
         course: string,
         description: string,
+        source: string,
+        public: boolean,
     };
 
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({defaultValues:{
         title: props.data.title!,
         course: props.data.course!,
         description: props.data.description!,
+        source: props.data.source!,
+        public: props.data.public!
     }});
 
     const [saveInput, setSaveInput] = useState(false);
@@ -27,7 +31,9 @@ export default function TitleInput(props: any) {
         props.setData((prev: Inputs) => ({...prev, 
             title: formVal.title,
             course: formVal.course,
-            description: formVal.description
+            description: formVal.description,
+            source: formVal.source == '' ? null : formVal.source,
+            public: formVal.public
         }));
         return setSaveInput(true);
     }
@@ -92,13 +98,37 @@ export default function TitleInput(props: any) {
                     message: 'Must have less than 500 Characters'
                 }, 
                 pattern: {
-                    value: /^[^\s][\w\s!@#$%^&*()-~`_+{}|/°:;"<>?\[\]\',.\/\\]{0,}$/,
+                    value: /^[^\s][\w\s!@#$%^&*()-~`'_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
                     message: 'No emojis or Starting with spaces'
                 }
                 })} 
                 autoComplete='off'
                 />
                 <h1 className={styles.FormInputError}>{errors?.description?.message}</h1>
+
+                <label htmlFor='source'>Source (optional)</label>
+                <input {...register('source', {
+                    minLength: {
+                        value: 3,
+                        message: 'Must be at least 3 characters'
+                    },
+                    maxLength: {
+                        value: 200,
+                        message: 'Must be less than 200 characters'
+                    },
+                    pattern: {
+                        value: /^[^\s][\w\s!@#$%^&*()-~`'_+{}|/:;"<>?\[\]\,.\/\\]{0,}$/,
+                        message: 'No emojis or Starting with spaces'
+                    }
+                })}
+                />
+                <h1 className={styles.FormInputError}>{errors?.source?.message}</h1>
+
+                <label htmlFor='public'>Make Recipe Public?</label>
+                <input {...register('public')} 
+                autoComplete='off' type='checkbox'
+                />
+                <h1 className={styles.FormInputError}>{errors?.public?.message}</h1>
 
                 {!saveInput 
                 ? <button type='submit' className={styles.SaveButton}>Save Changes</button>

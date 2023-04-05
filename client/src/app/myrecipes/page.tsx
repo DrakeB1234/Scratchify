@@ -11,14 +11,13 @@ import CreateRecipe from '@/components/createrecipe/createrecipe';
 import styles from '../../styles/MyRecipes.module.css';
 
 // auth
-import { createClient } from 'utils/supabase-browser';
 import { GetSessionAuth } from '@/supabasehelpers/auth';
 import { GetUserRecipes } from '@/supabasehelpers/database';
 
 export default function MyRecipes() {
 
     const router = useRouter();
-    let session: any = null;
+    let session = useRef<any>();
 
     const [toggleRecipeCreator, setToggleRecipeCreator] = useState(false);
     const [loadingData, setLoadingData] = useState<boolean>(false);
@@ -27,10 +26,10 @@ export default function MyRecipes() {
     // checks to see is user has a session
     useEffect(() => {
       const getSession = async () => {
-        session = await GetSessionAuth()
-        session = session.data.session;
+        session.current = await GetSessionAuth()
+        session.current = session.current.data.session;
         // if session is null, redirect user to signin
-        if (session == null) return router.replace('/signin');
+        if (session.current == null) return router.replace('/signin');
         // else return getRecipes();
       };
       getSession();
@@ -38,10 +37,10 @@ export default function MyRecipes() {
 
     const getRecipes = async () => {
         // if no session set, return nothing
-        if (session === null) return;
+        if (session.current === null) return;
         // set loading container
         setLoadingData(true);
-        let data = await GetUserRecipes(session.user.id);
+        let data = await GetUserRecipes(session.current.user.id);
         setLoadingData(false);
 
         // if data was unsucessful, reutn

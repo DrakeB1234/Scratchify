@@ -39,6 +39,8 @@
     flex-direction: row;
     align-items: center;
     gap: 2em;
+    min-height: 53px;
+    padding-bottom: 0.2em;
     overflow-x: scroll;
     cursor: pointer;
     scrollbar-width: none;
@@ -50,7 +52,7 @@
     }
     /* navbar items */
     .CreateContentNavBarItem {
-        padding: 0.75em 1em 0.75em 1em;
+        padding: 1em;
     }
         /* navbar active */
         .NavBarActive {

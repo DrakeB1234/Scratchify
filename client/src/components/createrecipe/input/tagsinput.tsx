@@ -97,6 +97,14 @@ export default function TagsInput(props: any) {
                                 value: true,
                                 message: 'Required'
                             },
+                            minLength: {
+                                value: 3,
+                                message: 'Tag must be at least 3 characters'
+                            },
+                            maxLength: {
+                                value: 30,
+                                message: 'Tag must be at less than 30 characters'
+                            },
                             pattern: {
                                 value: /^[^\s][a-zA-Z\s]{0,}$/,
                                 message: 'Must only use letters and spaces'

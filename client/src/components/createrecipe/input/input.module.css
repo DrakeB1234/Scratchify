@@ -40,6 +40,14 @@
         background-color: var(--white-color-li);
         resize: none;
     }
+        /* checkbox */
+        .FormParent input[type="checkbox"] {
+            width: fit-content;
+            align-self: flex-start;
+            height: 25px;
+            width: 25px;
+            margin-top: 1em;
+        }
         /* textarea */
         .FormParent textarea {
             padding: 0.5em 0.5em 3em 0.5em;
@@ -149,4 +157,11 @@
     margin-top: 2em;
     font-size: 1.2rem;
     background-color: var(--blue-color-med);
+}
+/* Create Recipe button */
+.ErrorButton {
+    width: 100%;
+    margin-top: 2em;
+    font-size: 1.2rem;
+    background-color: var(--red-color-med);
 }

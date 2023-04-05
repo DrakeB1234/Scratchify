@@ -23,6 +23,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.8",
     "server-only": "^0.0.1",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "uuidv4": "^6.2.13"
   }
 }
