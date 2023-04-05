@@ -51,12 +51,14 @@ export default function MyRecipes() {
 
   return (
     <>
+
     {toggleRecipeCreator
       ? <CreateRecipe 
         setToggle={setToggleRecipeCreator}
         />
       : <></>
     }
+    
     <div className={styles.MyRecipesParent}>
         <Navbar />
         <div className={styles.MyRecipesDashboardParent}>

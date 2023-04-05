@@ -20,7 +20,7 @@
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
-        padding: 1em 0.5em 1em 0.5em;
+        padding: 0.75em 0.5em 0.75em 0.5em;
         font-weight: 700;
         font-size: 1.3rem;
         color: var(--white-color-li);
@@ -37,19 +37,24 @@
 .CreateContentNavBar {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 2em;
-    min-height: 58px;
-    padding: 0.5em 0 0.5em 0;
     overflow-x: scroll;
     cursor: pointer;
+    scrollbar-width: none;
+    background-color: var(--white-color-liest);
 }
+    /* hide scrollbar for Chrome, Safarai */
+    .CreateContentNavBar::-webkit-scrollbar {
+        display: none;
+    }
     /* navbar items */
     .CreateContentNavBarItem {
-        padding: 0.5em 1em 0.5em 1em;
+        padding: 0.75em 1em 0.75em 1em;
     }
         /* navbar active */
         .NavBarActive {
-            border-bottom: 2px solid var(--red-color-li);
+            border-bottom: 4px solid var(--red-color-li);
         }
         /* navbar text */
         .CreateContentNavBarItem > h1 {

@@ -8,6 +8,7 @@
     padding: 1em;
     padding-top: 15vh;
     background-color: rgba(25, 48, 67, 0.4);
+    z-index: 99;
 }
 /* content */
 .PopupContent {
@@ -42,4 +43,29 @@
         color: var(--white-color-li);
         background-color: var(--appmain-color-med);
         cursor: pointer;
+    }
+/* confirm button container */
+.ConfirmButtonsParent {
+    display: flex;
+    width: 100%;
+    margin-top: 2em;
+    justify-content: flex-end;
+}
+    /* button style */
+    .ConfirmButtonsParent > button {
+        padding: 0.5em 1em 0.5em 1em;
+        border: 0;
+        border-radius: 4px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    /* cancel button style */
+    .ConfirmButtonsParent > button:first-child {
+        margin-right: 1em;
+        background-color: var(--white-color-med);
+    }
+    /* yes button style */
+    .ConfirmButtonsParent > button:last-child {
+        color: var(--white-color-li);
+        background-color: var(--appmain-color-med);
     }

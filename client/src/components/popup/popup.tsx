@@ -11,7 +11,10 @@ type Props = {
     title: string,
     message: string[],
     link?: string,
-    linkMessage?: string
+    linkMessage?: string,
+    confirm?: boolean,
+    popupToggle?: any,
+    callback?: any
 }
 
 export default function Popup(props: Props) {
@@ -28,6 +31,20 @@ export default function Popup(props: Props) {
 
             {props.link != null
             ? <Link href='/signin'>{props.linkMessage}</Link>
+            : <></>
+            }
+
+            {props.confirm
+            ? 
+            <div className={styles.ConfirmButtonsParent}>
+              <button
+              onClick={() => props.popupToggle(false)}
+              >Cancel</button>
+
+              <button
+              onClick={props.callback}
+              >Confirm</button>
+            </div>
             : <></>
             }
 

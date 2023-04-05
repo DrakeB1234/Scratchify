@@ -4,7 +4,13 @@ import Image from 'next/image';
 import React, {useEffect, useState, useRef} from 'react';
 
 // import styles / components
+import Popup from '../../components/popup/popup';
 import TitleInput from './input/titleinput';
+import PhotoInput from './input/photoinput';
+import TagsInput from './input/tagsinput';
+import IngredientsInput from './input/ingredientsinput';
+import InstructionsInput from './input/instructionsinput';
+import SubmitInput from './input/submitinput';
 import styles from './createrecipe.module.css';
 
 export default function CreateRecipe(props: any) {
@@ -13,17 +19,48 @@ export default function CreateRecipe(props: any) {
     type Inputs = {
         title: string | null,
         course: string | null,
-        description: string | null
+        description: string | null,
+        photoFile: any | null,
+        tags: string[],
+        ingredients: {
+            amount: string,
+            name: string
+        }[],
+        instructions: string[]
     }
 
+    const [popUpState, setPopUpState] = useState(false);
     const [activeTab, setActiveTab] = useState<string>('title');
     const [inputData, setInputData] = useState<Inputs>({
         title: null,
         course: null,
-        description: null
+        description: null,
+        photoFile: null,
+        tags: [''],
+        ingredients: [{
+            amount: '',
+            name: ''
+        }],
+        instructions: ['']
     });
 
+    const exitRecipe = () => {
+        return props.setToggle(false);
+    }
+
     return (
+        <>
+        {popUpState
+            ? <Popup 
+                title='Exit Recipe Creator'
+                message={['Are you sure you want to exit the Recipe Creator?', 
+                'This will delete any data saved so far, in order to save this data create this recipe before exiting!']}
+                confirm={true}
+                popupToggle={setPopUpState}
+                callback={exitRecipe}
+                />
+            : <></>
+        }
         <div className={styles.CreateParent}>
             <div className={styles.CreateContentParent}>
                 <div className={styles.CreateContentTitle}>
@@ -33,7 +70,7 @@ export default function CreateRecipe(props: any) {
                     src='/icons/actions/icon-plus-outline.svg'
                     height={50}
                     width={50}
-                    onClick={() => props.setToggle(false)}
+                    onClick={() => setPopUpState(true)}
                     />
                 </div>
                 <div className={styles.CreateContentNavBar}>
@@ -89,12 +126,45 @@ export default function CreateRecipe(props: any) {
                 />
 
                 : activeTab === 'photo'
-                ? <></>
+                ?
+                <PhotoInput
+                data={inputData} 
+                setData={setInputData}
+                />
+
+                : activeTab === 'tags'
+                ?
+                <TagsInput
+                data={inputData} 
+                setData={setInputData}
+                />
+
+                : activeTab === 'ingredients'
+                ?
+                <IngredientsInput
+                data={inputData} 
+                setData={setInputData}
+                />
+
+                : activeTab === 'instructions'
+                ?
+                <InstructionsInput
+                data={inputData} 
+                setData={setInputData}
+                />
+
+                : activeTab === 'submit'
+                ?
+                <SubmitInput
+                data={inputData} 
+                setData={setInputData}
+                />
 
                 : <></> 
 
                 }
             </div>
         </div>
+        </>
     )
 }
