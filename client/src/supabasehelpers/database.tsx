@@ -7,7 +7,7 @@ const supabase = createClient();
 export async function GetUserRecipes(userid: any) {
     const { data, error } = await supabase
     .from('recipe')
-    .select('*')
+    .select('recipeId, title, photoUrl')
     
     if (error) return {
         type: 'error',
@@ -20,20 +20,35 @@ export async function GetUserRecipes(userid: any) {
     };
 }
 
-export async function SearchRecipes(data: any) {
-    const { data: recipeData, error } = await supabase
+export async function SearchRecipes(searchParam: string | null) {
+    // performs search if params are provided
+    if (searchParam != null) {
+
+        let query = supabase
         .from('recipe')
-        .select('*')
+        .select('recipeId, title, photoUrl');
+  
+        // searches with provided search query
+        if (searchParam) { query = query.like('title', `%${searchParam}%`) }
+        
+        const { data, error } = await query;
     
-    if (error) return {
+        if (error) return {
+            type: 'error',
+            message: `${error.message}`,
+            data: null
+        }; else return {
+            type: 'success',
+            message: '',
+            data: data
+        };
+    }
+    // else if no params provided return error
+    else return {
         type: 'error',
-        message: `${error.message}`,
+        message: `input error`,
         data: null
-    }; else return {
-        type: 'success',
-        message: '',
-        data: data
-    };
+    }
 }
 
 // typedef

@@ -1,6 +1,5 @@
 import 'server-only';
 
-
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -27,7 +26,7 @@ export default async function Home() {
           <h1 className={styles.RecipeTitle}>Trending Recipes</h1>
           <div className={styles.RecipeItemContainer}>
             {data && data.map((e: any, index: number) => (
-              <Link href='/'
+              <Link href={`/recipe/${e.title}`}
               key={index + 'a'}className={styles.RecipeItem}
               >
                 <Image 
