@@ -1,0 +1,66 @@
+/* create parent */
+.CreateParent {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(9, 16, 30, 0.2);
+    z-index: 92;
+}
+/* create parent content */
+.CreateContentParent {
+    display: flex;
+    flex-direction: column;
+    width: clamp(200px, 100%, 1400px);
+    background-color: var(--white-color-li);
+}
+    /* create parent title */
+    .CreateContentTitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0.75em 0.5em 0.75em 0.5em;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--white-color-li);
+        background-color: var(--appmain-color-med);
+    }
+        /* create parent title */
+        .CreateContentTitle > img {
+            height: 30px;
+            width: 30px;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+/* create parent navbar */
+.CreateContentNavBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2em;
+    min-height: 53px;
+    padding-bottom: 0.2em;
+    overflow-x: scroll;
+    cursor: pointer;
+    scrollbar-width: none;
+    background-color: var(--white-color-liest);
+}
+    /* hide scrollbar for Chrome, Safarai */
+    .CreateContentNavBar::-webkit-scrollbar {
+        display: none;
+    }
+    /* navbar items */
+    .CreateContentNavBarItem {
+        padding: 1em;
+    }
+        /* navbar active */
+        .NavBarActive {
+            border-bottom: 4px solid var(--red-color-li);
+        }
+        /* navbar text */
+        .CreateContentNavBarItem > h1 {
+            font-weight: 700;
+            color: var(--black-color-li);
+            cursor: pointer;
+        }

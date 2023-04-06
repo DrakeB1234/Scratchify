@@ -1,0 +1,90 @@
+/* main parent */
+.HomeParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3em;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+/* recipe parent */
+.RecipeParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(200px, 100%, 1000px);
+    margin-top: 2em;
+    padding: 0.5em;
+}
+    /* recipe title */
+    .RecipeTitle {
+        align-self: flex-start;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--black-color-dark);
+    }
+/* recipe item container */
+.RecipeItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em 0.2em;
+    margin-top: 1em;
+}
+    /* recipe item */
+    .RecipeItem {
+        display: flex;
+        flex-direction: column;
+        width: clamp(50px, 48%, 300px);
+        padding: 0.5em;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: var(--white-color-liest);
+        box-shadow: 0 0 1em var(--white-color-dark);
+        cursor: pointer;
+    }
+        /* recipe item title */
+        .RecipeItem > h1 {
+            margin-top: 0.5em;
+            margin-bottom: auto;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--black-color-med);
+        }
+        /* recipe image */
+        .RecipeImage {
+            height: auto;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+        /* recipe creator and likes container */
+        .RecipeItemInfo {
+            display: flex;
+            flex-direction: column;
+            margin-top: 1em;
+        }
+            /* recipe creator text */
+            .RecipeItemInfo > h1 {
+                font-weight: 400;
+                font-size: 1rem;
+                color: var(--black-color-li);
+            }
+            /* recipe likes container */
+            .RecipeItemInfo > div {
+                align-self: flex-end;
+                display: flex;
+                align-items: center;
+                gap: 0.5em;
+            }
+                /* text */
+                .RecipeItemInfo > div > h1 {
+                    color: var(--appmain-color-dark);
+                }
+                /* save icon */
+                .RecipeItemInfo > div > img {
+                    height: 15px;
+                    width: 15px;
+                }

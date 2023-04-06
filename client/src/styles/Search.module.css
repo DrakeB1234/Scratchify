@@ -1,0 +1,107 @@
+/* main parent */
+.SearchParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3em;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+/* search recipe parent */
+.SearchRecipeParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: clamp(200px, 100%, 1000px);
+    margin-top: 1em;
+    padding: 0.5em;
+}
+    /* search bar container */
+    .SearchRecipeBar {
+        display: flex;
+        align-items: center;
+        width: clamp(100px, 100%, 600px);
+        margin: 0 auto 0 auto;
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 4px;
+        border: 1px solid var(--white-color-dark);
+    }
+        /* search bar input */
+        .SearchRecipeBar > input {
+            width: 100%;
+            padding: 0.2em;
+            background: none;
+            border: 0;
+            outline: none !important;
+        }
+        /* search icon */
+        .SearchRecipeBar > img {
+            height: 25px;
+            width: 25px;
+            cursor: pointer;
+        }
+/* recipe item container */
+.RecipeItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em 0.2em;
+    margin-top: 1em;
+}
+    /* recipe item */
+    .RecipeItem {
+        display: flex;
+        flex-direction: column;
+        width: clamp(50px, 48%, 300px);
+        padding: 0.5em;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: var(--white-color-liest);
+        box-shadow: 0 0 1em var(--white-color-dark);
+        cursor: pointer;
+    }
+        /* recipe item title */
+        .RecipeItem > h1 {
+            margin-top: 0.5em;
+            margin-bottom: auto;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--black-color-med);
+        }
+        /* recipe image */
+        .RecipeImage {
+            height: auto;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+        /* recipe creator and likes container */
+        .RecipeItemInfo {
+            display: flex;
+            flex-direction: column;
+            margin-top: 1em;
+        }
+            /* recipe creator text */
+            .RecipeItemInfo > h1 {
+                font-weight: 400;
+                font-size: 1rem;
+                color: var(--black-color-li);
+            }
+            /* recipe likes container */
+            .RecipeItemInfo > div {
+                align-self: flex-end;
+                display: flex;
+                align-items: center;
+                gap: 0.5em;
+            }
+                /* text */
+                .RecipeItemInfo > div > h1 {
+                    color: var(--appmain-color-dark);
+                }
+                /* save icon */
+                .RecipeItemInfo > div > img {
+                    height: 15px;
+                    width: 15px;
+                }

@@ -1,13 +1,13 @@
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <style>
     #ring1 {
+        animation: ring1 0.8s infinite;
         transform-origin: center;
-        animation: spinner1 1.5s infinite;
     }
 
-    @keyframes spinner1 {
-        0% { transform: rotate(0deg)}
-        100% { transform: rotate(355deg)}
+    @keyframes ring1 {
+        0% {transform:rotate(0deg)}
+        100% {transform:rotate(360deg)}
     }
 </style>
 <g id="icon-loading" clip-path="url(#clip0_1_3)">

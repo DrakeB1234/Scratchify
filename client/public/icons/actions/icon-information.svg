@@ -1,0 +1,22 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-instruction">
+<path id="Rectangle 17" d="M37.5 40V33H39.5V40H37.5Z" fill="#646161"/>
+<circle id="Ellipse 3" cx="38.5" cy="34.5" r="9" stroke="#646161" stroke-width="3"/>
+<circle id="Ellipse 4" cx="38.5" cy="30.5" r="1.5" fill="#646161"/>
+<mask id="mask0_2_80" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="6" width="46" height="36">
+<path id="Subtract" fill-rule="evenodd" clip-rule="evenodd" d="M48 6H2V42H28.4991C26.9299 39.9108 26 37.314 26 34.5C26 27.5964 31.5964 22 38.5 22C42.3019 22 45.7074 23.6973 48 26.3756V6Z" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_2_80)">
+<g id="book">
+<rect id="Rectangle 13" x="2" y="40" width="30" height="3" transform="rotate(-90 2 40)" fill="#646161"/>
+<rect id="Rectangle 14" x="24" y="40" width="30" height="2" transform="rotate(-90 24 40)" fill="#646161"/>
+<path id="Vector 7" d="M3 11C7 6.99999 18.5 5.50001 25 11" stroke="#646161" stroke-width="3"/>
+<path id="Vector 8" d="M3 41C7 37 19.5 35.5 26 41" stroke="#646161" stroke-width="3"/>
+<path id="Rectangle 15" d="M23.5 40L23.5 10H26.5V40H23.5Z" fill="#646161"/>
+<rect id="Rectangle 16" x="45" y="40" width="30" height="3" transform="rotate(-90 45 40)" fill="#646161"/>
+<path id="Vector 9" d="M25 11C29 7 40.5 5.49999 47 11" stroke="#646161" stroke-width="3"/>
+<path id="Vector 10" d="M24 41C28 37 40.5 35.5 47 41" stroke="#646161" stroke-width="3"/>
+</g>
+</g>
+</g>
+</svg>

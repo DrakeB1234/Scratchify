@@ -1,0 +1,33 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon-planner-outline">
+<path id="Rectangle 81" d="M6 42L6 8H2L2 42H6Z" fill="#646161"/>
+<path id="Rectangle 84" d="M46 20C47.1046 20 48 19.1046 48 18V8H44V18C44 19.1046 44.8954 20 46 20V20Z" fill="#646161"/>
+<path id="Rectangle 85" d="M20 46C20 47.1046 19.1046 48 18 48H8V44H18C19.1046 44 20 44.8954 20 46V46Z" fill="#646161"/>
+<path id="Rectangle 86" d="M42 36.5C42 37.3284 41.3284 38 40.5 38H33V35H40.5C41.3284 35 42 35.6716 42 36.5V36.5Z" fill="#646161"/>
+<path id="Rectangle 87" d="M34.5 28C35.3284 28 36 28.6716 36 29.5V37H33V29.5C33 28.6716 33.6716 28 34.5 28V28Z" fill="#646161"/>
+<path id="Rectangle 82" d="M8 6H42V2H8V6Z" fill="#646161"/>
+<path id="Vector 13" d="M4 8.5C4 6 6 4 8.5 4" stroke="#646161" stroke-width="4"/>
+<path id="Vector 14" d="M46 8.5C46 6 44 4 41.5 4" stroke="#646161" stroke-width="4"/>
+<path id="Vector 15" d="M4 41.5C4 44 6 46 8.5 46" stroke="#646161" stroke-width="4"/>
+<circle id="Ellipse 11" cx="35" cy="35" r="13" stroke="#646161" stroke-width="4"/>
+<g id="Rectangle 90">
+<mask id="path-11-inside-1_102_2" fill="white">
+<rect x="8" y="8" width="34" height="9" rx="2"/>
+</mask>
+<rect x="8" y="8" width="34" height="9" rx="2" stroke="#646161" stroke-width="6" mask="url(#path-11-inside-1_102_2)"/>
+</g>
+<g id="Rectangle 91">
+<mask id="path-12-inside-2_102_2" fill="white">
+<rect x="8" y="18" width="11" height="11" rx="2"/>
+</mask>
+<rect x="8" y="18" width="11" height="11" rx="2" stroke="#646161" stroke-width="6" mask="url(#path-12-inside-2_102_2)"/>
+</g>
+<path id="Rectangle 93" d="M24 19.5H31C31.2761 19.5 31.5 19.7239 31.5 20V22.114C31.5 22.3224 31.3707 22.509 31.1756 22.5822L28.8789 23.4434C28.4111 23.6188 27.9863 23.8924 27.633 24.2457L24.5251 27.3536C24.4314 27.4473 24.3042 27.5 24.1716 27.5H24C23.7239 27.5 23.5 27.2761 23.5 27V20C23.5 19.7239 23.7239 19.5 24 19.5Z" stroke="#646161" stroke-width="3"/>
+<g id="Rectangle 92">
+<mask id="path-14-inside-3_102_2" fill="white">
+<rect x="8" y="31" width="11" height="11" rx="2"/>
+</mask>
+<rect x="8" y="31" width="11" height="11" rx="2" stroke="#646161" stroke-width="6" mask="url(#path-14-inside-3_102_2)"/>
+</g>
+</g>
+</svg>

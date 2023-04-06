@@ -1,0 +1,71 @@
+/* parent element */
+.PopupParent {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1em;
+    padding-top: 15vh;
+    background-color: rgba(25, 48, 67, 0.4);
+    z-index: 99;
+}
+/* content */
+.PopupContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin: 0 auto 0 auto;
+    padding: 2em;
+    border-radius: 4px;
+    background-color: var(--white-color-li);
+}
+    /* title */
+    .PopupContent > h1 {
+        font-size: 1.3rem;
+        color: var(--black-color-med);
+    }
+    /* message */
+    .PopupContent > h2 {
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--black-color-li);
+    }
+    /* link */
+    .PopupContent > a {
+        width: 100%;
+        margin-top: 2em;
+        padding: 0.5em;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--white-color-li);
+        background-color: var(--appmain-color-med);
+        cursor: pointer;
+    }
+/* confirm button container */
+.ConfirmButtonsParent {
+    display: flex;
+    width: 100%;
+    margin-top: 2em;
+    justify-content: flex-end;
+}
+    /* button style */
+    .ConfirmButtonsParent > button {
+        padding: 0.5em 1em 0.5em 1em;
+        border: 0;
+        border-radius: 4px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    /* cancel button style */
+    .ConfirmButtonsParent > button:first-child {
+        margin-right: 1em;
+        background-color: var(--white-color-med);
+    }
+    /* yes button style */
+    .ConfirmButtonsParent > button:last-child {
+        color: var(--white-color-li);
+        background-color: var(--appmain-color-med);
+    }

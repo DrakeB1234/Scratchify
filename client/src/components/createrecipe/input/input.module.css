@@ -1,0 +1,167 @@
+.InputParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow-y: scroll;
+}
+.FormParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 90vh;
+    width: clamp(200px, 100%, 600px);
+    padding: 1.5em;
+    padding-top: 0;
+    padding-bottom: 6em;
+    overflow-y: scroll;
+}
+    /* form error */
+    .FormError {
+        align-self: flex-start;
+        display: flex;
+        width: 100%;
+        padding: 1em 0.5em 1em 0.5em;
+        font-size: 0.9rem;
+        color: var(--red-color-dark);
+        background-color: var(--red-color-li);
+    }
+        .FormError > span {
+            margin: auto 0 auto auto;
+            cursor: pointer;
+        }
+    /* inputs */
+    .FormParent input, .FormParent select, .FormParent textarea {
+        width: 100%;
+        padding: 0.5em;
+        border-radius: 4px;
+        border: 1px solid var(--white-color-dark);
+        color: var(--black-color-li);
+        background-color: var(--white-color-li);
+        resize: none;
+    }
+        /* checkbox */
+        .FormParent input[type="checkbox"] {
+            width: fit-content;
+            align-self: flex-start;
+            height: 25px;
+            width: 25px;
+            margin-top: 1em;
+        }
+        /* textarea */
+        .FormParent textarea {
+            padding: 0.5em 0.5em 3em 0.5em;
+        }
+        .FormParent input:focus, .FormParent textarea:focus{
+            outline: none !important;
+            border: 2px solid var(--appmain-color-med);
+        }
+        /* form input error */
+        .FormInputError {
+            align-self: flex-start;
+            margin-top: 0.5em;
+            font-size: 0.9rem;
+            color: var(--red-color-med);
+        }
+    /* label */
+    .FormParent label {
+        width: 100%;
+        margin-top: 1.5em;
+        margin-bottom: 0.2em;
+        color: var(--appmain-color-dark);
+    }
+    /* forgot password link */
+    .LinkForgotPassword {
+        align-self: flex-end;
+        margin-top: 0.5em;
+        font-size: 0.9rem;
+        color: var(--black-color-li);
+    }
+    /* submit button */
+    .FormParent button {
+        display: flex;
+        justify-content: center;
+        padding: 0.5em;
+        border: 0;
+        border-radius: 4px;
+        font-weight: 700;
+        color: var(--white-color-li);
+        cursor: pointer;
+    }
+/* input image */
+.InputImage {
+    height: auto;
+    width: clamp(100px, 60%, 300px);
+    aspect-ratio: 1 / 1;
+    margin: 2em 0 2em 0;
+    border: 2px solid var(--black-color-dark);
+    border-radius: 4px;
+    object-fit: cover;
+}
+/* dynamic input container */
+.InputDynamicItem {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-bottom: 2em;
+    border-bottom: 1px solid var(--appmain-color-dark);
+}
+    /* label container */
+    .InputDynamicLabel {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+        /* label container img (x button) */
+        .InputDynamicLabel > label {
+            width: fit-content;
+        }
+            /* label bold */
+            .LabelBold {
+                font-weight: 700;
+                font-size: 1.1rem;
+                color: var(--appmain-color-dark);
+            }
+        /* label container img (x button) */
+        .InputDynamicLabel > img {
+            height: 25px;
+            width: 25px;
+            padding-bottom: 0.3em;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+/* Add button */
+.AddButton {
+    margin-top: 2em;
+    margin-bottom: 5em;
+    font-size: 0.9rem;
+    background-color: var(--appmain-color-med);
+}
+/* Save button */
+.SaveButton {
+    width: 100%;
+    margin-top: auto;
+    font-size: 1.2rem;
+    background-color: var(--appmain-color-med);
+}
+/* Saved button */
+.SavedButton {
+    width: 100%;
+    margin-top: auto;
+    font-size: 1.2rem;
+    background-color: var(--blue-color-med);
+}
+/* Create Recipe button */
+.CreateButton {
+    width: 100%;
+    margin-top: 2em;
+    font-size: 1.2rem;
+    background-color: var(--blue-color-med);
+}
+/* Create Recipe button */
+.ErrorButton {
+    width: 100%;
+    margin-top: 2em;
+    font-size: 1.2rem;
+    background-color: var(--red-color-med);
+}

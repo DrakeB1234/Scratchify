@@ -1,0 +1,104 @@
+/* main parent */
+.MyRecipesParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 3.2em;
+}
+/* dashboard parent */
+.MyRecipesDashboardParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1em 0 2em 0;
+    background-color: var(--appmain-color-med);
+}
+    /* dashboard content */
+    .MyRecipesDashboardContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1em;
+        width: clamp(200px, 100%, 800px);
+        padding: 1em;
+    }
+        /* dashboard item */
+        .MyRecipesDashboardItem {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: clamp(200px, 100%, 1200px);
+            padding: 1.5em 1em 1.5em 1em;
+            border-radius: 4px;
+            background-color: var(--appmain-color-li);
+            cursor: pointer;
+        }
+            /* dashboard text container */
+            .MyRecipesDashboardItem > div > h1 {
+                font-size: 1.3rem;
+                color: var(--appmain-color-dark);
+            }
+                .MyRecipesDashboardItem > div > h2 {
+                    font-weight: 400;
+                    color: var(--appmain-color-dark);
+                }
+            /* dashboard plus img */
+            .MyRecipesDashboardItem > img {
+                height: 30px;
+                width: 30px;
+            }
+/* content parent */
+.MyRecipesContentParent {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: clamp(200px, 100%, 1000px);
+    padding: 1em 0 2em 0;
+}
+    /* loading svg */
+    .MyRecipesContentParent > svg {
+        align-self: center;
+        margin-top: 1em;
+    }
+    /* my recipe content item */
+    .MyRecipesContentItem {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 0.5em;
+        background-color: var(--white-color-liest);
+    }
+        /* my recipe content recipe img */
+        .MyRecipesContentRecipeImage {
+            height: auto;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        /* my recipe content text container */
+        .MyRecipesContentItem > div {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 0.5em;
+            border-radius: 4px;
+        }
+            /* text */
+            .MyRecipesContentItem > div > h1 {
+                font-weight: 400;
+                font-size: 1.2rem;
+                color: var(--black-color-li);
+            }
+            /* edit img */
+            .MyRecipesContentItem > div > img {
+                align-self: flex-end;
+                height: 30px;
+                width: 30px;
+                margin-top: auto;
+                cursor: pointer;
+            }
