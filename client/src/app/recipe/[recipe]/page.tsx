@@ -9,8 +9,8 @@ import styles from '../../../styles/Recipe.module.css';
 
 // auth
 import { createClient } from 'utils/supabase-server';
-// do not cache this page
-export const revalidate = 0;
+// cache this page
+export const revalidate = 90;
 
 export default async function Home(params: any) {
 
@@ -18,11 +18,38 @@ export default async function Home(params: any) {
   const searchParam = params.params.recipe.replaceAll('%20', ' ');
   
   const supabase = createClient();
-  
+
+  // grab recipe data from database
   const { data: recipeData } = await supabase
     .from('recipe')
-    .select('title,course,description,photoUrl,public,source')
+    .select('recipeId, title,course,description,photoUrl,public,source')
     .eq('title', searchParam);
+  // set recipeId for whole page
+  const recipeId = recipeData?.[0]?.recipeId
+
+  // grab tag data
+  const { data: tagsData } = await supabase
+    .from('recipe_tags')
+    .select('tag')
+    .eq('recipeId', recipeId);
+
+  // grab ingredients data
+  const { data: ingredientsData } = await supabase
+    .from('recipe_ingredients')
+    .select('amount, ingredient')
+    .eq('recipeId', recipeId);
+
+  // grab spices data
+  const { data: spicesData } = await supabase
+    .from('recipe_spices')
+    .select('spice')
+    .eq('recipeId', recipeId);
+
+  // grab instructions data
+  const { data: instructionsData } = await supabase
+  .from('recipe_instructions')
+  .select('instruction')
+  .eq('recipeId', recipeId);
 
   // if results, return recipe information
   if (recipeData && recipeData?.length > 0) {
@@ -54,6 +81,13 @@ export default async function Home(params: any) {
               }
 
             </div>
+
+            <div className={styles.RecipeTagsParent}>
+              {tagsData?.map((e: any, index: number) => (
+                <h1 key={index + 'a'}>{e.tag}</h1>
+              ))}
+            </div>
+            
             <div className={styles.RecipeImageParent}>
               <Image 
               className={styles.RecipeImageForeground}
@@ -76,9 +110,37 @@ export default async function Home(params: any) {
               width={400}
               />
             </div>
+
             <div className={styles.RecipeDescription}>
               <h1>{recipeData?.[0].description}</h1>
             </div>
+
+            <div className={styles.RecipeIngredientsParent}>
+              <h1>Ingredients</h1>
+              {ingredientsData?.map((e: any, index: number) => (
+                <h2 key={index + 'a'}>{e.amount}, {e.ingredient}</h2>
+              ))}
+              
+              {spicesData
+              ?
+                <>
+                  <h3>Spices</h3>
+                  {spicesData?.map((e: any, index: number) => (
+                    <h2 key={index + 'a'}>{e.spice}</h2>
+                  ))}
+                </>
+              : <></>
+              }
+
+            </div>
+
+            <div className={styles.RecipeInstructionsParent}>
+              <h1>Instructions</h1>
+              {instructionsData?.map((e: any, index: number) => (
+                <h2 key={index + 'a'}><span>Step {index + 1}:</span>{e.instruction}</h2>
+              ))}
+            </div>
+
           </div>
       </div>
     )

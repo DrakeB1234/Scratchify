@@ -8,6 +8,7 @@ export async function GetUserRecipes(userid: any) {
     const { data, error } = await supabase
     .from('recipe')
     .select('recipeId, title, photoUrl')
+    .eq('userId', userid);
     
     if (error) return {
         type: 'error',
@@ -18,6 +19,134 @@ export async function GetUserRecipes(userid: any) {
         message: '',
         data: data
     };
+}
+
+// typedef
+type recipeEditData = {
+    type: string | null,
+    message: string | null,
+    titleData: {
+        recipeId: string,
+        title: string,
+        course: string,
+        description: string,
+        source: string,
+        public: boolean | null,
+    }[] | null,
+
+    tagsData: {
+        tag: string
+    }[] | null,
+
+    ingredientsData: {
+        amount: string,
+        ingredient: string
+    }[] | null,
+
+    spicesData: {
+        spice: string
+    }[] | null,
+
+    instructionsData: {
+        instruction: string
+    }[] | null,
+
+}
+
+export async function GetRecipeById(userid: any, recipeId: any) {
+    let payload: recipeEditData = {
+        type: null,
+        message: null,
+        titleData: null,
+        tagsData: null,
+        ingredientsData: null,
+        spicesData: null,
+        instructionsData: null
+    }
+    
+    // get title data
+    const { data: titleData, error: titleError } = await supabase
+        .from('recipe')
+        .select('recipeId, title, course, description, public, source')
+        .eq('recipeId', recipeId);
+
+    // if no errors, set payload to include title data
+    if (titleError) {
+        payload.type = "error"
+        payload.message = titleError.message
+        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
+        return payload;
+    }; 
+
+    payload.titleData = titleData;
+
+    // get tags data
+    const { data: tagsData, error: tagsError } = await supabase
+        .from('recipe_tags')
+        .select('tag')
+        .eq('recipeId', recipeId);
+
+    // if no errors, set payload to include tags data
+    if (tagsError) {
+        payload.type = "error"
+        payload.message = tagsError.message
+        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
+        return payload;
+    }; 
+
+    payload.tagsData = tagsData;
+
+    // get ingredients data
+    const { data: ingredientsData, error: ingredientsError } = await supabase
+        .from('recipe_ingredients')
+        .select('amount, ingredient')
+        .eq('recipeId', recipeId);
+
+    // if no errors, set payload to include indredients data
+    if (ingredientsError) {
+        payload.type = "error"
+        payload.message = ingredientsError.message
+        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
+        return payload;
+    }; 
+
+    payload.ingredientsData = ingredientsData;
+
+    // get spices data
+    const { data: spicesData, error: spicesError } = await supabase
+        .from('recipe_spices')
+        .select('spice')
+        .eq('recipeId', recipeId);
+
+    // if no errors, set payload to include spices data
+    if (spicesError) {
+        payload.type = "error"
+        payload.message = spicesError.message
+        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
+        return payload;
+    }; 
+
+    payload.spicesData = spicesData;
+
+    // get instructions data
+    const { data: instructionsData, error: instructionsError } = await supabase
+        .from('recipe_instructions')
+        .select('instruction')
+        .eq('recipeId', recipeId);
+
+    // if no errors, set payload to include instructions data
+    if (instructionsError) {
+        payload.type = "error"
+        payload.message = instructionsError.message
+        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
+        return payload;
+    }; 
+
+    payload.instructionsData = instructionsData;
+
+    // return payload if no errors
+    payload.type = "success"
+    return payload;
 }
 
 export async function SearchRecipes(searchParam: string | null) {

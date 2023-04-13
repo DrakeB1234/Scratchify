@@ -5,16 +5,19 @@ import React, {useEffect, useState, useRef} from 'react';
 
 // import styles / components
 import Popup from '../../components/popup/popup';
-import TitleInput from './input/titleinput';
-import PhotoInput from './input/photoinput';
-import TagsInput from './input/tagsinput';
-import IngredientsInput from './input/ingredientsinput';
-import SpicesInput from './input/spicesinput';
-import InstructionsInput from './input/instructionsinput';
+import TitleInput from './editinput/titleinputedit';
+import PhotoInput from './editinput/photoinputedit';
+import TagsInput from './editinput/tagsinputedit';
+import IngredientsInput from './editinput/ingredientsinputedit';
+import SpicesInput from './editinput/spicesinputedit';
+import InstructionsInput from './editinput/instructionsinputedit';
 import SubmitInput from './input/submitinput';
 import styles from './createrecipe.module.css';
 
-export default function CreateRecipe(props: any) {
+// auth
+import { GetRecipeById } from '@/supabasehelpers/database';
+
+export default function EditRecipe(props: any) {
 
     // typedef
     type Inputs = {
@@ -22,34 +25,82 @@ export default function CreateRecipe(props: any) {
         course: string | null,
         description: string | null,
         source: string | null,
-        public: boolean,
+        public: boolean | null,
         photoFile: any | null,
-        tags: string[],
+        tags: {
+            tag: string
+        }[] | null,
         ingredients: {
             amount: string,
-            name: string
-        }[],
-        spices: string[],
-        instructions: string[]
+            ingredient: string
+        }[] | null,
+        spices: {
+            spice: string
+        }[] | null,
+        instructions: {
+            instruction: string
+        }[] | null,
     }
 
     const [popUpState, setPopUpState] = useState(false);
     const [activeTab, setActiveTab] = useState<string>('title');
+    const [inputEditData, setInputEditData] = useState<Inputs>({
+        title: null,
+        course: null,
+        description: null,
+        source: null,
+        public: null,
+        photoFile: null,
+        tags: [{tag: ''}],
+        ingredients: [{
+            amount: '',
+            ingredient: ''
+        }],
+        spices: [{spice: ''}],
+        instructions: [{instruction: ''}],
+    });
+
     const [inputData, setInputData] = useState<Inputs>({
         title: null,
         course: null,
         description: null,
         source: null,
-        public: false,
+        public: null,
         photoFile: null,
-        tags: [''],
+        tags: [{tag: ''}],
         ingredients: [{
             amount: '',
-            name: ''
+            ingredient: ''
         }],
-        spices: [''],
-        instructions: ['']
+        spices: [{spice: ''}],
+        instructions: [{instruction: ''}],
     });
+
+    // function to get recipe data by passed id from props
+    const getRecipeData = async () => {
+        setActiveTab('photo');
+        const data = await GetRecipeById(props.userId, props.recipeId);
+        if (data.type !== "success") return;
+        // if data is successful, set input state
+        setInputData(prev => ({...prev,
+            title: data.titleData![0].title,
+            course: data.titleData![0].course,
+            description: data.titleData![0].description,
+            source: data.titleData![0].source,
+            public: data.titleData![0].public,
+            tags: data.tagsData,
+            ingredients: data.ingredientsData,
+            spices: data.spicesData,
+            instructions: data.instructionsData
+        }));
+
+        setActiveTab('title');
+    }
+
+    // call get recipe function on recipeid
+    useEffect(() => {
+        getRecipeData();
+    }, [props.recipeId])
 
     const exitRecipe = () => {
         return props.setToggle(false);
@@ -59,9 +110,9 @@ export default function CreateRecipe(props: any) {
         <>
         {popUpState
             ? <Popup 
-                title='Exit Recipe Creator'
-                message={['Are you sure you want to exit the Recipe Creator?', 
-                'This will delete any data saved so far, in order to save this data create this recipe before exiting!']}
+                title='Exit Recipe Editor'
+                message={['Are you sure you want to exit the Recipe Editor?', 
+                'This will delete any changes made so far!']}
                 confirm={true}
                 popupToggle={setPopUpState}
                 callback={exitRecipe}
@@ -71,7 +122,7 @@ export default function CreateRecipe(props: any) {
         <div className={styles.CreateParent}>
             <div className={styles.CreateContentParent}>
                 <div className={styles.CreateContentTitle}>
-                    <h1>Recipe Creator</h1>
+                    <h1>Recipe Editor</h1>
                     <Image 
                     alt='+'
                     src='/icons/actions/icon-plus-outline.svg'
@@ -136,49 +187,55 @@ export default function CreateRecipe(props: any) {
                 ? 
                 <TitleInput
                 data={inputData} 
-                setData={setInputData}
+                setData={setInputEditData}
+                editData={inputEditData}
                 />
 
                 : activeTab === 'photo'
                 ?
                 <PhotoInput
                 data={inputData} 
-                setData={setInputData}
+                setData={setInputEditData}
                 />
 
                 : activeTab === 'tags'
                 ?
                 <TagsInput
                 data={inputData} 
-                setData={setInputData}
+                setData={setInputEditData}
+                editData={inputEditData}
                 />
 
                 : activeTab === 'ingredients'
                 ?
                 <IngredientsInput
                 data={inputData} 
-                setData={setInputData}
+                setData={setInputEditData}
+                editData={inputEditData}
                 />
 
                 : activeTab === 'spices'
                 ?
                 <SpicesInput
                 data={inputData} 
-                setData={setInputData}
+                setData={setInputEditData}
+                editData={inputEditData}
                 />
 
                 : activeTab === 'instructions'
                 ?
                 <InstructionsInput
                 data={inputData} 
-                setData={setInputData}
+                setData={setInputEditData}
+                editData={inputEditData}
                 />
 
                 : activeTab === 'submit'
                 ?
                 <SubmitInput
                 data={inputData} 
-                setData={setInputData}
+                setData={setInputEditData}
+                editData={inputEditData}
                 />
 
                 : <></> 

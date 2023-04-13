@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import Navbar from '@/components/navbar/navbar';
 import LoadingSvg from '/public/graphics/graphic-loading-dots.svg';
 import CreateRecipe from '@/components/createrecipe/createrecipe';
+import EditRecipe from '@/components/createrecipe/editrecipe';
 import styles from '../../styles/MyRecipes.module.css';
 
 // auth
@@ -20,8 +21,10 @@ export default function MyRecipes() {
     let session = useRef<any>();
 
     const [toggleRecipeCreator, setToggleRecipeCreator] = useState(false);
+    const [toggleRecipeEditor, setToggleRecipeEditor] = useState(false);
     const [loadingData, setLoadingData] = useState<boolean>(false);
     const [recipeData, setRecipeData] = useState<any>([]);
+    const recipeIdRef = useRef(0);
 
     // checks to see is user has a session
     useEffect(() => {
@@ -34,6 +37,13 @@ export default function MyRecipes() {
       };
       getSession();
     }, []);
+
+    // edit function
+    const editRecipe = (recipeId: number) => {
+      // 
+      recipeIdRef.current = recipeId;
+      setToggleRecipeEditor(true);
+    }
 
     const getRecipes = async () => {
         // if no session set, return nothing
@@ -54,6 +64,15 @@ export default function MyRecipes() {
     {toggleRecipeCreator
       ? <CreateRecipe 
         setToggle={setToggleRecipeCreator}
+        />
+      : <></>
+    }
+
+    {toggleRecipeEditor
+      ? <EditRecipe 
+        setToggle={setToggleRecipeEditor}
+        userId={session.current.user.id}
+        recipeId={recipeIdRef.current}
         />
       : <></>
     }
@@ -102,7 +121,9 @@ export default function MyRecipes() {
           : <></>
           }
           {recipeData.map((e: any, index: number) => (
-            <div key={index + 'a'} className={styles.MyRecipesContentItem}>
+            <div key={index + 'a'} className={styles.MyRecipesContentItem}
+            onClick={() => editRecipe(e.recipeId)}
+            >
               <Image 
               className={styles.MyRecipesContentRecipeImage}
               alt='+'

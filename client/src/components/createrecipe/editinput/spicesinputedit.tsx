@@ -5,9 +5,9 @@ import React, {useEffect, useState, useRef} from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 // import styles / components
-import styles from './input.module.css';
+import styles from './inputedit.module.css';
 
-export default function SpicesInput(props: any) {
+export default function SpicesInputEdit(props: any) {
 
     // typedefs
     type Inputs = {
@@ -39,32 +39,61 @@ export default function SpicesInput(props: any) {
     const [saveInput, setSaveInput] = useState(false);
 
     const handleSave = (formVal: any) => {
+        // check to see if size of each array has changed
+        if (formVal.spice.length == props.data.spices.length){
+            // if array size hasn't changed, check for difference in text
+            for (let i = 0; i < props.data.spices.length; i++){
+                if (formVal.spice[i].name != props.data.spices[i].spice){
+                    // call function to set edit data
+                    return setEditSpice(formVal);
+                }
+            }
+        }
+        else {
+            // call function to set edit data
+            return setEditSpice(formVal);
+        }
 
-        // create local array
-        let data: any = []
+        // else, if no changes made null tags data
+        setSaveInput(true);
+        return props.setData((prev: any) => ({...prev, spices: [{spice: ''}]}))
+    }
+
+    const setEditSpice = (formVal: any) => {
+        // local array
+        let data: any = [];
+
         formVal.spice.map((e: any) => {
-            data.push({
-                name: e.name
-            })
+            data.push({spice: e.name});
         });
-        // set local data array into props state
-        props.setData((prev: any) => ({...prev, spices: data}));
-        
-        return setSaveInput(true);
+
+        // set edit data state to local data
+        setSaveInput(true);
+        return props.setData((prev: any) => ({...prev, spices: data}))
     }
 
     // populate array with data if in state
     const setArrayData = () => {
-        // if value in state, append values
-        if(props.data.spices[0] != ''){
+        // if edit values provided, append them in inputs
+        if(props.editData.spices[0].spice != ''){
+            // drop empty value in array
+            remove(0);
+            props.editData.spices.map((e: any) => {
+                append({
+                    name: e.spice
+                })
+            })
+        } 
+        // else, append values from recipe tags data
+        else if (props.data.spices[0].spice != ''){
             // drop empty value in array
             remove(0);
             props.data.spices.map((e: any) => {
                 append({
-                    name: e.name
+                    name: e.spice
                 })
             })
-        } 
+        }
     }
 
     useEffect(() => {

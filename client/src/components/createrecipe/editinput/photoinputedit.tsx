@@ -5,9 +5,9 @@ import React, {useEffect, useState, useRef} from 'react';
 import { useForm } from 'react-hook-form';
 
 // import styles / components
-import styles from './input.module.css';
+import styles from './inputedit.module.css';
 
-export default function PhotoInput(props: any) {
+export default function PhotoInputEdit(props: any) {
 
     // typedefs
     type Inputs = {

@@ -5,27 +5,27 @@ import React, {useEffect, useState, useRef} from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 // import styles / components
-import styles from './input.module.css';
+import styles from './inputedit.module.css';
 
-export default function SpicesInput(props: any) {
+export default function InstructionsInput(props: any) {
 
     // typedefs
     type Inputs = {
-        spice: [{
+        instruction: [{
             name: string
         }]
     };
 
     const { control, handleSubmit, register, formState: {errors} } = useForm({
         defaultValues: {
-            spice: [{
+            instruction: [{
                 name: ''
             }]
         }
     });
 
     const { fields, append, remove } = useFieldArray({
-        name: 'spice',
+        name: 'instruction',
         control,
         rules: {
             required: 'Must have at least 1 instruction',
@@ -39,32 +39,61 @@ export default function SpicesInput(props: any) {
     const [saveInput, setSaveInput] = useState(false);
 
     const handleSave = (formVal: any) => {
+        // check to see if size of each array has changed
+        if (formVal.instruction.length == props.data.instructions.length){
+            // if array size hasn't changed, check for difference in text
+            for (let i = 0; i < props.data.instructions.length; i++){
+                if (formVal.instruction[i].instruction != props.data.instructions[i].instruction){
+                    // call function to set edit data
+                    return setEditInstruction(formVal);
+                }
+            }
+        }
+        else {
+            // call function to set edit data
+            return setEditInstruction(formVal);
+        }
 
-        // create local array
-        let data: any = []
-        formVal.spice.map((e: any) => {
-            data.push({
-                name: e.name
-            })
+        // else, if no changes made null tags data
+        setSaveInput(true);
+        return props.setData((prev: any) => ({...prev, instructions: [{instruction: ''}]}))
+    }
+
+    const setEditInstruction = (formVal: any) => {
+        // local array
+        let data: any = [];
+
+        formVal.instruction.map((e: any) => {
+            data.push({instruction: e.name});
         });
-        // set local data array into props state
-        props.setData((prev: any) => ({...prev, spices: data}));
-        
-        return setSaveInput(true);
+
+        // set edit data state to local data
+        setSaveInput(true);
+        return props.setData((prev: any) => ({...prev, instructions: data}))
     }
 
     // populate array with data if in state
     const setArrayData = () => {
-        // if value in state, append values
-        if(props.data.spices[0] != ''){
+        // if edit values provided, append them in inputs
+        if(props.editData.instructions[0].instruction != ''){
             // drop empty value in array
             remove(0);
-            props.data.spices.map((e: any) => {
+            props.editData.instructions.map((e: any) => {
                 append({
-                    name: e.name
+                    name: e.instruction
                 })
             })
         } 
+        // else, append values from recipe tags data
+        else if (props.data.instructions[0].instruction != ''){
+            // drop empty value in array
+            remove(0);
+            props.data.instructions.map((e: any) => {
+                append({
+                    name: e.instruction
+                })
+            })
+        }
     }
 
     useEffect(() => {
@@ -76,12 +105,11 @@ export default function SpicesInput(props: any) {
             <form className={styles.FormParent}
             onSubmit={(handleSubmit(handleSave))}
             >
-                <h1>OPTIONAL</h1>
                {fields.map((field: any, index:  number) => (
                     <div key={field.id} className={styles.InputDynamicItem}>
 
                         <div className={styles.InputDynamicLabel}>
-                            <label htmlFor='spice'>Spice {index + 1}</label>
+                            <label htmlFor='tag'>Step {index + 1}</label>
                             <Image 
                             alt='x'
                             src='/icons/actions/icon-plusred-outline.svg'
@@ -95,7 +123,7 @@ export default function SpicesInput(props: any) {
                             />
                         </div>
 
-                        <input {...register(`spice.${index}.name`, {
+                        <textarea {...register(`instruction.${index}.name`, {
                             required: {
                                 value: true,
                                 message: 'Required'
@@ -105,8 +133,8 @@ export default function SpicesInput(props: any) {
                                 message: 'Must have at least 3 Characters'
                             }, 
                             maxLength: {
-                                value: 30,
-                                message: 'Must have less than 30 Characters'
+                                value: 500,
+                                message: 'Must have less than 500 Characters'
                             }, 
                             pattern: {
                                 value: /^[^\s][\w\s!@#$%^&*()-~`'_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
@@ -115,7 +143,7 @@ export default function SpicesInput(props: any) {
                         })}
                         autoComplete='off'
                         />
-                        <h1 className={styles.FormInputError}>{errors.spice?.[index]?.name?.message}</h1>
+                        <h1 className={styles.FormInputError}>{errors.instruction?.[index]?.name?.message}</h1>
 
                     </div>
                 ))}
@@ -128,7 +156,7 @@ export default function SpicesInput(props: any) {
                         })
                     }
                 }}
-                >Add Spice</button>
+                >Add Step</button>
 
                 {!saveInput 
                 ? <button type='submit' className={styles.SaveButton}>Save Changes</button>

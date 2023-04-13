@@ -7,7 +7,7 @@
     width: 100%;
     color: var(--white-color-li);
     background-color: var(--appmain-color-med);
-    z-index: 99;
+    z-index: 97;
 }
 /* navbar parent for desktop */
 .NavbarDesktopParent {

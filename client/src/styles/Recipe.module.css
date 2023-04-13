@@ -54,6 +54,7 @@
     display: flex;
     flex-direction: column;
     width: clamp(200px, 100%, 1200px);
+    padding-bottom: 4em;
     background-color: var(--white-color-liest);
 }
 /* recipe title card */
@@ -62,7 +63,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 6em 1em 2em 1em;
+    padding: 8em 1em 2em 1em;
 }
     /* title */
     .RecipeTitleCard > h1 {
@@ -94,7 +95,23 @@
             text-decoration: underline;
             color: var(--blue-color-med);
         }
-/* recipe title card */
+/* recipe tags container */
+.RecipeTagsParent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 1em 8% 1em 8%;
+}    
+    /* recipe tags text */
+    .RecipeTagsParent > h1 {
+        padding: 0.5em 1em 0.5em 1em;
+        border-radius: 4px;
+        color: var(--white-color-liest);
+        background-color: var(--appmain-color-med);
+    }  
+/* recipe image parent */
 .RecipeImageParent {
     position: relative;
     display: flex;
@@ -126,6 +143,73 @@
     color: var(--black-color-dark);
     background-color: var(--white-color-med);
 }
+/* recipe ingredients parent */
+.RecipeIngredientsParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 2em 8% 1em 8%;
+}
+    /* recipe ingredients headers */
+    .RecipeIngredientsParent > h1 {
+        width: 100%;
+        margin-bottom: 1em;
+        padding: 0.5em 0.2em 0.5em 0.2em;
+        font-size: 1.3rem;
+        color: var(--black-color-dark);
+        border-bottom: 3px solid var(--white-color-dark);
+    }
+    /* recipe ingredients text */
+    .RecipeIngredientsParent > h2 {
+        align-self: flex-start;
+        font-weight: 400;
+        color: var(--black-color-med);
+    }
+    /* recipe spice text */
+    .RecipeIngredientsParent > h3 {
+        align-self: flex-start;
+        width: 100%;
+        margin-top: 1em;
+        padding: 0.5em 0.2em 0.5em 0.2em;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--black-color-med);
+        border-bottom: 1px solid var(--white-color-dark);
+    }
+/* recipe instructions parent */
+.RecipeInstructionsParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    margin-top: 2em;
+    padding: 1em 8% 1em 8%;
+}
+    /* recipe instructions headers */
+    .RecipeInstructionsParent > h1 {
+        width: 100%;
+        margin-bottom: 1em;
+        padding: 0.5em 0.2em 0.5em 0.2em;
+        font-size: 1.3rem;
+        color: var(--black-color-dark);
+        border-bottom: 3px solid var(--white-color-dark);
+    }
+    /* recipe instructions text */
+    .RecipeInstructionsParent > h2 {
+        align-self: flex-start;
+        font-weight: 400;
+        color: var(--black-color-med);
+    }
+        /* recipe instructions span text  */
+        .RecipeInstructionsParent > h2 > span {
+            align-self: flex-start;
+            margin-right: 1em;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--black-color-dark);
+        }
+
 /* div button */
 .DivButton {
     display: flex;
