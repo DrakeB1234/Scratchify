@@ -56,7 +56,7 @@ export default function InstructionsInput(props: any) {
 
         // else, if no changes made null tags data
         setSaveInput(true);
-        return props.setData((prev: any) => ({...prev, instructions: [{instruction: ''}]}))
+        return props.setData((prev: any) => ({...prev, instructions: null}))
     }
 
     const setEditInstruction = (formVal: any) => {
@@ -75,7 +75,7 @@ export default function InstructionsInput(props: any) {
     // populate array with data if in state
     const setArrayData = () => {
         // if edit values provided, append them in inputs
-        if(props.editData.instructions[0].instruction != ''){
+        if(props.editData.instructions != null && props.editData.instructions[0].instruction != ''){
             // drop empty value in array
             remove(0);
             props.editData.instructions.map((e: any) => {

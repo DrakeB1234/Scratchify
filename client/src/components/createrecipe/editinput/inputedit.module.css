@@ -17,7 +17,7 @@
     overflow-y: scroll;
 }
     /* header text */
-    .FormParent > h1 {
+    .FormParent > h2 {
         margin-top: 0.5em;
         font-size: 1.1rem;
         color: var(--appmain-color-dark);

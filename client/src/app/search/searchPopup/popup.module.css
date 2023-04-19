@@ -1,0 +1,82 @@
+/* parent */
+.PopupParent {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+}
+/* child container */
+.PopupChildContainer {
+    width: clamp(200px, 100%, 800px);
+    margin: 0.5em 0.2em 1em 0.2em;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: var(--white-color-liest);
+}
+    /* child container exit container */
+    .PopupExitContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    /* child container header */
+    .PopupExitContainer > h1 {
+        font-size: 1.4rem;
+        color: var(--black-color-med);
+    }
+    /* child container exit icon */
+    .PopupExitContainer > img {
+        height: 30px;
+        width: 30px;
+        transform: rotate(45deg);
+    }
+/* input form container */
+.FormParent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em 0 1em 0;
+}
+    /* inputs */
+    .FormParent select, .FormParent textarea {
+        width: 100%;
+        padding: 0.5em;
+        border-radius: 4px;
+        border: 1px solid var(--white-color-dark);
+        color: var(--black-color-li);
+        background-color: var(--white-color-li);
+        resize: none;
+    }
+    /* label */
+    .FormParent label {
+        width: 100%;
+        margin-top: 1.5em;
+        margin-bottom: 0.2em;
+        color: var(--appmain-color-dark);
+    }
+    /* label */
+    .FormTagInputContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0.5em;
+        border-radius: 4px;
+        border: 1px solid var(--white-color-dark);
+        color: var(--black-color-li);
+        background-color: var(--white-color-li);
+    }
+        .FormTagInputContainer > input {
+            width: 100%;
+            border: 0;
+            background: none;
+        }
+        .FormTagInputContainer > input:focus {
+            outline: none !important;
+        }
+        /* add icon */
+        .FormTagInputContainer > img {
+            height: 25px;
+            width: 25px;
+        }

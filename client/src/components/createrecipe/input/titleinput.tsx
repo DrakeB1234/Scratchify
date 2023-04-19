@@ -59,8 +59,8 @@ export default function TitleInput(props: any) {
                         message: 'Must be less than 40 characters'
                     },
                     pattern: {
-                        value: /^[^\s][\w\s-]{0,}$/,
-                        message: 'Must not start with space, only letters, numbers, spaces, and -'
+                        value: /^[^\s][\w\s-()]{0,}$/,
+                        message: 'Must not start with space, only letters, numbers, spaces, and - ( )'
                     }
                 })}
                 autoComplete='off'

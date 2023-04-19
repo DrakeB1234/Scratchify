@@ -29,8 +29,8 @@ export default function PhotoInput(props: any) {
         // if file not provided
         if(!file) return setError('photoFile', {message: 'If saving photo, file must be provided'});
 
-        // if file size bigger than 30MB set error
-        if(file.size > 30000000) return setError('photoFile', {message: 'Photo must can not be larger than 30MB'});
+        // if file size bigger than 20MB set error
+        if(file.size > 20000000) return setError('photoFile', {message: 'Photo must can not be larger than 20MB'});
 
         // file must be jpg, jpeg, or png
         if(!file.name.match(/\.(jpg|jpeg|png)$/i)) return setError('photoFile', {message: 'File must be a JPG, JPEG, or PNG'});
@@ -50,7 +50,7 @@ export default function PhotoInput(props: any) {
             <form className={styles.FormParent}
             onSubmit={(handleSubmit(handleSave))}
             >
-                <h1>OPTIONAL</h1>
+                <h2>OPTIONAL</h2>
                 {imageOutput
                 ? <Image 
                     className={styles.InputImage}

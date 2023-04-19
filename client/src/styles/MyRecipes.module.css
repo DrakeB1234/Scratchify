@@ -54,8 +54,8 @@
 .MyRecipesContentParent {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    width: clamp(200px, 100%, 1000px);
+    gap: 1em;
+    width: clamp(200px, 100%, 800px);
     padding: 1em 0 2em 0;
 }
     /* loading svg */
@@ -66,11 +66,22 @@
     /* my recipe content item */
     .MyRecipesContentItem {
         display: flex;
-        flex-direction: row;
-        width: 100%;
-        padding: 0.5em;
+        flex-direction: column;
         background-color: var(--white-color-liest);
     }
+    /* My Recipe Row */
+    .MyRecipesRow {
+        display: flex;
+        gap: 1em;
+        padding: 0.5em;
+    }
+        /* My Recipe Row text */
+        .MyRecipesRow > h1 {
+            font-weight: 400;
+            font-size: 1.1rem;
+            color: var(--black-color-med);
+            overflow: hidden;
+        }
         /* my recipe content recipe img */
         .MyRecipesContentRecipeImage {
             height: auto;
@@ -79,26 +90,28 @@
             object-fit: cover;
             border-radius: 4px;
         }
-        /* my recipe content text container */
-        .MyRecipesContentItem > div {
-            flex: 2;
+    /* My Recipe Row button */
+    .MyRecipesRowButtons {
+        display: flex;
+        padding-top: 1em;
+    }
+        /* My Recipe Row button container */
+        .MyRecipesRowButtons > div {
+            flex: 1;
             display: flex;
-            flex-direction: column;
-            width: 100%;
+            justify-content: center;
             padding: 0.5em;
-            border-radius: 4px;
+            cursor: pointer;
         }
-            /* text */
-            .MyRecipesContentItem > div > h1 {
-                font-weight: 400;
-                font-size: 1.2rem;
-                color: var(--black-color-li);
+            /* first button container */
+            .MyRecipesRowButtons > div:first-child {
+                background-color: var(--white-color-med);
             }
-            /* edit img */
-            .MyRecipesContentItem > div > img {
-                align-self: flex-end;
-                height: 30px;
-                width: 30px;
-                margin-top: auto;
-                cursor: pointer;
+            /* last button container */
+            .MyRecipesRowButtons > div:last-child {
+                background-color: var(--red-color-li);
             }
+                /* icon */
+                .MyRecipesRowButtons > div:last-child > img {
+                    transform: rotate(45deg);
+                }

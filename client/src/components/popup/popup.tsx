@@ -44,6 +44,7 @@ export default function Popup(props: Props) {
               <button
               onClick={props.callback}
               >Confirm</button>
+
             </div>
             : <></>
             }

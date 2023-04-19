@@ -17,7 +17,9 @@ export default async function Home() {
 
     const supabase = createClient();
     
-    const { data } = await supabase.from('recipe').select('*');
+    const { data } = await supabase
+      .from('recipe')
+      .select('title, photoUrl, profiles(username)');
 
   return (
     <div className={styles.HomeParent}>
@@ -42,7 +44,7 @@ export default async function Home() {
                 />
                 <h1>{e.title}</h1>
                 <div className={styles.RecipeItemInfo}>
-                  <h1>@DrakeB123</h1>
+                  <h1>@{e.profiles.username}</h1>
                   <div>
                     <h1>7</h1>
                     <Image 

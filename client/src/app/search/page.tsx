@@ -8,22 +8,19 @@ import {useEffect, useRef, useState} from 'react';
 
 // import styles / components
 import Navbar from '@/components/navbar/navbar';
+import FilterPopup from './searchPopup/filterPopup';
 import styles from '../../styles/Search.module.css';
 
 // auth
-import { createClient } from 'utils/supabase-browser';
 import { SearchRecipes } from '@/supabasehelpers/database';
 
 export default function Recipes() {
-
-  let render = useRef(0);
-  render.current = render.current + 1;
-  console.log(render.current)
 
   const router = useRouter();
   const params = useSearchParams();
 
   const [recipeData, setRecipeData] = useState<any>([]);
+  const [filterPopup, setFilterPopup] = useState(false);
 
   // URL params
   const searchParam = params.get('q');
@@ -55,7 +52,6 @@ export default function Recipes() {
     // function for getting recipe based on search params
     const getRecipes = async () => {
       let data = await SearchRecipes(searchParam);
-      console.log(data)
       if (data.type !== 'success') return;
       else return setRecipeData(data.data);
     }
@@ -68,6 +64,16 @@ export default function Recipes() {
 
   return (
     <div className={styles.SearchParent}>
+
+        {filterPopup
+          ? 
+          <FilterPopup 
+          popupToggle={setFilterPopup}
+          />
+          :
+          <></>
+        }
+      
         <Navbar />
         <div className={styles.SearchRecipeParent}>
             <div className={styles.SearchRecipeBar}>
@@ -85,6 +91,28 @@ export default function Recipes() {
                 onClick={recipeSearch}
                 tabIndex={0}
                 />
+            </div>
+            <div className={styles.SearchRecipeButtons}>
+              <div>
+                <h1>Sort</h1>
+                <Image 
+                  alt='o'
+                  src='/icons/actions/icon-sort-outline.svg'
+                  height={50}
+                  width={50}
+                />
+              </div>
+              <div
+              onClick={() => setFilterPopup(true)}
+              >
+                <h1>Filter</h1>
+                <Image 
+                  alt='o'
+                  src='/icons/actions/icon-filter-outline.svg'
+                  height={50}
+                  width={50}
+                />
+              </div>
             </div>
             <div className={styles.RecipeItemContainer}>
             {recipeData && recipeData.map((e: any, index: number) => (
@@ -104,7 +132,7 @@ export default function Recipes() {
                 />
                 <h1>{e.title}</h1>
                 <div className={styles.RecipeItemInfo}>
-                  <h1>@DrakeB123</h1>
+                  <h1>@{e.profiles.username}</h1>
                   <div>
                     <h1>7</h1>
                     <Image 

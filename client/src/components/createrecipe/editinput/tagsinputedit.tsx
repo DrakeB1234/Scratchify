@@ -57,7 +57,7 @@ export default function TagsInputEdit(props: any) {
 
         // else, if no changes made null tags data
         setSaveInput(true);
-        return props.setData((prev: any) => ({...prev, tags: [{tag: ''}]}))
+        return props.setData((prev: any) => ({...prev, tags: null}))
     }
 
     const setEditTag = (formVal: any) => {
@@ -76,7 +76,7 @@ export default function TagsInputEdit(props: any) {
     // populate array with data if in state
     const setArrayData = () => {
         // if edit values provided, append them in inputs
-        if(props.editData.tags[0].tag != ''){
+        if(props.editData.tags != null && props.editData.tags[0].tag != ''){
             // drop empty value in array
             remove(0);
             props.editData.tags.map((e: any) => {

@@ -19,37 +19,28 @@ export default async function Home(params: any) {
   
   const supabase = createClient();
 
-  // grab recipe data from database
+  // grab recipe id from database if recipe is public
+  const { data: recipeId } = await supabase
+    .from('recipe')
+    .select(`recipe_id`)
+    .eq('title', searchParam)
+    .eq('public', true);
+    
+  // grab recipe data if recipe id was able to be retrieved
   const { data: recipeData } = await supabase
     .from('recipe')
-    .select('recipeId, title,course,description,photoUrl,public,source')
-    .eq('title', searchParam);
-  // set recipeId for whole page
-  const recipeId = recipeData?.[0]?.recipeId
-
-  // grab tag data
-  const { data: tagsData } = await supabase
-    .from('recipe_tags')
-    .select('tag')
-    .eq('recipeId', recipeId);
-
-  // grab ingredients data
-  const { data: ingredientsData } = await supabase
-    .from('recipe_ingredients')
-    .select('amount, ingredient')
-    .eq('recipeId', recipeId);
-
-  // grab spices data
-  const { data: spicesData } = await supabase
-    .from('recipe_spices')
-    .select('spice')
-    .eq('recipeId', recipeId);
-
-  // grab instructions data
-  const { data: instructionsData } = await supabase
-  .from('recipe_instructions')
-  .select('instruction')
-  .eq('recipeId', recipeId);
+    .select(`title, course, description, photoUrl, source,
+    profiles(username),
+    recipe_tags(tag),
+    recipe_ingredients(amount, ingredient),
+    recipe_spices(spice),
+    recipe_instructions(instruction)`)
+    .eq('recipe_id', recipeId?.[0]?.recipe_id ?? null)
+    .eq('recipe_tags.recipe_id', recipeId?.[0]?.recipe_id ?? null)
+    .eq('recipe_ingredients.recipe_id', recipeId?.[0]?.recipe_id ?? null)
+    .eq('recipe_spices.recipe_id', recipeId?.[0]?.recipe_id ?? null)
+    .eq('recipe_instructions.recipe_id', recipeId?.[0]?.recipe_id ?? null)
+    ;
 
   // if results, return recipe information
   if (recipeData && recipeData?.length > 0) {
@@ -61,7 +52,7 @@ export default async function Home(params: any) {
               <h1>{recipeData?.[0].title}</h1>
               <h2>{recipeData?.[0].course}</h2>
               <h3>Created By:</h3>
-              <h3>@DrakeB123</h3>
+              <h3>@{Array.isArray(recipeData?.[0].profiles) ? recipeData?.[0].profiles?.map((e: any) => (e.username)) : recipeData?.[0].profiles?.username}</h3>
 
               <div
               className={styles.DivButton}
@@ -83,7 +74,7 @@ export default async function Home(params: any) {
             </div>
 
             <div className={styles.RecipeTagsParent}>
-              {tagsData?.map((e: any, index: number) => (
+              {Array.isArray(recipeData?.[0].recipe_tags) && recipeData?.[0].recipe_tags?.map((e: any, index: number) => (
                 <h1 key={index + 'a'}>{e.tag}</h1>
               ))}
             </div>
@@ -117,15 +108,15 @@ export default async function Home(params: any) {
 
             <div className={styles.RecipeIngredientsParent}>
               <h1>Ingredients</h1>
-              {ingredientsData?.map((e: any, index: number) => (
+              {Array.isArray(recipeData?.[0].recipe_ingredients) && recipeData?.[0].recipe_ingredients?.map((e: any, index: number) => (
                 <h2 key={index + 'a'}>{e.amount}, {e.ingredient}</h2>
               ))}
               
-              {spicesData
+              {Array.isArray(recipeData?.[0].recipe_spices) && recipeData?.[0].recipe_spices[0]
               ?
                 <>
                   <h3>Spices</h3>
-                  {spicesData?.map((e: any, index: number) => (
+                  {Array.isArray(recipeData?.[0].recipe_spices) && recipeData?.[0].recipe_spices?.map((e: any, index: number) => (
                     <h2 key={index + 'a'}>{e.spice}</h2>
                   ))}
                 </>
@@ -136,8 +127,8 @@ export default async function Home(params: any) {
 
             <div className={styles.RecipeInstructionsParent}>
               <h1>Instructions</h1>
-              {instructionsData?.map((e: any, index: number) => (
-                <h2 key={index + 'a'}><span>Step {index + 1}:</span>{e.instruction}</h2>
+              {Array.isArray(recipeData?.[0].recipe_instructions) && recipeData?.[0].recipe_instructions?.map((e: any, index: number) => (
+                <h2 key={index + 'a'}><span>Step {index + 1}<br></br></span>{e.instruction}</h2>
               ))}
             </div>
 
@@ -152,7 +143,7 @@ export default async function Home(params: any) {
           <Navbar />
           <div className={styles.RecipeNotFoundParent}>
             <h1>The recipe</h1>
-            <h1>'{searchParam}'</h1>
+            <h1>&apos;{searchParam}&apos;</h1>
             <h1>does not exist</h1>
           </div>
           <div className={styles.RecipeNotFoundLink}>

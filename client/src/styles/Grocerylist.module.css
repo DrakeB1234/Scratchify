@@ -1,0 +1,10 @@
+/* List parent */
+.ListParent {
+    margin-top: 4em;
+}
+
+/* list content parent */
+.ListContentParent {
+    margin-top: 4em;
+    background-color: var(--appmain-color-med);
+}

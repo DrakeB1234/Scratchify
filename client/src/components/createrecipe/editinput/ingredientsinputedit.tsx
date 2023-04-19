@@ -59,7 +59,7 @@ export default function IngredientsInputEdit(props: any) {
 
         // else, if no changes made null tags data
         setSaveInput(true);
-        return props.setData((prev: any) => ({...prev, ingredients: [{amount: '', ingredient: ''}]}))
+        return props.setData((prev: any) => ({...prev, ingredients: null}))
     }
 
     const setEditIngredient = (formVal: any) => {
@@ -81,7 +81,7 @@ export default function IngredientsInputEdit(props: any) {
     // populate array with data if in state
     const setArrayData = () => {
         // if edit values provided, append them in inputs
-        if(props.editData.ingredients[0].amount != ''){
+        if(props.editData.ingredients != null && props.editData.ingredients[0].amount != ''){
             // drop empty value in array
             remove(0);
             props.editData.ingredients.map((e: any) => {

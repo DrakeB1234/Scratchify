@@ -28,10 +28,9 @@ export default function SpicesInputEdit(props: any) {
         name: 'spice',
         control,
         rules: {
-            required: 'Must have at least 1 instruction',
             maxLength: {
                 value: 10,
-                message: 'Must have less than 10 instructions'
+                message: 'Must have less than 10 spices'
             }
         }
     });
@@ -56,10 +55,10 @@ export default function SpicesInputEdit(props: any) {
 
         // else, if no changes made null tags data
         setSaveInput(true);
-        return props.setData((prev: any) => ({...prev, spices: [{spice: ''}]}))
+        return props.setData((prev: any) => ({...prev, spices: null}))
     }
 
-    const setEditSpice = (formVal: any) => {
+    const setEditSpice = (formVal: any) => {        
         // local array
         let data: any = [];
 
@@ -75,7 +74,7 @@ export default function SpicesInputEdit(props: any) {
     // populate array with data if in state
     const setArrayData = () => {
         // if edit values provided, append them in inputs
-        if(props.editData.spices[0].spice != ''){
+        if(props.editData.spices != null && Array.isArray(props.editData.spices) && props.editData.spices[0].spice != null){
             // drop empty value in array
             remove(0);
             props.editData.spices.map((e: any) => {
@@ -85,7 +84,7 @@ export default function SpicesInputEdit(props: any) {
             })
         } 
         // else, append values from recipe tags data
-        else if (props.data.spices[0].spice != ''){
+        else if (Array.isArray(props.data.spices) && props.data.spices.length > 0){
             // drop empty value in array
             remove(0);
             props.data.spices.map((e: any) => {
@@ -93,7 +92,7 @@ export default function SpicesInputEdit(props: any) {
                     name: e.spice
                 })
             })
-        }
+        } 
     }
 
     useEffect(() => {
@@ -105,7 +104,7 @@ export default function SpicesInputEdit(props: any) {
             <form className={styles.FormParent}
             onSubmit={(handleSubmit(handleSave))}
             >
-                <h1>OPTIONAL</h1>
+                <h2>OPTIONAL</h2>
                {fields.map((field: any, index:  number) => (
                     <div key={field.id} className={styles.InputDynamicItem}>
 
@@ -125,10 +124,6 @@ export default function SpicesInputEdit(props: any) {
                         </div>
 
                         <input {...register(`spice.${index}.name`, {
-                            required: {
-                                value: true,
-                                message: 'Required'
-                            },
                             minLength: {
                                 value: 3,
                                 message: 'Must have at least 3 Characters'

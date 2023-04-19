@@ -28,10 +28,9 @@ export default function SpicesInput(props: any) {
         name: 'spice',
         control,
         rules: {
-            required: 'Must have at least 1 instruction',
             maxLength: {
                 value: 10,
-                message: 'Must have less than 10 instructions'
+                message: 'Must have less than 10 spices'
             }
         }
     });
@@ -76,7 +75,7 @@ export default function SpicesInput(props: any) {
             <form className={styles.FormParent}
             onSubmit={(handleSubmit(handleSave))}
             >
-                <h1>OPTIONAL</h1>
+                <h2>OPTIONAL</h2>
                {fields.map((field: any, index:  number) => (
                     <div key={field.id} className={styles.InputDynamicItem}>
 
@@ -88,7 +87,7 @@ export default function SpicesInput(props: any) {
                             height={50}
                             width={50}
                             onClick={() => {
-                                if (fields.length > 1){
+                                if (fields.length > 0){
                                     remove(index);
                                 }
                             }}
@@ -96,10 +95,6 @@ export default function SpicesInput(props: any) {
                         </div>
 
                         <input {...register(`spice.${index}.name`, {
-                            required: {
-                                value: true,
-                                message: 'Required'
-                            },
                             minLength: {
                                 value: 3,
                                 message: 'Must have at least 3 Characters'

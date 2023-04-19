@@ -7,8 +7,8 @@ const supabase = createClient();
 export async function GetUserRecipes(userid: any) {
     const { data, error } = await supabase
     .from('recipe')
-    .select('recipeId, title, photoUrl')
-    .eq('userId', userid);
+    .select('recipe_id, title, photoUrl')
+    .eq('user_id', userid);
     
     if (error) return {
         type: 'error',
@@ -25,128 +25,48 @@ export async function GetUserRecipes(userid: any) {
 type recipeEditData = {
     type: string | null,
     message: string | null,
-    titleData: {
-        recipeId: string,
-        title: string,
-        course: string,
-        description: string,
-        source: string,
-        public: boolean | null,
-    }[] | null,
-
-    tagsData: {
-        tag: string
-    }[] | null,
-
-    ingredientsData: {
-        amount: string,
-        ingredient: string
-    }[] | null,
-
-    spicesData: {
-        spice: string
-    }[] | null,
-
-    instructionsData: {
-        instruction: string
-    }[] | null,
-
+    data: any
 }
 
 export async function GetRecipeById(userid: any, recipeId: any) {
     let payload: recipeEditData = {
         type: null,
         message: null,
-        titleData: null,
-        tagsData: null,
-        ingredientsData: null,
-        spicesData: null,
-        instructionsData: null
+        data: null,
     }
     
-    // get title data
-    const { data: titleData, error: titleError } = await supabase
-        .from('recipe')
-        .select('recipeId, title, course, description, public, source')
-        .eq('recipeId', recipeId);
+    try {
+        // grab recipe data if recipe id was able to be retrieved
+        const { data: recipeData, error: recipeError } = await supabase
+            .from('recipe')
+            .select(`title, course, description, photoUrl, source, public,
+            profiles(username),
+            recipe_tags(tag),
+            recipe_ingredients(amount, ingredient),
+            recipe_spices(spice),
+            recipe_instructions(instruction)`)
+            .eq('recipe_id', recipeId)
+            .eq('recipe_tags.recipe_id', recipeId)
+            .eq('recipe_ingredients.recipe_id', recipeId)
+            .eq('recipe_spices.recipe_id', recipeId)
+            .eq('recipe_instructions.recipe_id', recipeId)
+            ;
+        
+        // error handler
+        if (recipeError) throw recipeError;
 
-    // if no errors, set payload to include title data
-    if (titleError) {
-        payload.type = "error"
-        payload.message = titleError.message
-        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
+        // return payload if no errors
+        payload.type = "success";
+        payload.data = recipeData;
         return payload;
-    }; 
 
-    payload.titleData = titleData;
-
-    // get tags data
-    const { data: tagsData, error: tagsError } = await supabase
-        .from('recipe_tags')
-        .select('tag')
-        .eq('recipeId', recipeId);
-
-    // if no errors, set payload to include tags data
-    if (tagsError) {
-        payload.type = "error"
-        payload.message = tagsError.message
-        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
+    } catch(e: any) {
+        payload.type = "error";
+        payload.message = e;
+        payload.data = null;
         return payload;
-    }; 
+    }
 
-    payload.tagsData = tagsData;
-
-    // get ingredients data
-    const { data: ingredientsData, error: ingredientsError } = await supabase
-        .from('recipe_ingredients')
-        .select('amount, ingredient')
-        .eq('recipeId', recipeId);
-
-    // if no errors, set payload to include indredients data
-    if (ingredientsError) {
-        payload.type = "error"
-        payload.message = ingredientsError.message
-        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
-        return payload;
-    }; 
-
-    payload.ingredientsData = ingredientsData;
-
-    // get spices data
-    const { data: spicesData, error: spicesError } = await supabase
-        .from('recipe_spices')
-        .select('spice')
-        .eq('recipeId', recipeId);
-
-    // if no errors, set payload to include spices data
-    if (spicesError) {
-        payload.type = "error"
-        payload.message = spicesError.message
-        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
-        return payload;
-    }; 
-
-    payload.spicesData = spicesData;
-
-    // get instructions data
-    const { data: instructionsData, error: instructionsError } = await supabase
-        .from('recipe_instructions')
-        .select('instruction')
-        .eq('recipeId', recipeId);
-
-    // if no errors, set payload to include instructions data
-    if (instructionsError) {
-        payload.type = "error"
-        payload.message = instructionsError.message
-        payload.titleData, payload.tagsData, payload.ingredientsData, payload.spicesData, payload.instructionsData  = null
-        return payload;
-    }; 
-
-    payload.instructionsData = instructionsData;
-
-    // return payload if no errors
-    payload.type = "success"
-    return payload;
 }
 
 export async function SearchRecipes(searchParam: string | null) {
@@ -154,8 +74,8 @@ export async function SearchRecipes(searchParam: string | null) {
     if (searchParam != null) {
 
         let query = supabase
-        .from('recipe')
-        .select('recipeId, title, photoUrl');
+            .from('recipe')
+            .select('title, photoUrl, profiles(username)');
   
         // searches with provided search query
         if (searchParam) { query = query.like('title', `%${searchParam}%`) }
@@ -200,7 +120,7 @@ type RecipeInputs = {
 export async function CreateRecipe(data: RecipeInputs) {
 
     // validating user inpuit
-    if (data.title == null || !/^[^\s][\w\s-]{2,40}$/.test(data.title)) return {
+    if (data.title == null || !/^[^\s][()\w\s-]{2,40}$/.test(data.title)) return {
         response: 'error',
         type: 'Invalid input',
         message: 'Title'
@@ -325,7 +245,7 @@ export async function CreateRecipe(data: RecipeInputs) {
         const { data: recipeData, error: recipeError } = await supabase
         .from('recipe')
         .insert({ 
-            userId: session?.user.id, 
+            user_id: session?.user.id, 
             title: data.title,
             course: data.course,
             description: data.description,
@@ -333,9 +253,11 @@ export async function CreateRecipe(data: RecipeInputs) {
             public: data.public,
             photoUrl: url
         })
-        .select('recipeId');
+        .select('recipe_id');
+
         // after insert, select returns recipe id for referencing other tables data
-        recipeId = recipeData?.[0].recipeId;
+        recipeId = recipeData?.[0].recipe_id;
+        
         // error handle
         if (recipeError) throw recipeError;
     } catch(error: any) {
@@ -359,7 +281,7 @@ export async function CreateRecipe(data: RecipeInputs) {
         const tagsArray: any = [];
         data.tags.map((e: any) => {
             tagsArray.push({
-                recipeId: recipeId,
+                recipe_id: recipeId,
                 tag: e.name
             })
         });
@@ -382,7 +304,7 @@ export async function CreateRecipe(data: RecipeInputs) {
         const ingredientsArray: any = [];
         data.ingredients.map((e: any) => {
             ingredientsArray.push({
-                recipeId: recipeId,
+                recipe_id: recipeId,
                 amount: e.amount,
                 ingredient: e.name
             })
@@ -407,7 +329,7 @@ export async function CreateRecipe(data: RecipeInputs) {
             const spicesArray: any = [];
             data.spices.map((e: any) => {
                 spicesArray.push({
-                    recipeId: recipeId,
+                    recipe_id: recipeId,
                     spice: e.name
                 })
             });
@@ -432,7 +354,7 @@ export async function CreateRecipe(data: RecipeInputs) {
         const instructionsArray: any = [];
         data.instructions.map((e: any) => {
             instructionsArray.push({
-                recipeId: recipeId,
+                recipe_id: recipeId,
                 instruction: e.name,
             })
         });
@@ -444,9 +366,9 @@ export async function CreateRecipe(data: RecipeInputs) {
         if (instructionsError) throw instructionsError;
     } catch(error) {
         return {
-        response: 'error',
-        type: 'Database error',
-        message: 'Try again later!'
+            response: 'error',
+            type: 'Database error',
+            message: 'Try again later!'
         }
     };
 
@@ -455,5 +377,360 @@ export async function CreateRecipe(data: RecipeInputs) {
         response: 'success',
         type: '',
         message: 'Recipe Created'
+    }
+}
+
+// typedef
+type RecipeEditInputs = {
+    title: string | null,
+    course: string | null,
+    description: string | null,
+    source: string | null,
+    public: boolean,
+    photoFile: any | null,
+    tags: {
+        tag: string,
+    }[],
+    ingredients: {
+        amount: string,
+        name: string
+    }[],
+    spices: {
+        spice: string,
+    }[],
+    instructions: {
+        instruction: string,
+    }[],
+}
+
+// function checks to see if any edits were made (determines this by seeing if data passed is not null)
+// this is done to save API calls by only updating the database with data that is actually changed from the
+// original
+export async function EditRecipe(data: RecipeEditInputs, userId: any, recipeId: number, photoUrl: any, recipeTitle: any) {
+    // check if any changes made in main recipe table
+    try {
+        if (data.title != null) {
+            const { error: titleError } = await supabase
+                .from('recipe')
+                .update( { title: data.title } )
+                .eq('recipe_id', recipeId)
+                .eq('user_id', userId);
+
+            // error handle
+            if (titleError) throw titleError;
+        }
+
+        if (data.course != null) {
+            const { error: courseError } = await supabase
+                .from('recipe')
+                .update( { course: data.course } )
+                .eq('recipe_id', recipeId)
+                .eq('userId', userId);
+
+            // error handle
+            if (courseError) throw courseError;
+        }
+
+        if (data.description != null) {
+            const { error: descriptionError } = await supabase
+                .from('recipe')
+                .update( { description: data.description } )
+                .eq('recipe_id', recipeId)
+                .eq('userId', userId);
+
+            // error handle
+            if (descriptionError) throw descriptionError;
+        }
+
+        if (data.source != null) {
+            const { error: sourceError } = await supabase
+                .from('recipe')
+                .update( { source: data.source } )
+                .eq('recipe_id', recipeId)
+                .eq('userId', userId);
+
+            // error handle
+            if (sourceError) throw sourceError;
+        }
+
+        if (data.public != null) {
+            const { error: publicError } = await supabase
+                .from('recipe')
+                .update( { public: data.public } )
+                .eq('recipe_id', recipeId)
+                .eq('userId', userId);
+
+            // error handle
+            if (publicError) throw publicError;
+        }
+
+        // check if photo file was provided
+        let url: any;
+        if (data.photoFile != null){
+            // delete old image from bucket
+            // get pure path to item in bucket
+            url = photoUrl!.replace('https://wsgtwhbvwnftxaqiogud.supabase.co/storage/v1/object/public/recipe-images/', '');
+
+            // removing space placeholders from url with actual spaces
+            url = url!.replaceAll('%20', ' ');
+            console.log(url)
+            const { error } = await supabase
+                .storage
+                .from('recipe-images')
+                .remove([url])
+
+            if (error) throw error;
+
+            // prepare to upload new image
+            // make url
+            url = 'public/' + recipeTitle + '-' + uuidv4();
+
+            const { data: photoFileData, error: photoError } = await supabase
+            .storage
+            .from('recipe-images')
+            // uploaded files will be recipe-images/TheBestLasagna-randomid123123
+            .upload(url, data.photoFile, {
+                cacheControl: '3600',
+                upsert: false
+            });
+            // error handle
+            if (photoError) throw photoError;
+
+            // if no errors, set url to public url for getting image
+            url = encodeURI('https://wsgtwhbvwnftxaqiogud.supabase.co/storage/v1/object/public/recipe-images/' + url);
+
+            console.log(url)
+
+            const { data: recipeData, error: recipeError } = await supabase
+            .from('recipe')
+            .update({ photoUrl: url})
+            .eq('recipe_id', recipeId);
+
+            if (recipeError) throw recipeError;
+        }
+
+        // check if any changes made in tags
+        if (data.tags != null ){
+            let query: any[] = []
+            data.tags.map((e: any) => {
+                query.push({recipe_id: recipeId, tag: e.tag});
+            });
+
+            // remove old tags
+            const { error: removeError } = await supabase
+                .from('recipe_tags')
+                .delete()
+                .eq('recipe_id', recipeId);
+
+            // error handle
+            if (removeError) throw removeError;
+
+            // add new tags
+            const { error: addError } = await supabase
+                .from('recipe_tags')
+                .insert(query);
+
+            // error handle
+            if (addError) throw addError;
+        }
+
+        // check if any changes made in ingredients
+        if (data.ingredients != null ){
+            let query: any[] = []
+            data.ingredients.map((e: any) => {
+                query.push({recipe_id: recipeId, amount: e.amount, ingredient: e.ingredient});
+            });
+                        
+            // remove old ingredients
+            const { error: removeError } = await supabase
+                .from('recipe_ingredients')
+                .delete()
+                .eq('recipe_id', recipeId);
+
+            // error handle
+            if (removeError) throw removeError;
+
+            // add new ingredients
+            const { error: addError } = await supabase
+                .from('recipe_ingredients')
+                .insert(query);
+
+            // error handle
+            if (addError) throw addError;
+        }
+
+        // check if any changes made in spices
+        if (data.spices != null){
+            let query: any[] | null = []
+
+            // check if first item in array isn't blank (user wants all spices deleted) 
+            if (data.spices[0].spice == ""){
+                query = null;
+            } else {
+                data.spices.map((e: any) => {
+                    if (e.spice != null) {
+                        query?.push({recipe_id: recipeId, spice: e.spice});
+                    }
+                });
+            }
+                        
+            // remove old spices
+            const { error: removeError } = await supabase
+                .from('recipe_spices')
+                .delete()
+                .eq('recipe_id', recipeId);
+
+            // error handle
+            if (removeError) throw removeError;
+
+            // add new spices if spices array is not nulled
+            if (query != null) {
+                const { error: addError } = await supabase
+                .from('recipe_spices')
+                .insert(query);
+
+                // error handle
+                if (addError) throw addError;
+            }
+        }
+
+        // check if any changes made in instructions
+        if (data.instructions != null ){
+            let query: any[] = []
+            data.instructions.map((e: any) => {
+                query.push({recipe_id: recipeId, instruction: e.instruction});
+            });
+                        
+            // remove old instructions
+            const { error: removeError } = await supabase
+                .from('recipe_instructions')
+                .delete()
+                .eq('recipe_id', recipeId);
+
+            // error handle
+            if (removeError) throw removeError;
+
+            // add new instructions
+            const { error: addError } = await supabase
+                .from('recipe_instructions')
+                .insert(query);
+
+            // error handle
+            if (addError) throw addError;
+        }
+
+    } catch(error) {
+        return {
+            response: 'error',
+            type: 'Database error',
+            message: 'Try again later!'
+        }
+    };
+    
+
+    return {
+        response: 'success',
+        type: '',
+        message: 'Recipe Edited'
+    }
+}
+
+// function checks to see if any edits were made (determines this by seeing if data passed is not null)
+// this is done to save API calls by only updating the database with data that is actually changed from the
+// original
+export async function DeleteRecipe(userId: any, recipeId: number) {
+    try {
+        // get photo url
+        const { data: photoGet, error: photoGetError } = await supabase
+            .from('recipe')
+            .select('photoUrl')
+            .eq('recipe_id', recipeId)
+            .eq('user_id', userId)
+        ;
+
+        // error handle
+        if (photoGetError) throw photoGetError;
+
+        // if a photo url is not null then delete with url, otherwise move on
+        if (photoGet?.[0].photoUrl != null){
+            let url = photoGet?.[0].photoUrl;
+
+            // get pure path to item in bucket
+            url = url!.replace('https://wsgtwhbvwnftxaqiogud.supabase.co/storage/v1/object/public/recipe-images/', '');
+
+            // removing space placeholders from url with actual spaces
+            url = url!.replaceAll('%20', ' ');
+            const { error } = await supabase
+                .storage
+                .from('recipe-images')
+                .remove([url])
+
+            // error handle
+            if (error) throw error;
+        }
+
+        // delete tags
+        const { error: tagRemoveError } = await supabase
+        .from('recipe_tags')
+        .delete()
+        .eq('recipe_id', recipeId)
+        ;
+
+        // error handle
+        if (tagRemoveError) throw tagRemoveError;
+
+        // delete ingredients
+        const { error: ingredientsRemoveError } = await supabase
+        .from('recipe_ingredients')
+        .delete()
+        .eq('recipe_id', recipeId)
+        ;
+
+        // error handle
+        if (ingredientsRemoveError) throw ingredientsRemoveError;
+
+        // delete spices
+        const { error: spicesRemoveError } = await supabase
+        .from('recipe_spices')
+        .delete()
+        .eq('recipe_id', recipeId)
+        ;
+
+        // error handle
+        if (spicesRemoveError) throw spicesRemoveError;
+
+        // delete instructions
+        const { error: instructionsRemoveError } = await supabase
+        .from('recipe_instructions')
+        .delete()
+        .eq('recipe_id', recipeId)
+        ;
+
+        // error handle
+        if (instructionsRemoveError) throw instructionsRemoveError;
+
+        // delete recipe
+        const { error: recipeRemoveError } = await supabase
+        .from('recipe')
+        .delete()
+        .eq('recipe_id', recipeId)
+        .eq('user_id', userId)
+        ;
+
+        // error handle
+        if (recipeRemoveError) throw recipeRemoveError;
+
+    } catch(error) {
+        return {
+            response: 'error',
+            type: 'Database error',
+            message: 'Try again later!'
+        }
+    };
+    
+    return {
+        response: 'success',
+        type: '',
+        message: 'Recipe Deleted'
     }
 }

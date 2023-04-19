@@ -11,7 +11,7 @@ import TagsInput from './editinput/tagsinputedit';
 import IngredientsInput from './editinput/ingredientsinputedit';
 import SpicesInput from './editinput/spicesinputedit';
 import InstructionsInput from './editinput/instructionsinputedit';
-import SubmitInput from './input/submitinput';
+import SubmitInput from './editinput/submitinputedit';
 import styles from './createrecipe.module.css';
 
 // auth
@@ -35,7 +35,7 @@ export default function EditRecipe(props: any) {
             ingredient: string
         }[] | null,
         spices: {
-            spice: string
+            spice: string | null
         }[] | null,
         instructions: {
             instruction: string
@@ -51,13 +51,10 @@ export default function EditRecipe(props: any) {
         source: null,
         public: null,
         photoFile: null,
-        tags: [{tag: ''}],
-        ingredients: [{
-            amount: '',
-            ingredient: ''
-        }],
-        spices: [{spice: ''}],
-        instructions: [{instruction: ''}],
+        tags: null,
+        ingredients: null,
+        spices: null,
+        instructions: null,
     });
 
     const [inputData, setInputData] = useState<Inputs>({
@@ -83,15 +80,16 @@ export default function EditRecipe(props: any) {
         if (data.type !== "success") return;
         // if data is successful, set input state
         setInputData(prev => ({...prev,
-            title: data.titleData![0].title,
-            course: data.titleData![0].course,
-            description: data.titleData![0].description,
-            source: data.titleData![0].source,
-            public: data.titleData![0].public,
-            tags: data.tagsData,
-            ingredients: data.ingredientsData,
-            spices: data.spicesData,
-            instructions: data.instructionsData
+            title: data.data[0].title,
+            course: data.data[0].course,
+            description: data.data[0].description,
+            source: data.data[0].source,
+            public: data.data[0].public,
+            tags: data.data[0].recipe_tags,
+            photoFile: data.data[0].photoUrl,
+            ingredients: data.data[0].recipe_ingredients,
+            spices: data.data[0].recipe_spices,
+            instructions: data.data[0].recipe_instructions
         }));
 
         setActiveTab('title');
@@ -196,6 +194,7 @@ export default function EditRecipe(props: any) {
                 <PhotoInput
                 data={inputData} 
                 setData={setInputEditData}
+                editData={inputEditData}
                 />
 
                 : activeTab === 'tags'
@@ -236,6 +235,8 @@ export default function EditRecipe(props: any) {
                 data={inputData} 
                 setData={setInputEditData}
                 editData={inputEditData}
+                userId={props.userId}
+                recipeId={props.recipeId}
                 />
 
                 : <></> 

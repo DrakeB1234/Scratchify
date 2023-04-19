@@ -53,7 +53,6 @@ export default function TitleInputEdit(props: any) {
         <div className={styles.InputParent}>
             <form className={styles.FormParent}
             onSubmit={(handleSubmit(handleSave))}
-            onClick={() => {console.log(props.data); console.log(props.editData)}}
             >
 
                 <label htmlFor='title'>Title</label>
@@ -71,8 +70,8 @@ export default function TitleInputEdit(props: any) {
                         message: 'Must be less than 40 characters'
                     },
                     pattern: {
-                        value: /^[^\s][\w\s-]{0,}$/,
-                        message: 'Must not start with space, only letters, numbers, spaces, and -'
+                        value: /^[^\s][\w\s-()]{0,}$/,
+                        message: 'Must not start with space, only letters, numbers, spaces, and - ( )'
                     }
                 })}
                 autoComplete='off'

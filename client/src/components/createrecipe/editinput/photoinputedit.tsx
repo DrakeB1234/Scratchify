@@ -29,19 +29,19 @@ export default function PhotoInputEdit(props: any) {
         // if file not provided
         if(!file) return setError('photoFile', {message: 'If saving photo, file must be provided'});
 
-        // if file size bigger than 30MB set error
-        if(file.size > 30000000) return setError('photoFile', {message: 'Photo must can not be larger than 30MB'});
+        // if file size bigger than 20MB set error
+        if(file.size > 20000000) return setError('photoFile', {message: 'Photo must can not be larger than 20MB'});
 
         // file must be jpg, jpeg, or png
         if(!file.name.match(/\.(jpg|jpeg|png)$/i)) return setError('photoFile', {message: 'File must be a JPG, JPEG, or PNG'});
         
-        props.setData((prev: Inputs) => ({...prev, 
+        props.setData((prev: any) => ({...prev, 
             photoFile: file
         }));
 
         // if photo is provided, set state to blob to show image
         if (formVal.photoFile.length > 0) setImageOutput(URL.createObjectURL(file));
-
+        
         return setSaveInput(true);
     }
 
@@ -50,7 +50,7 @@ export default function PhotoInputEdit(props: any) {
             <form className={styles.FormParent}
             onSubmit={(handleSubmit(handleSave))}
             >
-                <h1>OPTIONAL</h1>
+                <h2>OPTIONAL</h2>
                 {imageOutput
                 ? <Image 
                     className={styles.InputImage}
@@ -59,15 +59,29 @@ export default function PhotoInputEdit(props: any) {
                     height={300}
                     width={300}
                     />
+                : props.editData.photoFile !== null
+                ? <Image 
+                    className={styles.InputImage}
+                    alt='image'
+                    src={URL.createObjectURL(props.editData.photoFile)}
+                    height={300}
+                    width={300}
+                    />
                 : props.data.photoFile !== null
-                    ? <Image 
-                        className={styles.InputImage}
-                        alt='image'
-                        src={URL.createObjectURL(props.data.photoFile)}
-                        height={300}
-                        width={300}
-                        />
-                    : <></>
+                ? <Image 
+                    className={styles.InputImage}
+                    alt='image'
+                    src={props.data.photoFile}
+                    height={300}
+                    width={300}
+                    />
+                : <Image 
+                    className={styles.InputImage}
+                    alt='image'
+                    src='/graphics/graphic-recipe.png'
+                    height={300}
+                    width={300}
+                    />
                 }
 
                 <label htmlFor='photoFile'>Upload Photo</label>

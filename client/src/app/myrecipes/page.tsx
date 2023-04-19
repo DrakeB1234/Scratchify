@@ -9,11 +9,12 @@ import Navbar from '@/components/navbar/navbar';
 import LoadingSvg from '/public/graphics/graphic-loading-dots.svg';
 import CreateRecipe from '@/components/createrecipe/createrecipe';
 import EditRecipe from '@/components/createrecipe/editrecipe';
+import Popup from '@/components/popup/popup';
 import styles from '../../styles/MyRecipes.module.css';
 
 // auth
 import { GetSessionAuth } from '@/supabasehelpers/auth';
-import { GetUserRecipes } from '@/supabasehelpers/database';
+import { GetUserRecipes, DeleteRecipe } from '@/supabasehelpers/database';
 
 export default function MyRecipes() {
 
@@ -22,6 +23,7 @@ export default function MyRecipes() {
 
     const [toggleRecipeCreator, setToggleRecipeCreator] = useState(false);
     const [toggleRecipeEditor, setToggleRecipeEditor] = useState(false);
+    const [popupConfirmDelete, setPopupConfirmDelete] = useState(false);
     const [loadingData, setLoadingData] = useState<boolean>(false);
     const [recipeData, setRecipeData] = useState<any>([]);
     const recipeIdRef = useRef(0);
@@ -40,10 +42,30 @@ export default function MyRecipes() {
 
     // edit function
     const editRecipe = (recipeId: number) => {
-      // 
+      // sets current recipeId to transfer to edit component
       recipeIdRef.current = recipeId;
       setToggleRecipeEditor(true);
     }
+
+    // confirm delete recipe function
+    const confirmDeleteRecipe = (recipeId: number) => {
+      // sets current recipeId to transfer to delete confirm component
+      recipeIdRef.current = recipeId;
+      setPopupConfirmDelete(true);
+    }
+
+    // delete recipe function
+    const deleteRecipe = async () => {
+      // call delete recipe
+      let result = await DeleteRecipe(session.current.user.id, recipeIdRef.current);
+
+      setPopupConfirmDelete(false);
+
+      if (result.response != "success") return;
+      // if recipe deleted successfully, replace url to homepage
+      else router.replace('/');
+    }
+
 
     const getRecipes = async () => {
         // if no session set, return nothing
@@ -73,6 +95,18 @@ export default function MyRecipes() {
         setToggle={setToggleRecipeEditor}
         userId={session.current.user.id}
         recipeId={recipeIdRef.current}
+        />
+      : <></>
+    }
+
+    {popupConfirmDelete
+      ? <Popup 
+        popupToggle={setPopupConfirmDelete}
+        title="Confirm Recipe Deletion"
+        message={["Are you sure you want to delete this recipe?", `This action CAN NOT be undone. If you do not wish to delete this recipe,
+        then please press the cancel button below, otherwise continue with the yes button`]}
+        confirm={true}
+        callback={deleteRecipe}
         />
       : <></>
     }
@@ -122,27 +156,43 @@ export default function MyRecipes() {
           }
           {recipeData.map((e: any, index: number) => (
             <div key={index + 'a'} className={styles.MyRecipesContentItem}
-            onClick={() => editRecipe(e.recipeId)}
             >
-              <Image 
-              className={styles.MyRecipesContentRecipeImage}
-              alt='+'
-              src={e.photoUrl !== null
-              ? `${e.photoUrl}`
-              : '/graphics/graphic-recipe.png'
-              }
-              height={150}
-              width={150}
-              />
-              <div>
-                <h1>{e.title}</h1>
+              <div className={styles.MyRecipesRow}>
                 <Image 
+                className={styles.MyRecipesContentRecipeImage}
                 alt='+'
-                src='/icons/actions/icon-edit-outline.svg'
-                height={50}
-                width={50}
+                src={e.photoUrl !== null
+                ? `${e.photoUrl}`
+                : '/graphics/graphic-recipe.png'
+                }
+                height={120}
+                width={120}
                 />
+                <h1>{e.title}</h1>
               </div>
+              <div className={styles.MyRecipesRowButtons}>
+                <div
+                onClick={() => editRecipe(e.recipe_id)}
+                >
+                  <Image 
+                  alt='edit'
+                  src='/icons/actions/icon-edit-outline.svg'
+                  height={25}
+                  width={25}
+                  />
+                </div>
+                <div
+                onClick={() => confirmDeleteRecipe(e.recipe_id)}
+                >
+                  <Image 
+                  alt='edit'
+                  src='/icons/actions/icon-plusred-outline.svg'
+                  height={25}
+                  width={25}
+                  />
+                </div>
+              </div>
+
             </div>
           ))}
           </>
