@@ -19,7 +19,7 @@ import { GetUserRecipes, DeleteRecipe } from '@/supabasehelpers/database';
 export default function MyRecipes() {
 
     const router = useRouter();
-    let session = useRef<any>();
+    const session = useRef<any>();
 
     const [toggleRecipeCreator, setToggleRecipeCreator] = useState(false);
     const [toggleRecipeEditor, setToggleRecipeEditor] = useState(false);
@@ -33,6 +33,7 @@ export default function MyRecipes() {
       const getSession = async () => {
         session.current = await GetSessionAuth()
         session.current = session.current.data.session;
+        
         // if session is null, redirect user to signin
         if (session.current == null) return router.replace('/signin');
         // else return getRecipes();
@@ -65,7 +66,6 @@ export default function MyRecipes() {
       // if recipe deleted successfully, replace url to homepage
       else router.replace('/');
     }
-
 
     const getRecipes = async () => {
         // if no session set, return nothing

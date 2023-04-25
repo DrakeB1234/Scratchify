@@ -4,6 +4,23 @@ import { createClient } from 'utils/supabase-browser';
 import { GetSessionAuth } from '@/supabasehelpers/auth';
 const supabase = createClient();
 
+export async function GetGroceryList(userId: string) {
+    const { data, error } = await supabase
+    .from('grocery_list')
+    .select('id, category, recipe, item')
+    .eq('user_id', userId);
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
 export async function GetUserRecipes(userid: any) {
     const { data, error } = await supabase
     .from('recipe')
@@ -75,7 +92,7 @@ export async function SearchRecipes(searchParam: string | null) {
 
         let query = supabase
             .from('recipe')
-            .select('title, photoUrl, profiles(username)');
+            .select('title, photoUrl, profiles(username), recipe_saved(id)');
   
         // searches with provided search query
         if (searchParam) { query = query.like('title', `%${searchParam}%`) }
@@ -115,6 +132,68 @@ type RecipeInputs = {
     }[],
     spices: string[],
     instructions: string[]
+}
+
+export async function SaveRecipe(userId: any, recipeId: number) {
+    try {
+        // try and get row if recipe has already been saved by user
+        const { data: recipeData, error: recipeError } = await supabase
+            .from('recipe_saved')
+            .select('user_id, recipe_id')
+            .eq('user_id', userId)
+            .eq('recipe_id', recipeId)
+        ;
+
+        // error handler
+        if (recipeError) throw recipeError;
+        
+        // if data is empty, user has not saved recipe yet
+        if (recipeData.length <= 0){
+            // if recipe not saved
+            const { error: saveError } = await supabase
+                .from('recipe_saved')
+                .insert({ 
+                    user_id: userId, 
+                    recipe_id: recipeId,
+                })
+            ;
+
+            // error handler
+            if (saveError) throw saveError;
+
+            // if success, return success msg
+            return {
+                response: 'success',
+                type: 'Saved Recipe',
+                message: null
+            }
+        } else {
+            // if recipe already saved, delete row from database
+            const { error: removeError } = await supabase
+                .from('recipe_saved')
+                .delete()
+                .eq('user_id', userId)
+                .eq('recipe_id', recipeId)
+            ;
+
+            // error handler
+            if (removeError) throw removeError;
+
+            // if success, return success msg
+            return {
+                response: 'success',
+                type: 'Removed Saved Recipe',
+                message: null
+            }
+        }
+    }
+    catch(error: any) {
+        return {
+            response: 'error',
+            type: 'Database Error',
+            message: error.message
+        }
+    }
 }
 
 export async function CreateRecipe(data: RecipeInputs) {
@@ -425,7 +504,7 @@ export async function EditRecipe(data: RecipeEditInputs, userId: any, recipeId: 
                 .from('recipe')
                 .update( { course: data.course } )
                 .eq('recipe_id', recipeId)
-                .eq('userId', userId);
+                .eq('user_id', userId);
 
             // error handle
             if (courseError) throw courseError;
@@ -436,7 +515,7 @@ export async function EditRecipe(data: RecipeEditInputs, userId: any, recipeId: 
                 .from('recipe')
                 .update( { description: data.description } )
                 .eq('recipe_id', recipeId)
-                .eq('userId', userId);
+                .eq('user_id', userId);
 
             // error handle
             if (descriptionError) throw descriptionError;
@@ -447,7 +526,7 @@ export async function EditRecipe(data: RecipeEditInputs, userId: any, recipeId: 
                 .from('recipe')
                 .update( { source: data.source } )
                 .eq('recipe_id', recipeId)
-                .eq('userId', userId);
+                .eq('user_id', userId);
 
             // error handle
             if (sourceError) throw sourceError;
@@ -458,7 +537,7 @@ export async function EditRecipe(data: RecipeEditInputs, userId: any, recipeId: 
                 .from('recipe')
                 .update( { public: data.public } )
                 .eq('recipe_id', recipeId)
-                .eq('userId', userId);
+                .eq('user_id', userId);
 
             // error handle
             if (publicError) throw publicError;
@@ -473,7 +552,7 @@ export async function EditRecipe(data: RecipeEditInputs, userId: any, recipeId: 
 
             // removing space placeholders from url with actual spaces
             url = url!.replaceAll('%20', ' ');
-            console.log(url)
+
             const { error } = await supabase
                 .storage
                 .from('recipe-images')
@@ -498,8 +577,6 @@ export async function EditRecipe(data: RecipeEditInputs, userId: any, recipeId: 
 
             // if no errors, set url to public url for getting image
             url = encodeURI('https://wsgtwhbvwnftxaqiogud.supabase.co/storage/v1/object/public/recipe-images/' + url);
-
-            console.log(url)
 
             const { data: recipeData, error: recipeError } = await supabase
             .from('recipe')

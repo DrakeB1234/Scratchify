@@ -13,6 +13,8 @@ type Props = {
     link?: string,
     linkMessage?: string,
     confirm?: boolean,
+    dialog?: boolean,
+    signinDialog?: boolean,
     popupToggle?: any,
     callback?: any
 }
@@ -44,6 +46,14 @@ export default function Popup(props: Props) {
               <button
               onClick={props.callback}
               >Confirm</button>
+
+            </div>
+            :props.dialog
+            ?
+            <div className={styles.ConfirmButtonsParent}>
+              <button
+              onClick={() => props.popupToggle(false)}
+              >Ok</button>
 
             </div>
             : <></>

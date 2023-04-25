@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 
 // import styles / components
 import Popup from '@/components/popup/popup';
+import LoadingSvg from '/public/graphics/icon-loading.svg';
 import styles from './input.module.css';
 
 import { CreateRecipe } from '@/supabasehelpers/database';
@@ -17,16 +18,22 @@ export default function SubmitInput(props: any) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     
     const [popUpState, setPopUpState] = useState(false);
+    const [loadingState, setLoadingState] = useState(false);
     const [errorState, setErrorState] = useState<string>('');
 
     const handleSave = async () => {
-        const result = await CreateRecipe(props.data);
-        // close pop up and reset error state
-        setErrorState('');
+        // set loading state
         setPopUpState(false);
+        setLoadingState(true);
+
+        const result = await CreateRecipe(props.data);
+
         // if there is an error returned from function, set error
         // state
-        if (result?.response == 'error') return setErrorState(`${result.type}: ${result.message}`);
+        if (result?.response == 'error') {
+            setLoadingState(false);
+            return setErrorState(`${result.type}: ${result.message}`);
+        }
         // if recipe created successfully, replace url to homepage
         if (result?.response == 'success') return router.replace('/');
     }
@@ -49,9 +56,14 @@ export default function SubmitInput(props: any) {
             >
 
                 {errorState == ''
-                ? <button type='button' className={styles.CreateButton}
-                onClick={() => setPopUpState(true)}
-                >Create Recipe</button>
+                ? loadingState
+                ? 
+                    <button type='button' className={styles.CreateButton}
+                    ><LoadingSvg /></button>
+                :
+                    <button type='button' className={styles.CreateButton}
+                    onClick={() => setPopUpState(true)}
+                    >Create Recipe</button>
                 : <button type='button' className={styles.ErrorButton}>Error</button>
                 }
                 <h1 className={styles.FormInputError}>{errorState}</h1>

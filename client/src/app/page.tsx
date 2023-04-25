@@ -11,15 +11,16 @@ import styles from '../styles/Home.module.css';
 import { createClient } from '../../utils/supabase-server';
 
 // do not cache this page
-export const revalidate = 0;
+export const revalidate = 90;
 
 export default async function Home() {
 
     const supabase = createClient();
     
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('recipe')
-      .select('title, photoUrl, profiles(username)');
+      .select('title, photoUrl, profiles(username), recipe_saved(id)')
+    ;
 
   return (
     <div className={styles.HomeParent}>
@@ -46,7 +47,7 @@ export default async function Home() {
                 <div className={styles.RecipeItemInfo}>
                   <h1>@{e.profiles.username}</h1>
                   <div>
-                    <h1>7</h1>
+                    <h1>{e.recipe_saved.length}</h1>
                     <Image 
                     alt='image'
                     src='/icons/actions/icon-save-outline.svg'

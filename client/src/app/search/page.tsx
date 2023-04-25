@@ -134,7 +134,7 @@ export default function Recipes() {
                 <div className={styles.RecipeItemInfo}>
                   <h1>@{e.profiles.username}</h1>
                   <div>
-                    <h1>7</h1>
+                    <h1>{e.recipe_saved.length}</h1>
                     <Image 
                     alt='image'
                     src='/icons/actions/icon-save-outline.svg'

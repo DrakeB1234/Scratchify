@@ -145,6 +145,37 @@
     color: var(--black-color-dark);
     background-color: var(--white-color-med);
 }
+/* recipe social buttons parent */
+.RecipeSocialButtons {
+    display: flex;
+    justify-content: space-evenly;
+}
+    /* recipe social buttons divs */
+    .RecipeSocialButtons > div {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        padding: 1em;
+        border: 1px solid var(--white-color-med);
+        cursor: pointer;
+    }
+        /* recipe social buttons icons */
+        .RecipeSocialButtons > div > img {
+            height: 25px;
+            width: 25px;
+        }
+        /* recipe social buttons text */
+        .RecipeSocialButtons > div > h1 {
+            font-size: 1.1rem;
+            color: var(--black-color-med);
+        }
+    /* saved recipe button */
+    .SaveRecipeButtonSaved {
+        background-color: var(--appmain-color-med);
+    }
+
 /* recipe ingredients parent */
 .RecipeIngredientsParent {
     display: flex;

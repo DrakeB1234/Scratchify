@@ -4,11 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 // import styles / components
+import SocialButtons from '../socialbuttons/socialbuttons';
 import Navbar from '@/components/navbar/navbar';
 import styles from '../../../styles/Recipe.module.css';
 
 // auth
 import { createClient } from 'utils/supabase-server';
+import { cookies } from 'next/headers';
+
 // cache this page
 export const revalidate = 90;
 
@@ -19,6 +22,10 @@ export default async function Home(params: any) {
   
   const supabase = createClient();
 
+  // get user session data
+  const session = await supabase.auth.getSession();
+  let userId: string | undefined = session.data.session?.user.id
+
   // grab recipe id from database if recipe is public
   const { data: recipeId } = await supabase
     .from('recipe')
@@ -27,20 +34,35 @@ export default async function Home(params: any) {
     .eq('public', true);
     
   // grab recipe data if recipe id was able to be retrieved
-  const { data: recipeData } = await supabase
+  const { data: recipeData, error: recipeError } = await supabase
     .from('recipe')
-    .select(`title, course, description, photoUrl, source,
+    .select(`recipe_id, title, course, description, photoUrl, source,
     profiles(username),
     recipe_tags(tag),
     recipe_ingredients(amount, ingredient),
     recipe_spices(spice),
-    recipe_instructions(instruction)`)
+    recipe_instructions(instruction),
+    recipe_saved(id)`)
     .eq('recipe_id', recipeId?.[0]?.recipe_id ?? null)
     .eq('recipe_tags.recipe_id', recipeId?.[0]?.recipe_id ?? null)
     .eq('recipe_ingredients.recipe_id', recipeId?.[0]?.recipe_id ?? null)
     .eq('recipe_spices.recipe_id', recipeId?.[0]?.recipe_id ?? null)
     .eq('recipe_instructions.recipe_id', recipeId?.[0]?.recipe_id ?? null)
+    .eq('recipe_saved.recipe_id', recipeId?.[0]?.recipe_id ?? null)
+  ;
+
+  // if user has session, grab recipe saved data
+  let savedData: any = [];
+  if (userId !== undefined) {
+    // grab recipe data if recipe id was able to be retrieved
+    savedData = { data: savedData } = await supabase
+      .from('recipe_saved')
+      .select('user_id, recipe_id')
+      .eq('recipe_id', recipeId?.[0]?.recipe_id ?? null)
+      .eq('user_id', userId)
     ;
+
+  } 
 
   // if results, return recipe information
   if (recipeData && recipeData?.length > 0) {
@@ -51,20 +73,8 @@ export default async function Home(params: any) {
             <div className={styles.RecipeTitleCard}>
               <h1>{recipeData?.[0].title}</h1>
               <h2>{recipeData?.[0].course}</h2>
-              <h3>Created By:</h3>
+              <h3>Recipe By:</h3>
               <h3>@{Array.isArray(recipeData?.[0].profiles) ? recipeData?.[0].profiles?.map((e: any) => (e.username)) : recipeData?.[0].profiles?.username}</h3>
-
-              <div
-              className={styles.DivButton}
-              >
-                <Image 
-                alt='Recipe image'
-                src='/icons/actions/icon-savewhite-outline.svg'
-                height={50}
-                width={50}
-                />
-                <h1>Save Recipe</h1>
-              </div>
               
               {recipeData?.[0].source
               ? <h4>Source: <span>{recipeData?.[0].source}</span></h4>
@@ -105,6 +115,14 @@ export default async function Home(params: any) {
             <div className={styles.RecipeDescription}>
               <h1>{recipeData?.[0].description}</h1>
             </div>
+
+            <SocialButtons 
+            recipeTitle={recipeData?.[0].title}
+            recipeId={recipeData?.[0].recipe_id}
+            userId={userId}
+            isSaved={savedData.data}
+            amountSaved={recipeData?.[0].recipe_saved}
+            />
 
             <div className={styles.RecipeIngredientsParent}>
               <h1>Ingredients</h1>

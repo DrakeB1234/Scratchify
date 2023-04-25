@@ -2,6 +2,10 @@
 
 module.exports = {
   webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    },
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],

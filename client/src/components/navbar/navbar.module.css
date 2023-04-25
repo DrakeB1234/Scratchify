@@ -21,13 +21,13 @@
     .NavbarImageBannerDesktop {
         height: auto;
         width: 100%;
-        max-width: 200px;
+        max-width: 160px;
         aspect-ratio: 4 / 1;
     }
     /* bars icon on navbar */
     .NavbarImageBars {
-        height: 40px;
-        width: 40px;
+        height: 30px;
+        width: 30px;
         margin-left: auto;
         background: none;
         border: 0;
