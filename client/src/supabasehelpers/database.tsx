@@ -8,7 +8,57 @@ export async function GetGroceryList(userId: string) {
     const { data, error } = await supabase
     .from('grocery_list')
     .select('id, category, recipe, item')
-    .eq('user_id', userId);
+    .eq('user_id', userId)
+    .order('category', {
+        ascending: true
+    })
+    .order('item', {
+        ascending: true
+    })
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
+export async function EditListItem(userId: string, itemId: any, formVal: any) {
+
+    // check if formval category is set to 'none', if so null value
+    if (formVal.category === 'none') formVal.category = null;
+    
+    const { data, error } = await supabase
+    .from('grocery_list')
+    .update({category: formVal.category, item: formVal.item})
+    .eq('user_id', userId)
+    .eq('id', itemId)
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
+export async function DeleteListItem(userId: string, itemId: any) {
+    
+    const { data, error } = await supabase
+    .from('grocery_list')
+    .delete()
+    .eq('user_id', userId)
+    .eq('id', itemId)
+    ;
     
     if (error) return {
         type: 'error',

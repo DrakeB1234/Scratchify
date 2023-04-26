@@ -6,40 +6,95 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 // import styles / components
+import ListPopup from './listPopup/listPopup';
 import styles from './ListComponent.module.css';
 
 // auth
-import { GetGroceryList } from '@/supabasehelpers/database';
+import { DeleteListItem, EditListItem, GetGroceryList } from '@/supabasehelpers/database';
 
 export default function ListComponent(props: any) {
 
     // type def
     type ListData = {
+        id: any,
         category: string,
         recipe: string,
         item: string,
-    }[]
+    }[] | null
 
-    const [listData, setListData] = useState<ListData>([
-        // {
-        //     category: '',
-        //     recipe: '',
-        //     item: ''
-        // }
-    ]);
+    const [toggleListPopup, setToggleListPopup] = useState(false);
+    const [listData, setListData] = useState<ListData>([]);
+    const curCat = useRef<any>('');
+    const curEditId = useRef(0);
 
     const GetGroceryListFunction = async () => {
         const result = await GetGroceryList(props.userId);
-        console.log(result.data)
+        setListData(result.data);
     }
 
     useEffect(() => {
         // if there is no data, load in data
-        if (listData.length == 0 && props.userId != null) GetGroceryListFunction();
-    }, [props.userId])
+        if (listData?.length == 0 && props.userId != null) GetGroceryListFunction();
+    }, [props.userId]);
+
+    const EditItemFunction = (itemId: number) => {
+        // set cur edit id
+        curEditId.current = itemId;
+        // toggle popup
+        setToggleListPopup(true);
+    }
+
+    // call back function from popup edit component
+    const EditItemCallback = async (formVal: any, itemId: number) => {
+        // close popup
+        setToggleListPopup(false);
+        
+        const result = await EditListItem(props.userId, itemId, formVal);
+
+        // if result was success
+        if (result.type == 'success'){
+            // refresh list data by calling get list data fuction
+            const result = await GetGroceryListFunction();
+        }
+        // else, database error
+        else {
+            console.error(result)
+        }
+    }
+
+    // call back function from popup edit component for deleting item
+    const DeleteItemCallback = async (itemId: number) => {
+        // close popup
+        setToggleListPopup(false);
+        
+        const result = await DeleteListItem(props.userId, itemId);
+
+        // if result was success
+        if (result.type == 'success'){
+            // refresh list data by calling get list data fuction
+            const result = await GetGroceryListFunction();
+        }
+        // else, database error
+        else {
+            console.error(result)
+        }
+    }
 
     return (
         <div className={styles.ListParent}>
+
+            {toggleListPopup
+            ?
+            <ListPopup 
+            popupToggle={setToggleListPopup}
+            editId={curEditId.current}
+            listData={listData}
+            callbackEdit={EditItemCallback}
+            callbackDelete={DeleteItemCallback}
+            />
+            : <></>   
+            }
+
             <div className={styles.ListContentParent}>
                 <div className={styles.ListInputParent}>
                     <div className={styles.InputCategory}>
@@ -59,7 +114,7 @@ export default function ListComponent(props: any) {
                     </div>
                 </div>
             </div>
-            {listData.length == 0
+            {listData!.length < 1
             ? 
                 <div className={styles.ListNoItems}>
                     <Image 
@@ -71,7 +126,39 @@ export default function ListComponent(props: any) {
                     />
                     <h1>Empty List!</h1>
                 </div>
-            : <h1>Goody</h1>}
+            : 
+                <div className={styles.ListItemContainer}>
+                    {listData?.map((e: any, index: number) => {
+
+                        let newCat: boolean = false;
+
+                        if (e.category !== curCat.current) {
+                            curCat.current = e.category;
+                            newCat = true;
+                        }
+                        
+                        return (
+                            <div key={e.id} className={styles.ListItemParent}>
+                                {newCat
+                                ? <h1>{e.category !== null ? e.category : 'Uncategorized'}</h1>
+                                : <></>
+                                }
+
+                                <div className={styles.ListItem}>
+                                    <h1>{e.item}</h1>
+                                    <Image 
+                                    alt='edit'
+                                    src='/icons/actions/icon-edit-outline.svg'
+                                    height={30}
+                                    width={30}
+                                    onClick={() => EditItemFunction(e.id)}
+                                    />
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            }
         </div>
     )
 }

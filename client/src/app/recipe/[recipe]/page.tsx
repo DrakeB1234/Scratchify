@@ -60,7 +60,7 @@ export default async function Home(params: any) {
       .select('user_id, recipe_id')
       .eq('recipe_id', recipeId?.[0]?.recipe_id ?? null)
       .eq('user_id', userId)
-    ;
+    ; 
 
   } 
 

@@ -1,0 +1,117 @@
+/* parent */
+.PopupParent {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+    overflow-y: scroll;
+}
+/* child container */
+.PopupChildContainer {
+    height: fit-content;
+    width: clamp(200px, 100%, 600px);
+    margin: 5em 0.2em 3em 0.2em;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: var(--white-color-liest);
+}
+    /* child container exit container */
+    .PopupExitContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    /* child container header */
+    .PopupExitContainer > h1 {
+        font-size: 1.4rem;
+        color: var(--black-color-med);
+    }
+    /* child container exit icon */
+    .PopupExitContainer > img {
+        height: 30px;
+        width: 30px;
+        transform: rotate(45deg);
+        cursor: pointer;
+    }
+/* input form container */
+.FormParent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em 0 1em 0;
+}
+    /* inputs */
+    .FormParent select, .FormParent textarea, .FormParent input {
+        width: 100%;
+        padding: 0.5em;
+        border-radius: 4px;
+        border: 1px solid var(--white-color-dark);
+        color: var(--black-color-li);
+        background-color: var(--white-color-li);
+        resize: none;
+        outline: none !important;
+    }
+    /* label */
+    .FormParent label {
+        width: 100%;
+        margin-top: 1.5em;
+        margin-bottom: 0.2em;
+        color: var(--appmain-color-dark);
+    }
+    /* form input error */
+    .FormInputError {
+        align-self: flex-start;
+        margin-top: 0.5em;
+        font-size: 0.9rem;
+        color: var(--red-color-med);
+    }
+    /* input container */
+    .FormTagInputContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0.5em;
+        border-radius: 4px;
+        border: 1px solid var(--white-color-dark);
+        color: var(--black-color-li);
+        background-color: var(--white-color-li);
+    }
+        .FormTagInputContainer > input {
+            width: 100%;
+            border: 0;
+            background: none;
+        }
+        .FormTagInputContainer > input:focus {
+            outline: none !important;
+        }
+        /* add icon */
+        .FormTagInputContainer > img {
+            height: 25px;
+            width: 25px;
+        }
+    /* button container */
+    .FormButtonContainer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1em;
+    }
+        /* delete button */
+        .FormButtonContainer > button:first-child {
+            padding: 0 1em 0 1em;
+            color: var(--red-color-dark);
+            background-color: var(--white-color-li);
+            border: 1px solid var(--black-color-li);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        /* save button */
+        .FormButtonContainer > button:last-child {
+            padding: 0.2em 1em 0.2em 1em;
+            color: var(--appmain-color-dark);
+            background-color: var(--white-color-li);
+            border: 1px solid var(--black-color-li);
+            border-radius: 4px;
+            cursor: pointer;
+        }

@@ -22,16 +22,23 @@ export default function SocialButtons(props: any) {
     const router = useRouter();
 
     const SaveRecipeFunction = async () => {
-        const result = await SaveRecipe(props.userId, props.recipeId);
-        setSavePopupState(true);
-        // set dialog depending on message from result
-        if (result.type == 'Removed Saved Recipe'){
-            saveMessage.current = 'Unsaved Recipe!';
+        // ensure that user is logged in
+        if (props.userId === undefined) {
+            // call refresh function
+            return router.replace('/signin');
+            
         } else {
-            saveMessage.current = 'Saved Recipe!';
+            const result = await SaveRecipe(props.userId, props.recipeId);
+            setSavePopupState(true);
+            // set dialog depending on message from result
+            if (result.type == 'Removed Saved Recipe'){
+                saveMessage.current = 'Unsaved Recipe!';
+            } else {
+                saveMessage.current = 'Saved Recipe!';
+            }
+            // call refresh function
+            return router.refresh();
         }
-        // call refresh function
-        return router.refresh();
     }
 
     const ShareRecipeFunction = () => {
