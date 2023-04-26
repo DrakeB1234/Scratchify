@@ -210,6 +210,28 @@
         color: var(--black-color-med);
         border-bottom: 1px solid var(--white-color-dark);
     }
+/* Add list items button */
+.AddListItemsContainer {
+    align-self: start;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    width: fit-content;
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 4px;
+    background-color: var(--appmain-color-med);
+    cursor: pointer;
+}
+    /* text */
+    .AddListItemsContainer > h1 {
+        font-size: 1.1rem;
+        color: var(--white-color-liest);
+    }
+    /* icon */
+    .AddListItemsContainer > img {
+        height: 20px;
+        width: 20px;
+    }
 /* recipe instructions parent */
 .RecipeInstructionsParent {
     display: flex;

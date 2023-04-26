@@ -28,6 +28,50 @@ export async function GetGroceryList(userId: string) {
     };
 }
 
+export async function RecipeAddListItem(formValArray: any) {
+
+    const { data, error } = await supabase
+    .from('grocery_list')
+    .insert(formValArray)
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
+export async function AddListItem(userId: string, formVal: any) {
+
+    // check if formval category is set to 'none', if so null value
+    if (formVal.category === 'none') formVal.category = null;
+
+    const { data, error } = await supabase
+    .from('grocery_list')
+    .insert({ 
+        user_id: userId, 
+        category: formVal.category,
+        recipe: null,
+        item: formVal.item
+    })
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
 export async function EditListItem(userId: string, itemId: any, formVal: any) {
 
     // check if formval category is set to 'none', if so null value

@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 // import styles / components
 import SocialButtons from '../socialbuttons/socialbuttons';
+import AddListButton from '../addlistbutton/addlistbutton';
 import Navbar from '@/components/navbar/navbar';
 import styles from '../../../styles/Recipe.module.css';
 
@@ -138,6 +139,14 @@ export default async function Home(params: any) {
                     <h2 key={index + 'a'}>{e.spice}</h2>
                   ))}
                 </>
+              : <></>
+              }
+
+              {userId !== undefined
+              ? <AddListButton 
+                userId={userId}
+                data={recipeData[0]}
+                />
               : <></>
               }
 

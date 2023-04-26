@@ -4,13 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 // import styles / components
 import ListPopup from './listPopup/listPopup';
 import styles from './ListComponent.module.css';
 
 // auth
-import { DeleteListItem, EditListItem, GetGroceryList } from '@/supabasehelpers/database';
+import { AddListItem, DeleteListItem, EditListItem, GetGroceryList } from '@/supabasehelpers/database';
 
 export default function ListComponent(props: any) {
 
@@ -22,10 +23,17 @@ export default function ListComponent(props: any) {
         item: string,
     }[] | null
 
+    type Inputs = {
+        category: string,
+        item: string
+    };
+
     const [toggleListPopup, setToggleListPopup] = useState(false);
     const [listData, setListData] = useState<ListData>([]);
     const curCat = useRef<any>('');
     const curEditId = useRef(0);
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
 
     const GetGroceryListFunction = async () => {
         const result = await GetGroceryList(props.userId);
@@ -36,6 +44,23 @@ export default function ListComponent(props: any) {
         // if there is no data, load in data
         if (listData?.length == 0 && props.userId != null) GetGroceryListFunction();
     }, [props.userId]);
+
+    // form function to add item to list
+    const handleSave = async (formVal: any,) => {
+        
+        const result = await AddListItem(props.userId, formVal);
+
+        // if result was success
+        if (result.type == 'success'){
+            // reset inputs
+            reset({
+                category: 'none',
+                item: ''
+            });
+            // refresh list data by calling get list data fuction
+            const result = await GetGroceryListFunction();
+        }
+    }
 
     const EditItemFunction = (itemId: number) => {
         // set cur edit id
@@ -96,23 +121,65 @@ export default function ListComponent(props: any) {
             }
 
             <div className={styles.ListContentParent}>
-                <div className={styles.ListInputParent}>
+                <form className={styles.FormParent}
+                onSubmit={(handleSubmit(handleSave))}
+                >
                     <div className={styles.InputCategory}>
-                    <select>
-                        <option defaultValue='none' hidden>Category</option>
-                        <option value='none'>Uncategorized</option>
-                    </select>
+
+                        <select {...register('category', {
+                            required: {
+                                value: true,
+                                message: 'Required'
+                            },
+                            pattern: {
+                                value: /^none|Produce|Frozen|Dairy|Meat|Canned & Packed Goods|Condiments|Beverages|House Goods|Others$/,
+                                message: 'Must select item in list only'
+                            }
+                        })}>
+                            <option value='none'>Uncategorized</option>
+                            <option value='Produce'>Produce</option>
+                            <option value='Frozen'>Frozen</option>
+                            <option value='Dairy'>Dairy</option>
+                            <option value='Meat'>Meat</option>
+                            <option value='Canned & Packed Goods'>Canned & Packed Goods</option>
+                            <option value='Condiments'>Condiments</option>
+                            <option value='Beverages'>Beverages</option>
+                            <option value='House Goods'>House Goods</option>
+                            <option value='Others'>Others</option>
+                        </select>
                     </div>
+                    {errors?.category ? <h1 className={styles.FormInputError}>{errors?.category?.message}</h1> : <></>}
+
                     <div className={styles.InputItem}>
-                    <input type='text' />
-                    <Image 
-                        alt='+'
-                        src='/icons/actions/icon-plusgreen-outline.svg'
-                        height={20}
-                        width={20}
-                    />
+                        <input {...register('item', {
+                            required: {
+                                value: true,
+                                message: 'Required'
+                            },
+                            maxLength: {
+                                value: 40,
+                                message: 'Must be less than 40 characters'
+                            },
+                            pattern: {
+                                value: /^[^\s][\w\s!@#$%^&*()-~`'_+{}|/:;"<>?\[\]\',.\/\\]{0,}$/,
+                                message: 'No emojis or Starting with spaces'
+                            }
+                        })}
+                        autoComplete='off' 
+                        />
+
+                        <button type='submit'>
+                            <Image 
+                            alt='+'
+                            src='/icons/actions/icon-plusgreen-outline.svg'
+                            height={20}
+                            width={20}
+                            />
+                        </button>
                     </div>
-                </div>
+                    {errors?.item ? <h1 className={styles.FormInputError}>{errors?.item?.message}</h1> : <></>}
+
+                </form>
             </div>
             {listData!.length < 1
             ? 

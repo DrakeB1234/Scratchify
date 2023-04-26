@@ -84,12 +84,20 @@ export default function Popup(props: Props) {
                         message: 'Required'
                     },
                     pattern: {
-                        value: /^none|Produce$/,
+                        value: /^none|Produce|Frozen|Dairy|Meat|Canned & Packed Goods|Condiments|Beverages|House Goods|Others$/,
                         message: 'Must select item in list only'
                     }
                 })} defaultValue={categoryData.current}>
                     <option value='none'>Uncategorized</option>
                     <option value='Produce'>Produce</option>
+                    <option value='Frozen'>Frozen</option>
+                    <option value='Dairy'>Dairy</option>
+                    <option value='Meat'>Meat</option>
+                    <option value='Canned & Packed Goods'>Canned & Packed Goods</option>
+                    <option value='Condiments'>Condiments</option>
+                    <option value='Beverages'>Beverages</option>
+                    <option value='House Goods'>House Goods</option>
+                    <option value='Others'>Others</option>
                 </select>
                 <h1 className={styles.FormInputError}>{errors?.category?.message}</h1>
 
@@ -100,8 +108,8 @@ export default function Popup(props: Props) {
                         message: 'Required'
                     },
                     minLength: {
-                        value: 3,
-                        message: 'Must be at least 3 characters'
+                        value: 1,
+                        message: 'Must be at least 1 characters'
                     },
                     maxLength: {
                         value: 40,
