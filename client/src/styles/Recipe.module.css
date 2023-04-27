@@ -80,12 +80,15 @@
     }
     /* recipe creator */
     .RecipeTitleCard > h3 {
+        text-align: center;
+        width: 100%;
         font-weight: 400;
         font-size: 1rem;
         color: var(--black-color-dark);
     }
     /* recipe source */
     .RecipeTitleCard > h4 {
+        text-align: center;
         margin-top: 2em;
         font-weight: 400;
         font-size: 0.9rem;
@@ -106,10 +109,12 @@
 }    
     /* recipe tags text */
     .RecipeTagsParent > h1 {
+        text-align: center;
         padding: 0.5em 1em 0.5em 1em;
         border-radius: 4px;
         color: var(--white-color-liest);
         background-color: var(--appmain-color-med);
+        overflow-wrap: unset;
     }  
 /* recipe image parent */
 .RecipeImageParent {
@@ -141,7 +146,7 @@
         }
 /* recipe description container */
 .RecipeDescription {
-    padding: 2em 15% 2em 15%;
+    padding: 2em 12% 2em 12%;
     color: var(--black-color-dark);
     background-color: var(--white-color-med);
 }
@@ -195,9 +200,11 @@
     }
     /* recipe ingredients text */
     .RecipeIngredientsParent > h2 {
+        width: 100%;
         align-self: flex-start;
         font-weight: 400;
         color: var(--black-color-med);
+        overflow-wrap: unset;
     }
     /* recipe spice text */
     .RecipeIngredientsParent > h3 {

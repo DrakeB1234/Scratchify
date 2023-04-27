@@ -10,7 +10,7 @@ export async function GetGroceryList(userId: string) {
     .select('id, category, recipe, item')
     .eq('user_id', userId)
     .order('category', {
-        ascending: true
+        ascending: false,
     })
     .order('item', {
         ascending: true
@@ -102,6 +102,25 @@ export async function DeleteListItem(userId: string, itemId: any) {
     .delete()
     .eq('user_id', userId)
     .eq('id', itemId)
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
+export async function DeleteAllListItem(userId: string) {
+    
+    const { data, error } = await supabase
+    .from('grocery_list')
+    .delete()
+    .eq('user_id', userId)
     ;
     
     if (error) return {

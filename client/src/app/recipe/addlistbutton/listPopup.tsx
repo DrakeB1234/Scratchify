@@ -61,8 +61,6 @@ export default function ListPopup(props: Props) {
             })
             // check to see if spices are in data
             if(props.data.recipe_spices[0] != ''){
-                // drop empty value in array
-                remove(0);
                 props.data.recipe_spices.map((e: any) => {
                     append({
                         name: `${e.spice}`,

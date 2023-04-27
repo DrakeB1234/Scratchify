@@ -10,10 +10,44 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 1em;
-    padding-top: 4em;
+    margin-bottom: 0.5em;
+    padding: 4em 1em 2em 1em;
     background-color: var(--appmain-color-med);
 }
+/* list action button parent */
+.ListActionButtonsParent {
+    display: flex;
+    justify-content: space-between;
+    width: clamp(100px, 100%, 800px);
+    padding: 0.5em;
+}
+    /* button div */
+    .ListActionButtonsParent > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.5em;
+        border: 1px solid var(--black-color-li);
+        border-radius: 4px;
+        cursor: pointer;
+    }
+        /* button div text */
+        .ListActionButtonsParent > div > h1 {
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: var(--appmain-color-dark);
+        }
+        /* button div icon */
+        .ListActionButtonsParent > div > img {
+            height: 20px;
+            width: 20px;
+        }
+        /* button delete div icon */
+        .ListActionButtonsParent > div:first-child > img {
+            transform: rotate(45deg);
+        }
+
 /* list input parent */
 .FormParent {
     display: flex;
