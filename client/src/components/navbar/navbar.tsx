@@ -32,14 +32,6 @@ export default function Navbar() {
     return (
         <div className={styles.NavbarParent}>
             <div className={styles.NavbarDesktopParent}>
-                <Image
-                className={styles.NavbarImageBannerDesktop}
-                alt='logo'
-                src='/scratchify/appbanner.png'
-                height={100}
-                width={300}
-                quality={100}
-                />
                 <button className={styles.NavbarImageBars}
                 onClick={() => setToggleDesktop(!toggleDesktop)}
                 >
@@ -52,10 +44,18 @@ export default function Navbar() {
                     quality={100}
                     />
                 </button>
+                <Image
+                className={styles.NavbarImageBannerDesktop}
+                alt='logo'
+                src='/scratchify/appbanner.png'
+                height={100}
+                width={300}
+                quality={100}
+                />
                 <div className={styles.NavbarDesktopContent}
                 style={toggleDesktop ? {left: '0'} : {left: '-30vw'}}
                 >
-                    <Link href='/' className={styles.DesktopLink}>                
+                    <Link href='/' className={styles.DesktopLink + ' ' + (pathname === '/' ?  styles.ActiveLink : ' ')}>                
                         <Image
                         className={styles.NavbarImageIcon}
                         alt='logo'
@@ -66,7 +66,7 @@ export default function Navbar() {
                         />
                         Home
                     </Link>
-                    <Link href='/search' className={styles.DesktopLink}>                
+                    <Link href='/search' className={styles.DesktopLink + ' ' + (pathname === '/search' ?  styles.ActiveLink : ' ')}>                
                         <Image
                         className={styles.NavbarImageIcon}
                         alt='logo'
@@ -80,7 +80,7 @@ export default function Navbar() {
                     {session
                     ?
                     <>
-                    <Link href='/myrecipes' className={styles.DesktopLink + ' ' + styles.DesktopLinkSpaced}>                
+                    <Link href='/myrecipes' className={styles.DesktopLink + ' ' + styles.DesktopLinkSpaced + ' ' + (pathname === '/myrecipes' ?  styles.ActiveLink : ' ')}>                
                         <Image
                         className={styles.NavbarImageIcon}
                         alt='logo'
@@ -91,7 +91,18 @@ export default function Navbar() {
                         />
                         My Recipes
                     </Link>
-                    <Link href='/mealplanner' className={styles.DesktopLink}>                
+                    <Link href='/savedrecipes' className={styles.DesktopLink + ' ' + (pathname === '/savedrecipes' ?  styles.ActiveLink : ' ')}>                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/actions/icon-save-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        Saved Recipes
+                    </Link>
+                    <Link href='/mealplanner' className={styles.DesktopLink + ' ' + (pathname === '/mealplanner' ?  styles.ActiveLink : ' ')}>                
                         <Image
                         className={styles.NavbarImageIcon}
                         alt='logo'
@@ -102,7 +113,7 @@ export default function Navbar() {
                         />
                         Meal Planner
                     </Link>
-                    <Link href='/grocerylist' className={styles.DesktopLink}>                
+                    <Link href='/grocerylist' className={styles.DesktopLink + ' ' + (pathname === '/grocerylist' ?  styles.ActiveLink : ' ')}>                
                         <Image
                         className={styles.NavbarImageIcon}
                         alt='logo'
@@ -172,7 +183,7 @@ export default function Navbar() {
                             quality={100}
                             />
                             {session
-                            ? <h1>Hello, DrakeB123!</h1>
+                            ? <h1>Hello, {session.user.user_metadata.username}</h1>
                             : <h1>Hello, Guest!</h1>
                             }
                         </div>
@@ -209,6 +220,16 @@ export default function Navbar() {
                             width={50}
                             />
                             My Recipes
+                        </Link>
+                        <Link href='/savedrecipes' className={pathname === '/savedrecipes' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
+                            <Image 
+                            className={styles.NavbarImageLinkIcon}
+                            alt=''
+                            src='/icons/actions/icon-save-outline.svg'
+                            height={50}
+                            width={50}
+                            />
+                            Saved Recipes
                         </Link>
                         <Link href='/mealplanner' className={pathname === '/mealplanner' ? styles.MobileLink + ' ' + styles.ActiveLink : styles.MobileLink}>                
                             <Image 

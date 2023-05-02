@@ -1,10 +1,10 @@
 // metadata
 export const metadata = {
-  title: 'Scratchify | My Recipes',
+  title: 'Scratchify | Meal Planner',
   description: 'Scratchify, your one stop shop for recipes, mealplanning, and grocery list management!',
 }
 
-export default function SigninLayout({
+export default function SignupLayout({
   children,
 }: {
   children: React.ReactNode

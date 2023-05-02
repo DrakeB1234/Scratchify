@@ -30,7 +30,7 @@ export default async function Home() {
           <div className={styles.RecipeItemContainer}>
             {data && data.map((e: any, index: number) => (
               <Link href={`/recipe/${e.title}`}
-              key={index + 'a'}className={styles.RecipeItem}
+              key={index + 'a'} className={styles.RecipeItem}
               >
                 <Image 
                 className={styles.RecipeImage}

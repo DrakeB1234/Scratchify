@@ -124,6 +124,7 @@
 }
     /* No Items container image */
     .ListNoItems > img {
+        max-width: 100%;
         border-radius: 10px;
     }
     /* No Items container text */

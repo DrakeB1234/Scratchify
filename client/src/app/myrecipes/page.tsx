@@ -121,7 +121,6 @@ export default function MyRecipes() {
             >
               <div>
                 <h1>Create Recipe</h1>
-                <h2>0 Recipes made</h2>
               </div>
               <Image 
               alt='+'

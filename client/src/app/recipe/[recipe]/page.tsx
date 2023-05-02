@@ -78,7 +78,7 @@ export default async function Home(params: any) {
               <h3>@{Array.isArray(recipeData?.[0].profiles) ? recipeData?.[0].profiles?.map((e: any) => (e.username)) : recipeData?.[0].profiles?.username}</h3>
               
               {recipeData?.[0].source
-              ? <h4>Source: <span>{recipeData?.[0].source}</span></h4>
+              ? <Link href={recipeData?.[0].source} target='_blank'>Source: <span>{recipeData?.[0].source}</span></Link>
               : <></>
               }
 

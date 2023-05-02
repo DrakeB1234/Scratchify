@@ -87,14 +87,14 @@
         color: var(--black-color-dark);
     }
     /* recipe source */
-    .RecipeTitleCard > h4 {
+    .RecipeTitleCard > a {
         text-align: center;
         margin-top: 2em;
         font-weight: 400;
         font-size: 0.9rem;
         color: var(--black-color-li);
     }
-        .RecipeTitleCard > h4 > span {
+        .RecipeTitleCard > a > span {
             text-decoration: underline;
             color: var(--blue-color-med);
         }

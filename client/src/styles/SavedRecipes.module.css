@@ -1,0 +1,98 @@
+/* parent */
+.SavedRecipesParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3em;
+}
+    /* header text */
+    .SavedRecipesParent > h1 {
+        width: clamp(200px, 100%, 800px);
+        padding: 1em 0.5em 0 0.5em;
+        text-align: left;
+        color: var(--black-color-med);
+    }
+/* No Items container */
+.SavedRecipesEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: clamp(200px, 100%, 800px);
+    margin-top: 1em;
+    padding: 0.5em;
+}
+    /* No Items container image */
+    .SavedRecipesEmpty > img {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+    /* No Items container text */
+    .SavedRecipesEmpty > h1 {
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--black-color-li);
+    }
+/* content parent */
+.SavedRecipesContentParent {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 1em;
+    width: clamp(200px, 100%, 800px);
+    padding: 1em 0 2em 0;
+}
+    /* loading svg */
+    .SavedRecipesContentParent > svg {
+        align-self: center;
+        margin-top: 1em;
+    }
+    /* Saved recipe content item */
+    .SavedRecipesContentItem {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--white-color-liest);
+    }
+    /* Saved Recipe Row */
+    .SavedRecipesRow {
+        display: flex;
+        gap: 1em;
+        padding: 0.5em;
+    }
+        /* Saved recipe content recipe img */
+        .SavedRecipesContentRecipeImage {
+            height: auto;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    /* Saved Recipe Text */
+    .SavedRecipesText {
+        display: flex;
+        flex-direction: column;
+    }
+        /* Saved Recipe Text */
+        .SavedRecipesText > h1 {
+            font-size: 1.1rem;
+            color: var(--black-color-med);
+        }
+        /* Saved Recipe Text */
+        .SavedRecipesText > h2 {
+            font-weight: 400;
+            font-size: 1rem;
+            color: var(--black-color-med);
+        }
+    /* Saved Recipe saved */
+    .SaveRecipesSaveContainer {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        color: var(--appmain-color-dark);
+    }
+        /* Saved Recipe icon */
+        .SaveRecipesSaveContainer {
+            height: 20px;
+            width: 20px;
+        }
