@@ -134,11 +134,60 @@ export async function DeleteAllListItem(userId: string) {
     };
 }
 
+export async function GetUserMealPlanner(userid: any) {
+    const { data, error } = await supabase
+    .from('mealplanner_dates')
+    .select('id, date, mealplanner_meals(date_id, category, recipe, meal)')
+    .eq('user_id', userid)
+    .order('date', {
+        ascending: true
+    })
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
+export async function AddMealItem(formVal: any, mealId: number) {
+    // check if meal was provided
+    if (formVal.meal == '') formVal.meal = null;
+
+    if (formVal.recipe == '') formVal.recipe = null;
+
+    const { data, error } = await supabase
+    .from('mealplanner_meals')
+    .insert({
+        date_id: mealId,
+        category: formVal.category,
+        meal: formVal.meal,
+        recipe: formVal.recipe
+    })
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
 export async function GetUserRecipes(userid: any) {
     const { data, error } = await supabase
     .from('recipe')
     .select('recipe_id, title, photoUrl')
-    .eq('user_id', userid);
+    .eq('user_id', userid)
+    ;
     
     if (error) return {
         type: 'error',
@@ -228,6 +277,24 @@ export async function SearchRecipes(searchParam: string | null) {
         message: `input error`,
         data: null
     }
+}
+
+export async function GetSavedRecipes(userid: any) {
+    const { data, error } = await supabase
+    .from('recipe_saved')
+    .select('recipe(title)')
+    .eq('user_id', userid)
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
 }
 
 // typedef

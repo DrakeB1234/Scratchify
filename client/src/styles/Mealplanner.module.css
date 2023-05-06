@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 2em;
 }
 /* create button container*/
 .CreateButtonContainer {
@@ -32,6 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     padding: 1em;
     font-weight: 700;
     font-size: 1rem;
@@ -43,47 +45,44 @@
     flex-direction: column;
     gap: 1em;
     width: clamp(200px,100%, 800px);
+    padding: 0.2em;
 }  
     /* meal item date container */
     .MealItemDate {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
         padding: 0.2em;
         border-radius: 4px;
         background-color: var(--white-color-li);
     }  
         /* date item */
-        .MealItemDate > div:first-child {
-            min-width: 80px;
-            padding: 0.5em;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            background-color: var(--black-color-liest);
+        .DateItem {
+            display: flex;
+            flex-direction: column;
         }  
+            .DateItem > h1 {
+                min-width: 80px;
+                margin-top: 2em;
+                padding: 0.5em;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                background-color: var(--black-color-liest);
+            }  
+            .DateItem > h2 {
+                min-width: 80px;
+                margin-top: 2em;
+                padding: 0.5em;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                background-color: var(--blue-color-li);
+            }  
         /* edit item */
         .MealItemDate > div:last-child {
             height: 25px;
             width: 25px;
             cursor: pointer;
-        }  
-    /* todays meal item container */
-    .MealItemParentToday {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5em;
-        min-width: 80px;
-        padding: 0.8em;
-        border-radius: 4px;
-        background-color: var(--white-color-li);
-        border: 2px solid var(--black-color-liest);
-    }  
-        /* header text */
-        .MealItemParentToday > h1 {
-            margin-top: 0.5em;
-            font-size: 1.2rem;
-            color: var(--blue-color-med);
         }  
     /* meal item container */
     .MealItemParent {
@@ -103,7 +102,9 @@
             display: flex;
             flex-direction: column;
             padding: 1em;
+            border-radius: 4px;
             border: 1px solid var(--white-color-dark);
+            cursor: pointer;
         }
             /* meal category */
             .MealItemContainer > h1 {
@@ -116,8 +117,14 @@
                 color: var(--black-color-li);
             }
             /* link to recipe */
-            .MealItemContainer > h3 {
+            .MealItemContainer > a {
                 margin-top: 0.5em;
                 font-weight: 400;
                 color: var(--blue-color-med);
+            }
+            /* edit icon */
+            .MealItemContainer > img {
+                height: 20px;
+                width: 20px;
+                margin-left: auto;
             }
