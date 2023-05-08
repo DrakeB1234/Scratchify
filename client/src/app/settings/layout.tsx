@@ -1,6 +1,6 @@
 // metadata
 export const metadata = {
-  title: 'Scratchify | My Recipes',
+  title: 'Scratchify | Account Settings',
   description: 'Scratchify, your one stop shop for recipes, mealplanning, and grocery list management!',
 }
 

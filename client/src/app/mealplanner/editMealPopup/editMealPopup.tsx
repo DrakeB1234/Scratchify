@@ -12,7 +12,9 @@ import styles from './popup.module.css';
 type Props = {
     popupToggle: any,
     callback: any,
-    savedRecipes?: any
+    deleteCallback: any,
+    savedRecipes?: any,
+    editData?: any
 }
 
 // typedefs
@@ -32,23 +34,39 @@ export default function editMealPopup(props: Props) {
         recipe: string
     };
 
-    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({defaultValues: {
-        recipe: '',
-        meal: ''
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<Inputs>({defaultValues: {
+        category: props.editData.category,
+        recipe: props.editData.recipe,
+        meal: props.editData.meal
     }});
 
     const [saveInput, setSaveInput] = useState(false);
 
     const handleSave = (formVal: Inputs) => {
+        // check if any changes were made, if so close popup without API call
+        if (formVal.category == props.editData.category && formVal.meal == props.editData.meal && formVal.recipe == props.editData.recipe) {
+            return props.popupToggle(false);
+        }
         // send formVal to callback function
+        props.callback(formVal, props.editData.mealId);
         return setSaveInput(true);
+    }
+
+    // function to delete meal
+    const deleteMealFunction = () => {
+        props.deleteCallback(props.editData.mealId)
     }
 
     // function to change input types
     const changeInputType = (input: string) => {
         if (input == 'text'){
+            // reset meal value on change
+            setValue('recipe', '')
+            setValue('meal', props.editData.meal)
             return setCurInputType('text');
         } else {
+            setValue('meal', '')
+            setValue('recipe', props.editData.recipe)
             return setCurInputType('recipe');
         }
     }
@@ -123,10 +141,12 @@ export default function editMealPopup(props: Props) {
                 />
                 <h1 className={styles.FormInputError}>{errors?.meal?.message}</h1>
 
-                {!saveInput 
-                ? <button type='submit' className={styles.SaveButton}>Save Changes</button>
-                : <button type='submit' className={styles.SavedButton}>Changes Saved!</button>
-                }
+                <div className={styles.FormButtonContainer}>
+                    <button type='button'
+                    onClick={() => deleteMealFunction()}
+                    >Delete</button>
+                    <button type='submit'>Save</button>
+                </div>
 
             </form>
             :
@@ -166,10 +186,12 @@ export default function editMealPopup(props: Props) {
                 </select>
                 <h1 className={styles.FormInputError}>{errors?.recipe?.message}</h1>
 
-                {!saveInput 
-                ? <button type='submit' className={styles.SaveButton}>Save Changes</button>
-                : <button type='submit' className={styles.SavedButton}>Changes Saved!</button>
-                }
+                <div className={styles.FormButtonContainer}>
+                    <button type='button'
+                    onClick={() => deleteMealFunction()}
+                    >Delete</button>
+                    <button type='submit'>Save</button>
+                </div>
 
             </form>
             }

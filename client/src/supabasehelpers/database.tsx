@@ -137,7 +137,7 @@ export async function DeleteAllListItem(userId: string) {
 export async function GetUserMealPlanner(userid: any) {
     const { data, error } = await supabase
     .from('mealplanner_dates')
-    .select('id, date, mealplanner_meals(date_id, category, recipe, meal)')
+    .select('id, date, mealplanner_meals(id, date_id, category, recipe, meal)')
     .eq('user_id', userid)
     .order('date', {
         ascending: true
@@ -155,6 +155,80 @@ export async function GetUserMealPlanner(userid: any) {
     };
 }
 
+// type def
+type dates = {
+    id?: number,
+    user_id: any,
+    date: string,
+}[]
+
+export async function AddMealPlan(formVal: any, mealData: any, userId: any) {
+    // check if meal data array is not empty, if so add new values into db
+    if (mealData.length < 1) {
+        let dates: dates = [];
+        let curDate: Date = new Date(formVal.date);
+
+        // iterate loop 7 times, for a week
+        for (let i=0; i<7; i++){
+            dates.push({
+                user_id: userId,
+                date: curDate.toISOString().split('T')[0]
+            });
+            // add a day to cur date
+            curDate.setDate(curDate.getDate() + 1);
+        }
+
+        // add date array to db
+        const { data, error } = await supabase
+        .from('mealplanner_dates')
+        .insert(dates)
+        ;
+        
+        if (error) return {
+            type: 'error',
+            message: `${error.message}`,
+            data: null
+        }; else return {
+            type: 'success',
+            message: '',
+            data: data
+        };
+
+    }
+    // if meal data is provided, then update db instead to retain ids
+    else {
+        let dates: dates = [];
+        let curDate: Date = new Date(formVal.date);
+
+        // iterate loop 7 times, for a week
+        for (let i=0; i<7; i++){
+            dates.push({
+                id: mealData[i].id,
+                user_id: userId,
+                date: curDate.toISOString().split('T')[0]
+            });
+            // add a day to cur date
+            curDate.setDate(curDate.getDate() + 1);
+        }
+
+        // update date data with new date array
+        const { data, error } = await supabase
+        .from('mealplanner_dates')
+        .upsert(dates)
+        ;
+        
+        if (error) return {
+            type: 'error',
+            message: `${error.message}`,
+            data: null
+        }; else return {
+            type: 'success',
+            message: '',
+            data: data
+        };
+    }
+}
+
 export async function AddMealItem(formVal: any, mealId: number) {
     // check if meal was provided
     if (formVal.meal == '') formVal.meal = null;
@@ -169,6 +243,52 @@ export async function AddMealItem(formVal: any, mealId: number) {
         meal: formVal.meal,
         recipe: formVal.recipe
     })
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
+export async function EditMealItem(formVal: any, mealId: number) {
+    console.log(formVal)
+    // check if meal was provided
+    if (formVal.meal == '') formVal.meal = null;
+
+    if (formVal.recipe == '') formVal.recipe = null;
+
+    const { data, error } = await supabase
+    .from('mealplanner_meals')
+    .update({
+        category: formVal.category,
+        meal: formVal.meal,
+        recipe: formVal.recipe
+    })
+    .eq('id', mealId)
+    ;
+    
+    if (error) return {
+        type: 'error',
+        message: `${error.message}`,
+        data: null
+    }; else return {
+        type: 'success',
+        message: '',
+        data: data
+    };
+}
+
+export async function DeleteMealItem(mealId: number) {
+    const { data, error } = await supabase
+    .from('mealplanner_meals')
+    .delete()
+    .eq('id', mealId)
     ;
     
     if (error) return {

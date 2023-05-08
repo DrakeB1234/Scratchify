@@ -34,10 +34,11 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 1em;
     padding: 1em;
     font-weight: 700;
     font-size: 1rem;
-    background-color: var(--appmain-color-li);
+    color: var(--black-color-med);
 }  
 /* meal parent */
 .MealParent {

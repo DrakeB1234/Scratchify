@@ -62,6 +62,12 @@
     gap: 0.5em;
     padding: 1em 0 1em 0;
 }
+    /* form header */
+    .FormInputHeader {
+        margin-bottom: 1em;
+        font-weight: 400;
+        color: var(--black-color-li);
+    }
     /* inputs */
     .FormParent select, .FormParent textarea, .FormParent input {
         width: 100%;
@@ -127,11 +133,11 @@
             cursor: pointer;
         }
         /* save button */
-        .FormButtonContainer > button:last-child {
-            padding: 0.2em 1em 0.2em 1em;
-            color: var(--appmain-color-dark);
-            background-color: var(--white-color-li);
-            border: 1px solid var(--black-color-li);
+        .SaveButton {
+            padding: 0.5em 1em 0.5em 1em;
+            font-weight: 700;
+            background-color: var(--appmain-color-med);
+            border: 0;
             border-radius: 4px;
             cursor: pointer;
         }

@@ -126,7 +126,7 @@ export default function addMealPopup(props: Props) {
                 <h1 className={styles.FormInputError}>{errors?.meal?.message}</h1>
 
                 {!saveInput 
-                ? <button type='submit' className={styles.SaveButton}>Save Changes</button>
+                ? <button type='submit' className={styles.SaveButton}>Add</button>
                 : <button type='submit' className={styles.SavedButton}>Changes Saved!</button>
                 }
 

@@ -9,11 +9,12 @@ import React, {useState, useEffect, useRef} from 'react';
 import Navbar from '@/components/navbar/navbar';
 import AddMealPopup from './addMealPopup/addMealPopup';
 import EditMealPopup from './editMealPopup/editMealPopup';
+import AddMealPlanPopup from './addMealPlanPopup/addMealPlanPopup';
 import styles from '@/styles/Mealplanner.module.css';
 
 // auth
 import { GetSessionAuth } from '@/supabasehelpers/auth';
-import { AddMealItem, GetSavedRecipes, GetUserMealPlanner } from '@/supabasehelpers/database';
+import { AddMealItem, AddMealPlan, DeleteMealItem, EditMealItem, GetSavedRecipes, GetUserMealPlanner } from '@/supabasehelpers/database';
 
 export default function MealPlanner() {
 
@@ -42,7 +43,14 @@ export default function MealPlanner() {
     const [savedRecipeData, setSavedRecipeData] = useState<any>([]);
     const [toggleAddMealPopup, setToggleAddMealPopup] = useState(false);
     const [toggleEditMealPopup, setToggleEditMealPopup] = useState(false);
+    const [toggleAddMealPlanPopup, setToggleAddMealPlanPopup] = useState(false);
     const curMealId = useRef<Number>(0);
+    const curEditData = useRef({
+        mealId: 0,
+        category: '',
+        meal: '',
+        recipe: ''
+    });
 
     // get current date
     let todayDate: any = new Date()
@@ -77,6 +85,17 @@ export default function MealPlanner() {
         
     }
 
+    // add meal plan callback function
+    const addMealPlanCallbackFunction = async (formVal: any) => {
+        const result = await AddMealPlan(formVal, mealData, session.current.user.id);
+
+        if (result!.type !== 'success') return;
+
+        // close popup
+        setToggleAddMealPlanPopup(false);
+        // if success, get new data
+        getMealData();
+    }
     // add meal function
     const addMealFunction = (mealId: number) => {
         // set current meal id to pass to popup
@@ -96,8 +115,37 @@ export default function MealPlanner() {
     }
 
     // edit meal function
-    const editMealFunction = () => {
+    const editMealFunction = (id: number, category: string, meal: string, recipe: string) => {
+        // set current meal data to pass to popup
+        curEditData.current = {
+            mealId: id,
+            category: category,
+            meal: meal,
+            recipe: recipe
+        };
         setToggleEditMealPopup(true);
+    }
+    // edit meal callback function
+    const editMealCallbackFunction = async (formVal: any, mealId: number) => {
+        setToggleEditMealPopup(false);
+        // edit meal
+        const result = await EditMealItem(formVal, mealId);
+
+        if (result.type !== 'success') return;
+
+        // if success, get new data
+        getMealData();
+    }
+    // delete meal callback function
+    const deleteMealCallbackFunction = async (mealId: number) => {
+        setToggleEditMealPopup(false);
+        // edit meal
+        const result = await DeleteMealItem(mealId);
+
+        if (result.type !== 'success') return;
+
+        // if success, get new data
+        getMealData();
     }
     
     return (
@@ -117,8 +165,19 @@ export default function MealPlanner() {
             ?
             <EditMealPopup
                 popupToggle={setToggleEditMealPopup}
-                callback={addMealCallbackFunction}
+                callback={editMealCallbackFunction}
+                deleteCallback={deleteMealCallbackFunction}
                 savedRecipes={savedRecipeData}
+                editData={curEditData.current}
+            />
+            : <></>
+            }
+            {toggleAddMealPlanPopup
+            ?
+            <AddMealPlanPopup
+                popupToggle={setToggleAddMealPlanPopup}
+                callback={addMealPlanCallbackFunction}
+                todayDate={todayDate}
             />
             : <></>
             }
@@ -126,7 +185,9 @@ export default function MealPlanner() {
             <Navbar />
             <div className={styles.PlannerContentParent}>
                 <div className={styles.CreateButtonContainer}>
-                    <button>Create New Meal Plan</button>
+                    <button
+                    onClick={() => setToggleAddMealPlanPopup(true)}
+                    >Create New Meal Plan</button>
                 </div>
 
                 {mealData!.length < 1
@@ -181,7 +242,7 @@ export default function MealPlanner() {
                                 {e.meal != null
                                 ?
                                 <div className={styles.MealItemContainer} key={index + 'b'}
-                                onClick={() => editMealFunction()}
+                                onClick={() => editMealFunction(e.id, e.category, e.meal, e.recipe)}
                                 >
                                     <h1>{e.category}</h1>
                                     <h2>{e.meal}</h2>
@@ -194,7 +255,7 @@ export default function MealPlanner() {
                                 </div>
                                 :
                                 <div className={styles.MealItemContainer} key={index + 'c'}
-                                onClick={() => editMealFunction()}
+                                onClick={() => editMealFunction(e.id, e.category, e.meal, e.recipe)}
                                 >
                                     <h1>{e.category}</h1>
                                     <h2>{e.recipe}</h2>
