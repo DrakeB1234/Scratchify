@@ -257,7 +257,6 @@ export async function AddMealItem(formVal: any, mealId: number) {
 }
 
 export async function EditMealItem(formVal: any, mealId: number) {
-    console.log(formVal)
     // check if meal was provided
     if (formVal.meal == '') formVal.meal = null;
 
@@ -720,7 +719,6 @@ export async function CreateRecipe(data: RecipeInputs) {
             if (spicesError) throw spicesError;
         }
     } catch(error: any) {
-        console.error(error)
         return {
         response: 'error',
         type: 'Database error',
