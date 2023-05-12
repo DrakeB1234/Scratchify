@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
@@ -170,6 +171,18 @@ export default function MyRecipes() {
                 <h1>{e.title}</h1>
               </div>
               <div className={styles.MyRecipesRowButtons}>
+                <div
+                onClick={() => editRecipe(e.recipe_id)}
+                >
+                  <Link href={'https://localhost:3000/recipe/' + e.title}>
+                    <Image 
+                    alt='edit'
+                    src='/icons/actions/icon-viewgrey-outline.svg'
+                    height={25}
+                    width={25}
+                    />
+                  </Link>
+                </div>
                 <div
                 onClick={() => editRecipe(e.recipe_id)}
                 >

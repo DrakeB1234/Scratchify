@@ -55,8 +55,11 @@ export default function SignupForm(props: any) {
         // remove loading state, set auth state with value passed from auth server component
         setLoadingState(false);
 
-        // check if val passed from auth is error, if so set auth
-        // state
+        // if error, check if message is duplicate value
+        if (val.type == 'error' && val.message.includes('duplicate key value violates unique constraint')) return setAuthState(prev => ({...prev, 
+            type: val.type,
+            message: 'Username taken'
+        }));
         if (val.type == 'error') return setAuthState(prev => ({...prev, 
             type: val.type,
             message: val.message

@@ -9,6 +9,7 @@ import styles from '../styles/Home.module.css';
 
 // auth
 import { createClient } from '../../utils/supabase-server';
+import { GetSessionAuth } from '@/supabasehelpers/auth';
 
 // do not cache this page
 export const revalidate = 90;
@@ -20,13 +21,55 @@ export default async function Home() {
     const { data, error } = await supabase
       .from('recipe')
       .select('title, photoUrl, profiles(username), recipe_saved(id)')
+      .order('recipe_id', {
+        ascending: false
+      }
+      )
+      .limit(6)
     ;
 
-  return (
-    <div className={styles.HomeParent}>
-        <Navbar />
-        <div className={styles.RecipeParent}>
-          <h1 className={styles.RecipeTitle}>Trending Recipes</h1>
+    // checks to see is user has a session
+    let session: any = await supabase.auth.getSession();
+    session = session.data.session
+    
+    return (
+      <div className={styles.HomeParent}>
+          <Navbar />
+          <div className={styles.BannerContainer}>
+              <Image 
+              alt=''
+              src='/scratchify/appbanner.png'
+              height={70}
+              width={340}
+              quality={100}
+              />
+            </div>
+  
+          {!session
+          ?
+          <div className={styles.AccountCreationContainer}>
+            <h1>Having an account with us gives you access to:</h1>
+            <ul>
+              <li>Saving Recipes</li>
+              <li>Making Recipes</li>
+              <li>Grocery List</li>
+              <li>Meal Planner</li>
+            </ul>
+            <Link href='/signup'>Signup Here!</Link>
+          </div>
+          :
+          <div className={styles.AccountContainer}>
+            <h1>Make sure to check out these features included with your account!</h1>
+            <ul>
+              <li>Saving Recipes</li>
+              <li>Making Recipes</li>
+              <li>Grocery List</li>
+              <li>Meal Planner</li>
+            </ul>
+          </div>
+          }
+  
+          <h1>Recent Recipes</h1>
           <div className={styles.RecipeItemContainer}>
             {data && data.map((e: any, index: number) => (
               <Link href={`/recipe/${e.title}`}
@@ -60,7 +103,39 @@ export default async function Home() {
               </Link>
             ))}
           </div>
-        </div>
-    </div>
-  )
+  
+          <h1>Explore by Course!</h1>
+          <div className={styles.ExploreContainer}>
+            <Link href='/search?filterCourse=Breakfast' className={styles.ExploreItemParent}>
+              <h1>Breakfast</h1>
+            </Link>
+            <Link href='/search?filterCourse=Lunch' className={styles.ExploreItemParent}>
+              <h1>Lunches</h1>
+            </Link>
+            <Link href='/search?filterCourse=Dinner' className={styles.ExploreItemParent}>
+              <h1>Dinner</h1>
+            </Link>
+          </div>
+  
+          <h1>Explore by Popular Tags!</h1>
+          <div className={styles.ExploreTagContainer}>
+            <Link href='/search?filterTag=Italian' className={styles.ExploreTagItemParent}>
+              <h1>Italian</h1>
+            </Link>
+            <Link href='/search?filterTag=Mexican' className={styles.ExploreTagItemParent}>
+              <h1>Mexican</h1>
+            </Link>
+            <Link href='/search?filterTag=Healthy' className={styles.ExploreTagItemParent}>
+              <h1>Healthy</h1>
+            </Link>
+            <Link href='/search?filterTag=Low Cal' className={styles.ExploreTagItemParent}>
+              <h1>LowCal</h1>
+            </Link>
+            <Link href='/search?filterTag=Cheesy' className={styles.ExploreTagItemParent}>
+              <h1>Cheesy</h1>
+            </Link>
+          </div>
+  
+      </div>
+    )
 }

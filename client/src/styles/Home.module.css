@@ -3,11 +3,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 3em;
     width: 100%;
     min-height: 100vh;
+    margin-top: 3em;
+    padding-bottom: 4em;
     overflow: hidden;
 }
+    /* headers */
+    .HomeParent > h1 {
+        margin-top: 2em;
+        text-align: center;
+        font-weight: 400;
+        color: var(--black-color-med);
+    }
 /* recipe parent */
 .RecipeParent {
     display: flex;
@@ -16,13 +24,6 @@
     margin-top: 2em;
     padding: 0.5em;
 }
-    /* recipe title */
-    .RecipeTitle {
-        align-self: flex-start;
-        font-weight: 700;
-        font-size: 1.2rem;
-        color: var(--black-color-dark);
-    }
 /* recipe item container */
 .RecipeItemContainer {
     display: flex;
@@ -87,3 +88,126 @@
                     height: 15px;
                     width: 15px;
                 }
+/* banner container */
+.BannerContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0.5em 2em 0.5em 2em;
+    background-color: var(--appmain-color-med);
+}
+    /* banner container img */
+    .BannerContainer > img {
+        height: auto;
+        max-width: 70%;
+        object-fit: cover;
+        top: 0;
+        z-index: 2;
+    }
+/* account container */
+.AccountContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    padding: 1em 0.5em 2em 0.5em;
+    background-color: var(--appmain-color-liest);
+}
+    /* header */
+    .AccountContainer > h1 {
+        text-align: center;
+        font-weight: 400;
+        color: var(--black-color-dark);
+    }
+    /* list items */
+    .AccountContainer > ul > li {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--black-color-dark);
+    }
+/* account creation container */
+.AccountCreationContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    padding: 1em 0.5em 2em 0.5em;
+    background-color: var(--appmain-color-liest);
+}
+    /* header */
+    .AccountCreationContainer > h1 {
+        text-align: center;
+        font-weight: 400;
+        color: var(--black-color-dark);
+    }
+    /* list items */
+    .AccountCreationContainer > ul > li {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--black-color-dark);
+    }
+    /* links */
+    .AccountCreationContainer > a {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--appmain-color-dark);
+    }
+/* explore container */
+.ExploreContainer {
+    display: flex;
+    justify-content: center;
+    gap: 0.2em;
+    width: clamp(200px, 100%, 600px);
+    margin-top: 1em;
+}
+    /* explore container items */
+    .ExploreItemParent {
+        flex: 1;
+        text-align: center;
+        padding: 2em;
+        cursor: pointer;
+    }
+    /* breakfast */
+    .ExploreItemParent:first-child {
+        text-align: center;
+        padding: 2em;
+        background-color: rgb(253, 216, 134);
+    }
+    /* lunch */
+    .ExploreItemParent:nth-child(2n) {
+        text-align: center;
+        padding: 2em;
+        background-color: rgb(188, 253, 134);
+    }
+    /* dinner */
+    .ExploreItemParent:last-child {
+        text-align: center;
+        padding: 2em;
+        background-color: rgb(241, 134, 253);
+    }
+/* explore tag container */
+.ExploreTagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2em;
+    width: clamp(200px, 100%, 600px);
+    margin-top: 1em;
+    padding: 0.3em;
+}
+    /* explore tag items */
+    .ExploreTagItemParent {
+        flex: 1;
+        text-align: center;
+        padding: 2em;
+        cursor: pointer;
+    }
+        /* tags */
+        .ExploreTagItemParent {
+            text-align: center;
+            padding: 2em;
+            background-color: var(--appmain-color-liest);
+        }

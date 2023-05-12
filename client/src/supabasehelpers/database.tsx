@@ -367,18 +367,26 @@ export async function GetRecipeById(userid: any, recipeId: any) {
 
 }
 
-export async function SearchRecipes(searchParam: string | null) {
-    // performs search if params are provided
-    if (searchParam != null) {
+export async function SearchRecipes(params: any | null) {
+    
+    if (params != null) {
 
         let query = supabase
             .from('recipe')
-            .select('title, photoUrl, profiles(username), recipe_saved(id)');
+            .select('title, photoUrl, profiles(username), recipe_saved!inner(id)');
   
         // searches with provided search query
-        if (searchParam) { query = query.like('title', `%${searchParam}%`) }
+        if (params.get('q')) { query = query.like('title', `%${params.get('q')}%`) }
+
+        // searches with provided filter course query
+        if (params.get('filterCourse')) { query = query.like('course', `%${params.get('filterCourse')}%`) }
+
+        // searches with provided filter tag query
+        if (params.get('filterTag')) { query = query.like('recipe_tags.tag', `%${params.get('filterTag')}%`) }
         
         const { data, error } = await query;
+
+        console.log(data)
     
         if (error) return {
             type: 'error',

@@ -6,6 +6,7 @@
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 99;
+    overflow: hidden;
 }
 /* child container */
 .PopupChildContainer {
@@ -14,6 +15,7 @@
     padding: 1em;
     border-radius: 4px;
     background-color: var(--white-color-liest);
+    overflow-y: scroll;
 }
     /* child container exit container */
     .PopupExitContainer {
@@ -39,6 +41,31 @@
     gap: 0.5em;
     padding: 1em 0 1em 0;
 }
+    /* input form container */
+    .FormParent > h1 {
+        margin-top: 1em;
+        text-align: center;
+        font-weight: 400;
+        font-size: 0.9rem;
+        color: var(--black-color-li);
+    }
+    /* form input row */
+    .FormInputRow {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+        /* form input row */
+        .FormInputRow > button {
+            border: 0;
+            background: none;
+            cursor: pointer;
+        }
+            /* form input row icon */
+            .FormInputRow > button > img {
+                height: 25px;
+                width: 25px;
+            }
     /* inputs */
     .FormParent select, .FormParent textarea {
         width: 100%;
@@ -56,7 +83,14 @@
         margin-bottom: 0.2em;
         color: var(--appmain-color-dark);
     }
-    /* label */
+    /* form input error */
+    .FormInputError {
+        align-self: flex-start;
+        margin-top: 0.5em;
+        font-size: 0.9rem;
+        color: var(--red-color-med);
+    }
+    /* tag container */
     .FormTagInputContainer {
         display: flex;
         justify-content: space-between;
@@ -75,8 +109,36 @@
         .FormTagInputContainer > input:focus {
             outline: none !important;
         }
-        /* add icon */
-        .FormTagInputContainer > img {
-            height: 25px;
-            width: 25px;
+        /* add button */
+        .FormTagInputContainer > button {
+            border: 0;
+            background: none;
+            cursor: pointer;
         }
+            /* add button icon */
+            .FormTagInputContainer > button > img {
+                height: 25px;
+                width: 25px;
+            }
+        /* form chosen tag */
+        .FormChosenTag {
+            width: fit-content;
+            padding: 0.3em 0.6em 0.3em 0.6em;
+            border-radius: 4px;
+            background-color: var(--appmain-color-li);
+        }
+            /* form chosen tag x */
+            .FormChosenTag > span {
+                margin-right: 0.6em;
+                color: var(--appmain-color-dark);
+            }
+    /* save button */
+    .SaveButton {
+        margin-top: 2em;
+        padding: 0.5em;
+        font-size: 1.2rem;
+        border: 0;
+        border-radius: 4px;
+        background-color: var(--appmain-color-med);
+        cursor: pointer;
+    }

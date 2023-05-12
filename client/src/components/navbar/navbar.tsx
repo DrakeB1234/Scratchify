@@ -124,7 +124,18 @@ export default function Navbar() {
                         />
                         Grocery List
                     </Link>
-                    <button className={styles.DesktopLink + ' ' + styles.DesktopLinkSpaced}
+                    <Link href='/settings' className={styles.DesktopLink + ' ' + styles.DesktopLinkSpaced + ' ' + (pathname === '/settings' ?  styles.ActiveLink : ' ')}>                
+                        <Image
+                        className={styles.NavbarImageIcon}
+                        alt='logo'
+                        src='/icons/navbar/icon-settings-outline.svg'
+                        height={50}
+                        width={50}
+                        quality={100}
+                        />
+                        Settings
+                    </Link>
+                    <button className={styles.DesktopLink}
                     onClick={() => {
                         SignoutAuth();
                         router.replace('/signin');
@@ -175,7 +186,7 @@ export default function Navbar() {
                     <div className={styles.NavbarMobileContentChild}>
                         <div className={styles.NavbarMobileContentWelcome}>
                             <Image
-                            className={styles.NavbarImageBanner}
+                            className={styles.NavbarMobileImageBanner}
                             alt='logo'
                             src='/scratchify/appbanner.png'
                             height={100}
@@ -251,7 +262,7 @@ export default function Navbar() {
                             />
                             Grocery List
                         </Link>
-                        <Link href='/settings' className={styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
+                        <Link href='/settings' className={pathname === '/settings' ? styles.MobileLink + ' ' + styles.MobileLinkSpaced + ' ' + styles.ActiveLink : styles.MobileLink + ' ' + styles.MobileLinkSpaced}>                
                             <Image 
                             className={styles.NavbarImageLinkIcon}
                             alt=''

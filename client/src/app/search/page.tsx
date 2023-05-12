@@ -9,6 +9,7 @@ import {useEffect, useRef, useState} from 'react';
 // import styles / components
 import Navbar from '@/components/navbar/navbar';
 import FilterPopup from './searchPopup/filterPopup';
+import SortPopup from './searchPopup/sortPopup';
 import styles from '../../styles/Search.module.css';
 
 // auth
@@ -21,9 +22,12 @@ export default function Recipes() {
 
   const [recipeData, setRecipeData] = useState<any>([]);
   const [filterPopup, setFilterPopup] = useState(false);
+  const [sortPopup, setSortPopup] = useState(false);
 
   // URL params
   const searchParam = params.get('q');
+  const filterCourseParam = params.get('filterCourse');
+  const filterTagParam = params.get('filterTag');
 
   // ref for input
   let searchInput = useRef('');
@@ -51,16 +55,16 @@ export default function Recipes() {
   useEffect(() => {
     // function for getting recipe based on search params
     const getRecipes = async () => {
-      let data = await SearchRecipes(searchParam);
+      let data = await SearchRecipes(params);
       if (data.type !== 'success') return;
       else return setRecipeData(data.data);
     }
 
     // call for recipe on page render if search params are provided
-    if (searchParam != '' && searchParam != null) {
+    if (params.get('q') !== null || params.get('filterCourse') !== null || params.get('filterTag') !== null) {
       getRecipes();
     }
-  }, [searchParam])
+  }, [params])
 
   return (
     <div className={styles.SearchParent}>
@@ -93,15 +97,6 @@ export default function Recipes() {
                 />
             </div>
             <div className={styles.SearchRecipeButtons}>
-              <div>
-                <h1>Sort</h1>
-                <Image 
-                  alt='o'
-                  src='/icons/actions/icon-sort-outline.svg'
-                  height={50}
-                  width={50}
-                />
-              </div>
               <div
               onClick={() => setFilterPopup(true)}
               >

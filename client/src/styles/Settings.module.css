@@ -1,6 +1,6 @@
 /* content parent */
 .SettingsContentParent {
-    width: clamp(200px, 100%, 1000px);
+    width: clamp(200px, 100%, 800px);
     margin: 0 auto 0 auto;
 }
     /* header container */
@@ -8,7 +8,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 4.5em 0 1em 0;
+        margin-top: 5em;
+        padding: 1em 0 1em 0;
         background-color: var(--white-color-liest);
     }
         /* header container text */
