@@ -76,7 +76,7 @@ export async function GetSessionAuth() {
 
 export async function ResetPasswordSend(params: ResetSendInputs) {
     const { data, error } = await supabase.auth.resetPasswordForEmail(params.email, {
-        redirectTo: 'http://localhost:3000/signin/updatepassword',
+        redirectTo: 'https://www.scratchifyhub.com/signin/updatepassword',
     });
     if (error) return {
         type: 'error',

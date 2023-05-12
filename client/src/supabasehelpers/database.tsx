@@ -385,8 +385,6 @@ export async function SearchRecipes(params: any | null) {
         if (params.get('filterTag')) { query = query.like('recipe_tags.tag', `%${params.get('filterTag')}%`) }
         
         const { data, error } = await query;
-
-        console.log(data)
     
         if (error) return {
             type: 'error',

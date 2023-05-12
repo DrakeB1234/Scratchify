@@ -77,7 +77,7 @@ export default function MyRecipes() {
         setLoadingData(false);
 
         // if data was unsucessful, reutn
-        if (data.type !== 'success') return console.log(data)
+        if (data.type !== 'success') return;
         return setRecipeData(data.data);
     }
 
