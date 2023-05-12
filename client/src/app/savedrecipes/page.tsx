@@ -46,7 +46,7 @@ export default async function SavedRecipes() {
                 <div className={styles.SavedRecipesContentParent}>
                 {recipeData!.map((e: any, index: number) => (
                     <Link key={index + 'a'} className={styles.SavedRecipesContentItem}
-                    href={'http://localhost:3000/recipe/' + e.title}
+                    href={'/recipe/' + e.title}
                     >
                     <div className={styles.SavedRecipesRow}>
                         <Image 

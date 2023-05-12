@@ -174,7 +174,7 @@ export default function MyRecipes() {
                 <div
                 onClick={() => editRecipe(e.recipe_id)}
                 >
-                  <Link href={'https://localhost:3000/recipe/' + e.title}>
+                  <Link href={'/recipe/' + e.title}>
                     <Image 
                     alt='edit'
                     src='/icons/actions/icon-viewgrey-outline.svg'

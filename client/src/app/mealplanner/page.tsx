@@ -259,7 +259,7 @@ export default function MealPlanner() {
                                 >
                                     <h1>{e.category}</h1>
                                     <h2>{e.recipe}</h2>
-                                    <Link href={'http://localhost:3000/recipe/' + e.recipe}>Go to Recipe &gt;</Link>
+                                    <Link href={'/recipe/' + e.recipe}>Go to Recipe &gt;</Link>
                                     <Image 
                                     alt=''
                                     src='/icons/actions/icon-edit-outline.svg'
