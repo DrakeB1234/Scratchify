@@ -20,7 +20,7 @@ type Inputs = {
     sort: string,
 };
 
-export default function sortPopup(props: Props) {
+export default function SortPopup(props: Props) {
 
     const router = useRouter();
     const params = useSearchParams();

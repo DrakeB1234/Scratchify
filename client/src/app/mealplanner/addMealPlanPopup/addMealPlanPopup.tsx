@@ -21,7 +21,7 @@ type Inputs = {
     item: string
 };
 
-export default function addMealPlanPopup(props: Props) {
+export default function AddMealPlanPopup(props: Props) {
 
     // typedefs
     type Inputs = {

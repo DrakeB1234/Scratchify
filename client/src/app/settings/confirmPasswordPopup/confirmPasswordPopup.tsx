@@ -22,7 +22,7 @@ type Props = {
 
 }
 
-export default function confirmPasswordPopup(props: Props) {
+export default function ConfirmPasswordPopup(props: Props) {
     
     // typedefs
     type Inputs = {

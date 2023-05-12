@@ -23,7 +23,7 @@ type Inputs = {
     item: string
 };
 
-export default function editMealPopup(props: Props) {
+export default function EditMealPopup(props: Props) {
 
     const [curInputType, setCurInputType] = useState('text'); 
 

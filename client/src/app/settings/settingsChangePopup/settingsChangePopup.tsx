@@ -17,7 +17,7 @@ type Props = {
     type: string
 }
 
-export default function settingsChangePopup(props: Props) {
+export default function SettingsChangePopup(props: Props) {
 
     // typedefs
     type Inputs = {
