@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import React, {useState, useRef} from 'react';
-import { useForm } from 'react-hook-form';
+import React, {useState, useRef, useEffect} from 'react';
+import { useForm, useWatch } from 'react-hook-form';
 
 // import styles / components
 import styles from '../addMealPopup/popup.module.css';
@@ -23,14 +23,14 @@ type Inputs = {
 
 export default function AddMealPlanPopup(props: Props) {
 
+    const [curDate, setCurDate] = useState('')
+    
     // typedefs
     type Inputs = {
         date: string,
     };
 
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm<Inputs>({defaultValues: {
-        date: props.todayDate
-    }});
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm<Inputs>({});
 
     const handleSave = (formVal: Inputs) => {
         props.callback(formVal);        
@@ -63,10 +63,16 @@ export default function AddMealPlanPopup(props: Props) {
                     }
                 })}
                 type='date'
+                onChange={(e: any) => {
+                    let curDate: any = new Date(e.target.value);
+                    curDate.setDate(curDate.getDate() + 7);
+                    curDate = `${curDate.getMonth() + 1} / ${curDate.getDate()} / ${curDate.getFullYear()}`;
+                    setCurDate(curDate);
+                }}
                 />
 
                 <label htmlFor='date'>End Date</label>
-                <input type='text' value={getValues().date} disabled/>
+                <input type='text' value={curDate} disabled/>
                     
                 <h1 className={styles.FormInputError}>{errors?.date?.message}</h1>
 

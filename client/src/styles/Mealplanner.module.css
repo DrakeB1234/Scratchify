@@ -44,7 +44,7 @@
 .MealParent {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 0.5em;
     width: clamp(200px,100%, 800px);
     padding: 0.5em;
 }  
@@ -64,19 +64,17 @@
             flex-direction: column;
         }  
             .DateItem > h1 {
-                min-width: 80px;
-                margin-top: 2em;
+                margin-top: 3em;
                 padding: 0.5em;
                 border-radius: 4px;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 background-color: var(--black-color-liest);
             }  
             .DateItem > h2 {
-                min-width: 80px;
                 margin-top: 2em;
                 padding: 0.5em;
                 border-radius: 4px;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
                 background-color: var(--blue-color-li);
             }  
         /* edit item */
@@ -125,7 +123,7 @@
             }
             /* edit icon */
             .MealItemContainer > img {
-                height: 20px;
-                width: 20px;
+                height: 15px;
+                width: 15px;
                 margin-left: auto;
             }

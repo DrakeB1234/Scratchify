@@ -50,8 +50,8 @@ export default async function Home() {
           <div className={styles.AccountCreationContainer}>
             <h1>Having an account with us gives you access to:</h1>
             <ul>
-              <li>Saving Recipes</li>
-              <li>Making Recipes</li>
+              <li>Save Recipes</li>
+              <li>Make Recipes</li>
               <li>Grocery List</li>
               <li>Meal Planner</li>
             </ul>
@@ -61,8 +61,8 @@ export default async function Home() {
           <div className={styles.AccountContainer}>
             <h1>Make sure to check out these features included with your account!</h1>
             <ul>
-              <li>Saving Recipes</li>
-              <li>Making Recipes</li>
+              <li>Save Recipes</li>
+              <li>Make Recipes</li>
               <li>Grocery List</li>
               <li>Meal Planner</li>
             </ul>
@@ -112,26 +112,36 @@ export default async function Home() {
             <Link href='/search?filterCourse=Lunch' className={styles.ExploreItemParent}>
               <h1>Lunches</h1>
             </Link>
+          </div>
+          <div className={styles.ExploreContainer}>
             <Link href='/search?filterCourse=Dinner' className={styles.ExploreItemParent}>
               <h1>Dinner</h1>
+            </Link>
+            <Link href='/search?filterCourse=Dessert' className={styles.ExploreItemParent}>
+              <h1>Desserts</h1>
             </Link>
           </div>
   
           <h1>Explore by Popular Tags!</h1>
-          <div className={styles.ExploreTagContainer}>
-            <Link href='/search?filterTag=Italian' className={styles.ExploreTagItemParent}>
+          <div className={styles.ExploreContainer}>
+            <Link href='/search?filterTag=Italian' className={styles.ExploreItemParent}>
               <h1>Italian</h1>
             </Link>
-            <Link href='/search?filterTag=Mexican' className={styles.ExploreTagItemParent}>
+            <Link href='/search?filterTag=Mexican' className={styles.ExploreItemParent}>
               <h1>Mexican</h1>
             </Link>
-            <Link href='/search?filterTag=Healthy' className={styles.ExploreTagItemParent}>
+            <Link href='/search?filterTag=American' className={styles.ExploreItemParent}>
+              <h1>American</h1>
+            </Link>
+          </div>
+          <div className={styles.ExploreContainer}>
+            <Link href='/search?filterTag=Healthy' className={styles.ExploreItemParent}>
               <h1>Healthy</h1>
             </Link>
-            <Link href='/search?filterTag=Low Cal' className={styles.ExploreTagItemParent}>
-              <h1>LowCal</h1>
+            <Link href='/search?filterTag=Easy' className={styles.ExploreItemParent}>
+              <h1>Easy</h1>
             </Link>
-            <Link href='/search?filterTag=Cheesy' className={styles.ExploreTagItemParent}>
+            <Link href='/search?filterTag=Cheesy' className={styles.ExploreItemParent}>
               <h1>Cheesy</h1>
             </Link>
           </div>

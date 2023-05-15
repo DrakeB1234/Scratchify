@@ -42,7 +42,7 @@ export default function SocialButtons(props: any) {
     }
 
     const ShareRecipeFunction = () => {
-        navigator.clipboard.writeText('https://scratchify.com/recipe/' + props.recipeTitle);
+        navigator.clipboard.writeText('https://scratchifyhub.com/recipe/' + props.recipeTitle);
         setSharePopupState(true);
     }
 

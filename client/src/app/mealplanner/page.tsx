@@ -74,7 +74,7 @@ export default function MealPlanner() {
         const resultPlanner = await GetUserMealPlanner(session.current.user.id);
 
         if(resultPlanner.type !== 'success') return;
-
+        
         setMealData(resultPlanner.data);
 
         const resultSaved = await GetSavedRecipes(session.current.user.id);
@@ -199,6 +199,11 @@ export default function MealPlanner() {
                 <div className={styles.MealParent}>
                     {mealData?.map((e: any, index: number) => {
 
+                        const weekday = ["SUN","MON","TUES","WED","THUR","FRI","SAT"];
+
+                        let formatDate: any = new Date(e.date);
+                        formatDate = `${weekday[formatDate.getDay()]} ${formatDate.getMonth() + 1}/${formatDate.getDate()}`
+
                         return (
 
                         <div className={styles.MealParent} key={index + 'a'}>
@@ -208,14 +213,14 @@ export default function MealPlanner() {
                             onClick={() => addMealFunction(e.id)}
                             >
                                 <div className={styles.DateItem}>
-                                    <h2>{e.date}</h2>
+                                    <h2>{formatDate}</h2>
                                 </div>
                                 <div>
                                     <Image 
                                     alt=''
                                     src='/icons/actions/icon-plusgreen-outline.svg'
-                                    height={30}
-                                    width={30}
+                                    height={20}
+                                    width={20}
                                     />
                                 </div>
                             </div>  
@@ -224,14 +229,14 @@ export default function MealPlanner() {
                             onClick={() => addMealFunction(e.id)}
                             >
                                 <div className={styles.DateItem}>
-                                    <h1>{e.date}</h1>
+                                    <h1>{formatDate}</h1>
                                 </div>
                                 <div>
                                     <Image 
                                     alt=''
                                     src='/icons/actions/icon-plusgreen-outline.svg'
-                                    height={30}
-                                    width={30}
+                                    height={20}
+                                    width={20}
                                     />
                                 </div>
                             </div>  

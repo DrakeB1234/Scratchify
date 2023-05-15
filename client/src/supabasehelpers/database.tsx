@@ -163,6 +163,7 @@ type dates = {
 }[]
 
 export async function AddMealPlan(formVal: any, mealData: any, userId: any) {
+    
     // check if meal data array is not empty, if so add new values into db
     if (mealData.length < 1) {
         let dates: dates = [];
@@ -199,6 +200,7 @@ export async function AddMealPlan(formVal: any, mealData: any, userId: any) {
     else {
         let dates: dates = [];
         let curDate: Date = new Date(formVal.date);
+        curDate.setDate(curDate.getDate() + 1);
 
         // iterate loop 7 times, for a week
         for (let i=0; i<7; i++){
@@ -210,6 +212,8 @@ export async function AddMealPlan(formVal: any, mealData: any, userId: any) {
             // add a day to cur date
             curDate.setDate(curDate.getDate() + 1);
         }
+
+        console.log(dates)
 
         // update date data with new date array
         const { data, error } = await supabase
@@ -373,7 +377,8 @@ export async function SearchRecipes(params: any | null) {
 
         let query = supabase
             .from('recipe')
-            .select('title, photoUrl, profiles(username), recipe_saved!inner(id)');
+            .select('title, photoUrl, profiles(username), recipe_tags!inner(id), recipe_saved(id)')
+            .limit(20);
   
         // searches with provided search query
         if (params.get('q')) { query = query.like('title', `%${params.get('q')}%`) }
@@ -384,7 +389,11 @@ export async function SearchRecipes(params: any | null) {
         // searches with provided filter tag query
         if (params.get('filterTag')) { query = query.like('recipe_tags.tag', `%${params.get('filterTag')}%`) }
         
+        console.log(query)
+        
         const { data, error } = await query;
+
+        console.log(data, error)
     
         if (error) return {
             type: 'error',
